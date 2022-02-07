@@ -16,7 +16,14 @@ use Yii;
  */
 class ConfigActiveForm extends ActiveForm
 {
+    /**
+     * @var bool
+     */
+    public $hasStickyButtons = true;
 
+    /**
+     * @inheritDoc
+     */
     public function init()
     {
         if (!$this->fields) {
@@ -30,14 +37,25 @@ class ConfigActiveForm extends ActiveForm
         parent::init();
     }
 
+    /**
+     * @return void
+     */
     public function renderFooter()
+    {
+        echo $this->listRow($this->getTimestampItems());
+    }
+
+    /**
+     * @return array
+     */
+    protected function getTimestampItems()
     {
         $text = Yii::t('skeleton', 'Last updated {timestamp}', [
             'timestamp' => Timeago::tag($this->model->getUpdatedAt()),
         ]);
 
-        echo $this->listRow([
+        return [
             Yii::$app->getUser()->can('trailIndex') ? Html::a($text, ['/admin/trail/index', 'model' => Config::class]) : $text,
-        ]);
+        ];
     }
 }
