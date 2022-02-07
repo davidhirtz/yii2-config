@@ -63,14 +63,15 @@ class Module extends \yii\base\Module
 
         if (!Yii::$app->getRequest()->getIsConsoleRequest()) {
             if (!$this->navbarItems) {
+                // Settings should come in last, so the config param "zz-config" is used
                 $this->navbarItems = [
-                    'cms' => [
+                    'zz-config' => [
                         'label' => $this->name,
                         'icon' => 'cogs',
                         'url' => $this->url,
                         'active' => ['admin/config/'],
-                        'roles' => ['configUpdate', 'configView'],
-                    ]
+                        'roles' => ['configUpdate'],
+                    ],
                 ];
             }
 
@@ -81,7 +82,7 @@ class Module extends \yii\base\Module
                     'label' => Yii::t('config', 'Settings'),
                     'url' => ['/admin/config/index'],
                     'icon' => 'cogs',
-                    'roles' => ['configUpdate', 'configView'],
+                    'roles' => ['configUpdate'],
                 ];
             }
 

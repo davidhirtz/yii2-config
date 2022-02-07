@@ -23,7 +23,7 @@ $this->setBreadcrumb($this->title);
 <?= Html::errorSummary($config); ?>
 
 <?= Panel::widget([
-    'title' => $this->title,
+    'title' => Yii::t('config', 'Update Settings'),
     'content' => $config->getActiveForm()::widget([
         'model' => $config,
     ]),

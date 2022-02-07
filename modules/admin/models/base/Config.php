@@ -8,6 +8,8 @@ use davidhirtz\yii2\config\modules\admin\widgets\forms\ConfigActiveForm;
 use davidhirtz\yii2\skeleton\helpers\FileHelper;
 use Yii;
 use yii\base\Model;
+use yii\db\ActiveRecord;
+use yii\db\AfterSaveEvent;
 
 /**
  * Class Config
@@ -20,6 +22,32 @@ class Config extends Model
      * @var Module
      */
     protected static $_module;
+
+    /**
+     * @var array
+     */
+    private $_params;
+
+    /**
+     * @inheritDoc
+     */
+    public function init()
+    {
+        $this->setAttributesFromParams();
+        parent::init();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function behaviors(): array
+    {
+        return array_merge(parent::behaviors(), [
+            'TrailBehavior' => [
+                'class' => 'davidhirtz\yii2\skeleton\behaviors\TrailBehavior',
+            ],
+        ]);
+    }
 
     /**
      * Saves the given all safe attributes to the config file.
@@ -36,15 +64,59 @@ class Config extends Model
         }
 
         $prevParams = $this->getParams();
-        $params = array_merge($prevParams, $this->activeAttributes());
+        $params = $prevParams;
 
-        if (!array_diff_assoc($prevParams, $params)) {
-            return false;
+        foreach ($this->activeAttributes() as $attribute) {
+            $params[$attribute] = $this->$attribute;
         }
 
-        $phpdoc = (Yii::$app->has('user') && $username = (Yii::$app->getUser()->getIdentity()->getUsername() ?? false)) ? "Updated by {$username}" : null;
-        FileHelper::createConfigFile(static::getModule()->configFile, $params, $phpdoc);
-        return true;
+        if ($changedAttributes = array_diff_assoc($params, $prevParams)) {
+            $phpdoc = (Yii::$app->has('user') && $username = (Yii::$app->getUser()->getIdentity()->getUsername() ?? false)) ? "Last updated via administration by {$username}" : null;
+            FileHelper::createConfigFile(static::getModule()->configFile, $params, $phpdoc);
+
+            $this->afterSave(array_intersect_key($prevParams, $changedAttributes));
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Triggers an {@link ActiveRecord::EVENT_AFTER_UPDATE} so TrailBehavior can hook to it.
+     *
+     * @param array $changedAttributes
+     * @return void
+     */
+    public function afterSave($changedAttributes)
+    {
+        $this->trigger(ActiveRecord::EVENT_AFTER_UPDATE, new AfterSaveEvent([
+            'changedAttributes' => $changedAttributes,
+        ]));
+    }
+
+    /**
+     * @return string
+     */
+    public function getTrailModelName()
+    {
+        return static::getModule()->name;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTrailModelAdminRoute()
+    {
+        return ['/admin/config/update'];
+    }
+
+    /**
+     * @return false|int|null
+     */
+    public function getUpdatedAt()
+    {
+        $file = Yii::getAlias(static::getModule()->configFile);
+        return is_file($file) ? filemtime($file) : null;
     }
 
     /**
@@ -52,8 +124,20 @@ class Config extends Model
      */
     protected function getParams()
     {
-        $file = Yii::getAlias(static::getModule()->configFile);
-        return is_file($file) ? require($file) : [];
+        if ($this->_params === null) {
+            $file = Yii::getAlias(static::getModule()->configFile);
+            $this->_params = is_file($file) ? require($file) : [];
+        }
+
+        return $this->_params;
+    }
+
+    /**
+     * @return void
+     */
+    protected function setAttributesFromParams()
+    {
+        $this->setAttributes($this->getParams(), false);
     }
 
     /**
