@@ -1,0 +1,25 @@
+{
+  "name": "davidhirtz/yii2-config",
+  "type": "yii2-extension",
+  "description": "Yii2 Config Module",
+  "homepage": "https://www.davidhirtz.com/",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "davidhirtz/yii2-skeleton": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "davidhirtz\\yii2\\config\\": ""
+    }
+  },
+  "extra": {
+    "bootstrap": "davidhirtz\\yii2\\config\\composer\\Bootstrap"
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:davidhirtz/yii2-skeleton.git"
+    }
+  ]
+}
