@@ -18,6 +18,8 @@ use yii\db\AfterSaveEvent;
  */
 class Config extends Model
 {
+    public const AUTH_CONFIG_UPDATE = 'configUpdate';
+
     /**
      * @var Module
      */

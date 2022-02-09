@@ -2,6 +2,7 @@
 
 namespace davidhirtz\yii2\config\modules\admin;
 
+use davidhirtz\yii2\config\modules\admin\models\Config;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -70,7 +71,7 @@ class Module extends \yii\base\Module
                         'icon' => 'cogs',
                         'url' => $this->url,
                         'active' => ['admin/config/'],
-                        'roles' => ['configUpdate'],
+                        'roles' => [Config::AUTH_CONFIG_UPDATE],
                     ],
                 ];
             }
@@ -82,7 +83,7 @@ class Module extends \yii\base\Module
                     'label' => Yii::t('config', 'Settings'),
                     'url' => ['/admin/config/index'],
                     'icon' => 'cogs',
-                    'roles' => ['configUpdate'],
+                    'roles' => [Config::AUTH_CONFIG_UPDATE],
                 ];
             }
 

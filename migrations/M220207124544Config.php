@@ -2,6 +2,7 @@
 
 namespace davidhirtz\yii2\config\migrations;
 
+use davidhirtz\yii2\config\modules\admin\models\Config;
 use davidhirtz\yii2\skeleton\db\MigrationTrait;
 use davidhirtz\yii2\skeleton\models\User;
 use Yii;
@@ -26,7 +27,7 @@ class M220207124544Config extends Migration
         $auth = Yii::$app->getAuthManager();
         $admin = $auth->getRole(User::AUTH_ROLE_ADMIN);
 
-        $configUpdate = $auth->createPermission('configUpdate');
+        $configUpdate = $auth->createPermission(Config::AUTH_CONFIG_UPDATE);
         $configUpdate->description = Yii::t('config', 'Update website settings', [], $sourceLanguage);
         $auth->add($configUpdate);
 
@@ -39,6 +40,6 @@ class M220207124544Config extends Migration
     public function safeDown()
     {
         $auth = Yii::$app->getAuthManager();
-        $this->delete($auth->itemTable, ['name' => 'configUpdate']);
+        $this->delete($auth->itemTable, ['name' => Config::AUTH_CONFIG_UPDATE]);
     }
 }
