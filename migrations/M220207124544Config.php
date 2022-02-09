@@ -3,6 +3,7 @@
 namespace davidhirtz\yii2\config\migrations;
 
 use davidhirtz\yii2\skeleton\db\MigrationTrait;
+use davidhirtz\yii2\skeleton\models\User;
 use Yii;
 use yii\db\Migration;
 
@@ -23,7 +24,7 @@ class M220207124544Config extends Migration
         $sourceLanguage = Yii::$app->sourceLanguage;
 
         $auth = Yii::$app->getAuthManager();
-        $admin = $auth->getRole('admin');
+        $admin = $auth->getRole(User::AUTH_ROLE_ADMIN);
 
         $configUpdate = $auth->createPermission('configUpdate');
         $configUpdate->description = Yii::t('config', 'Update website settings', [], $sourceLanguage);
