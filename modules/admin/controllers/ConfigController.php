@@ -5,6 +5,7 @@ namespace davidhirtz\yii2\config\modules\admin\controllers;
 use davidhirtz\yii2\config\modules\admin\models\Config;
 use davidhirtz\yii2\skeleton\web\Controller;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Response;
 
 /**
@@ -17,6 +18,25 @@ class ConfigController extends Controller
      * @var string
      */
     public $defaultAction = 'update';
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['update'],
+                        'roles' => [Config::AUTH_CONFIG_UPDATE],
+                    ],
+                ],
+            ],
+        ]);
+    }
 
     /**
      * @return string|Response
