@@ -8,21 +8,11 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Response;
 
-/**
- * Class ConfigController
- * @package davidhirtz\yii2\config\modules\admin\controllers
- */
 class ConfigController extends Controller
 {
-    /**
-     * @var string
-     */
     public $defaultAction = 'update';
 
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
+    public function behaviors(): array
     {
         return array_merge(parent::behaviors(), [
             'access' => [
@@ -38,10 +28,7 @@ class ConfigController extends Controller
         ]);
     }
 
-    /**
-     * @return string|Response
-     */
-    public function actionUpdate()
+    public function actionUpdate(): Response|string
     {
         $config = new Config();
 
