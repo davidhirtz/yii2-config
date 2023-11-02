@@ -6,11 +6,11 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "davidhirtz/yii2-skeleton": "^1.9.1"
+    "davidhirtz/yii2-skeleton": "^2.0"
   },
   "autoload": {
     "psr-4": {
-      "davidhirtz\\yii2\\config\\": ""
+      "davidhirtz\\yii2\\config\\": "src"
     }
   },
   "extra": {

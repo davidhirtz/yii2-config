@@ -9,18 +9,14 @@ use Yii;
 use yii\db\Migration;
 
 /**
- * Class M220207124544Config
- * @package davidhirtz\yii2\config\migrations
  * @noinspection PhpUnused
  */
+
 class M220207124544Config extends Migration
 {
     use MigrationTrait;
 
-    /**
-     * @inheritDoc
-     */
-    public function safeUp()
+    public function safeUp(): void
     {
         $sourceLanguage = Yii::$app->sourceLanguage;
 
@@ -34,10 +30,7 @@ class M220207124544Config extends Migration
         $auth->addChild($admin, $configUpdate);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function safeDown()
+    public function safeDown(): void
     {
         $auth = Yii::$app->getAuthManager();
         $this->delete($auth->itemTable, ['name' => Config::AUTH_CONFIG_UPDATE]);

@@ -2,53 +2,46 @@
 
 namespace davidhirtz\yii2\config\modules\admin;
 
+use davidhirtz\yii2\config\modules\admin\controllers\ConfigController;
 use davidhirtz\yii2\config\modules\admin\models\Config;
 use Yii;
 use yii\helpers\ArrayHelper;
 
-/**
- * Class Module
- * @package davidhirtz\yii2\config\modules\admin
- * @property \davidhirtz\yii2\skeleton\modules\admin\Module $module
- */
 class Module extends \yii\base\Module
 {
     /**
-     * @var string the module display name, defaults to "Settings"
+     * @var string|null the module display name, defaults to "Settings"
      */
-    public $name;
+    public ?string $name = null;
 
     /**
      * @var string
      */
-    public $configFile = '@app/config/params.php';
+    public string $configFile = '@app/config/params.php';
 
     /**
      * @var mixed the navbar item url
      */
-    public $url = ['/admin/config/update'];
-
-    /**
-     * @var string
-     */
-    public $defaultRoute = 'config';
+    public array|string $url = ['/admin/config/update'];
 
     /**
      * @var array containing the admin menu items
      */
-    public $navbarItems = [];
+    public array $navbarItems = [];
 
     /**
      * @var array containing the panel items
      */
-    public $panels = [];
+    public array $panels = [];
+
+    public $defaultRoute = 'config';
 
     /**
      * @var array
      */
-    protected $defaultControllerMap = [
+    protected array $defaultControllerMap = [
         'config' => [
-            'class' => 'davidhirtz\yii2\config\modules\admin\controllers\ConfigController',
+            'class' => ConfigController::class,
             'viewPath' => '@config/modules/admin/views/config',
         ],
     ];
@@ -58,9 +51,7 @@ class Module extends \yii\base\Module
      */
     public function init(): void
     {
-        if (!$this->name) {
-            $this->name = Yii::t('config', 'Settings');
-        }
+        $this->name ??= Yii::t('config', 'Settings');
 
         if (!Yii::$app->getRequest()->getIsConsoleRequest()) {
             if (!$this->navbarItems) {

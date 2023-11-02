@@ -2,27 +2,25 @@
 
 namespace davidhirtz\yii2\config\composer;
 
+use davidhirtz\yii2\config\modules\admin\Module;
 use davidhirtz\yii2\skeleton\web\Application;
 use yii\base\BootstrapInterface;
 use Yii;
+use yii\i18n\PhpMessageSource;
 
-/**
- * Class Bootstrap
- * @package davidhirtz\yii2\config\bootstrap
- */
 class Bootstrap implements BootstrapInterface
 {
     /**
      * @param Application $app
      */
-    public function bootstrap($app)
+    public function bootstrap($app): void
     {
         Yii::setAlias('@config', dirname(__DIR__));
 
         $app->extendComponent('i18n', [
             'translations' => [
                 'config' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
+                    'class' => PhpMessageSource::class,
                     'basePath' => '@config/messages',
                 ],
             ],
@@ -32,7 +30,7 @@ class Bootstrap implements BootstrapInterface
             'admin' => [
                 'modules' => [
                     'config' => [
-                        'class' => 'davidhirtz\yii2\config\modules\admin\Module',
+                        'class' => Module::class
                     ],
                 ],
             ],

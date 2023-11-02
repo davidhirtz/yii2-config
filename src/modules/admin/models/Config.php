@@ -1,64 +1,40 @@
 <?php
 
 
-namespace davidhirtz\yii2\config\modules\admin\models\base;
+namespace davidhirtz\yii2\config\modules\admin\models;
 
 use davidhirtz\yii2\config\modules\admin\Module;
 use davidhirtz\yii2\config\modules\admin\widgets\forms\ConfigActiveForm;
+use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
 use davidhirtz\yii2\skeleton\helpers\FileHelper;
 use Yii;
 use yii\base\Model;
 use yii\db\ActiveRecord;
 use yii\db\AfterSaveEvent;
 
-/**
- * Class Config
- * @package davidhirtz\yii2\config\modules\admin\models\base
- * @see \davidhirtz\yii2\config\modules\admin\models\Config
- */
 class Config extends Model
 {
     public const AUTH_CONFIG_UPDATE = 'configUpdate';
 
-    /**
-     * @var Module
-     */
-    protected static $_module;
+    protected static ?Module $_module = null;
+    private ?array $_params = null;
 
-    /**
-     * @var array
-     */
-    private $_params;
-
-    /**
-     * @inheritDoc
-     */
-    public function init()
+    public function init(): void
     {
         $this->setAttributesFromParams();
         parent::init();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function behaviors(): array
     {
         return array_merge(parent::behaviors(), [
             'TrailBehavior' => [
-                'class' => 'davidhirtz\yii2\skeleton\behaviors\TrailBehavior',
+                'class' => TrailBehavior::class,
             ],
         ]);
     }
 
-    /**
-     * Saves the given all safe attributes to the config file.
-     *
-     * @param bool $runValidation
-     * @param array|null $attributeNames
-     * @return bool
-     */
-    public function save($runValidation = true, $attributeNames = null)
+    public function save(bool $runValidation = true, ?array $attributeNames = null): bool
     {
         if ($runValidation && !$this->validate($attributeNames)) {
             Yii::info('Model not updated due to validation error.', __METHOD__);
@@ -73,7 +49,7 @@ class Config extends Model
         }
 
         if ($changedAttributes = array_diff_assoc($params, $prevParams)) {
-            $phpdoc = (Yii::$app->has('user') && $username = (Yii::$app->getUser()->getIdentity()->getUsername() ?? false)) ? "Last updated via administration by {$username}" : null;
+            $phpdoc = (Yii::$app->has('user') && $username = (Yii::$app->getUser()->getIdentity()->getUsername() ?? false)) ? "Last updated via administration by $username" : null;
             FileHelper::createConfigFile(static::getModule()->configFile, $params, $phpdoc);
 
             $this->afterSave(array_intersect_key($prevParams, $changedAttributes));
@@ -85,46 +61,31 @@ class Config extends Model
 
     /**
      * Triggers an {@link ActiveRecord::EVENT_AFTER_UPDATE} so TrailBehavior can hook to it.
-     *
-     * @param array $changedAttributes
-     * @return void
      */
-    public function afterSave($changedAttributes)
+    public function afterSave(array $changedAttributes): void
     {
         $this->trigger(ActiveRecord::EVENT_AFTER_UPDATE, new AfterSaveEvent([
             'changedAttributes' => $changedAttributes,
         ]));
     }
 
-    /**
-     * @return string
-     */
-    public function getTrailModelName()
+    public function getTrailModelName(): string
     {
         return static::getModule()->name;
     }
 
-    /**
-     * @return array
-     */
-    public function getTrailModelAdminRoute()
+    public function getTrailModelAdminRoute(): array|false
     {
         return ['/admin/config/update'];
     }
 
-    /**
-     * @return false|int|null
-     */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): bool|int|null
     {
         $file = Yii::getAlias(static::getModule()->configFile);
         return is_file($file) ? filemtime($file) : null;
     }
 
-    /**
-     * @return array
-     */
-    protected function getParams()
+    protected function getParams(): array
     {
         if ($this->_params === null) {
             $file = Yii::getAlias(static::getModule()->configFile);
@@ -134,32 +95,22 @@ class Config extends Model
         return $this->_params;
     }
 
-    /**
-     * @return void
-     */
-    protected function setAttributesFromParams()
+    protected function setAttributesFromParams(): void
     {
         $this->setAttributes($this->getParams(), false);
     }
 
     /**
-     * @return ConfigActiveForm
+     * @return class-string
      */
-    public function getActiveForm()
+    public function getActiveForm(): string
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return ConfigActiveForm::class;
     }
 
-    /**
-     * @return Module
-     */
-    public static function getModule()
+    public static function getModule(): Module
     {
-        if (static::$_module === null) {
-            static::$_module = Yii::$app->getModule('admin')->getModule('config');
-        }
-
+        static::$_module ??= Yii::$app->getModule('admin')->getModule('config');
         return static::$_module;
     }
 }
