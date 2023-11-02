@@ -4,6 +4,7 @@ namespace davidhirtz\yii2\config\modules\admin\widgets\forms;
 
 use davidhirtz\yii2\config\modules\admin\models\Config;
 use davidhirtz\yii2\skeleton\helpers\Html;
+use davidhirtz\yii2\skeleton\models\Trail;
 use davidhirtz\yii2\skeleton\widgets\bootstrap\ActiveForm;
 use davidhirtz\yii2\timeago\Timeago;
 use Yii;
@@ -17,14 +18,7 @@ class ConfigActiveForm extends ActiveForm
 
     public function init(): void
     {
-        if (!$this->fields) {
-            $this->fields = [];
-
-            foreach ($this->model->activeAttributes() as $attribute) {
-                $this->fields[] = [$attribute];
-            }
-        }
-
+        $this->fields ??= array_map(fn($attribute) => [$attribute], $this->model->activeAttributes());
         parent::init();
     }
 
@@ -40,7 +34,7 @@ class ConfigActiveForm extends ActiveForm
         ]);
 
         return [
-            Yii::$app->getUser()->can('trailIndex') ? Html::a($text, ['/admin/trail/index', 'model' => $this->model::class]) : $text,
+            Yii::$app->getUser()->can('trailIndex') ? Html::a($text, Trail::getAdminRouteByModel($this->model)) : $text,
         ];
     }
 }
