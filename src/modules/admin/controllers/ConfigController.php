@@ -30,10 +30,11 @@ class ConfigController extends Controller
 
     public function actionUpdate(): Response|string
     {
-        $config = new Config();
+        $config = Yii::createObject(Config::class);
 
         if ($config->load(Yii::$app->getRequest()->post()) && $config->save()) {
             $this->success(Yii::t('config', 'The settings were updated.'));
+            $this->refresh();
         }
 
         return $this->render('update', [

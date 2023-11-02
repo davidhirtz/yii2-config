@@ -40,7 +40,7 @@ class ConfigActiveForm extends ActiveForm
         ]);
 
         return [
-            Yii::$app->getUser()->can('trailIndex') ? Html::a($text, ['/admin/trail/index', 'model' => Config::class]) : $text,
+            Yii::$app->getUser()->can('trailIndex') ? Html::a($text, ['/admin/trail/index', 'model' => $this->model::class]) : $text,
         ];
     }
 }

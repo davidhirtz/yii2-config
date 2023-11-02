@@ -12,6 +12,11 @@ use yii\base\Model;
 use yii\db\ActiveRecord;
 use yii\db\AfterSaveEvent;
 
+/**
+ * Extend this class in your application to make application params editable via the admin interface. Params need to be
+ * defined as public properties and must have a valid rule. Per default, only active attributes will be displayed in
+ * the form.
+ */
 class Config extends Model
 {
     public const AUTH_CONFIG_UPDATE = 'configUpdate';
@@ -51,6 +56,10 @@ class Config extends Model
         if ($changedAttributes = array_diff_assoc($params, $prevParams)) {
             $phpdoc = (Yii::$app->has('user') && $username = (Yii::$app->getUser()->getIdentity()->getUsername() ?? false)) ? "Last updated via administration by $username" : null;
             FileHelper::createConfigFile(static::getModule()->configFile, $params, $phpdoc);
+
+            if (function_exists('opcache_invalidate')) {
+                opcache_invalidate(Yii::getAlias(static::getModule()->configFile));
+            }
 
             $this->afterSave(array_intersect_key($prevParams, $changedAttributes));
             return true;
