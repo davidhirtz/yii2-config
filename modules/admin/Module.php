@@ -56,7 +56,7 @@ class Module extends \yii\base\Module
     /**
      * @inheritdoc
      */
-    public function init()
+    public function init(): void
     {
         if (!$this->name) {
             $this->name = Yii::t('config', 'Settings');

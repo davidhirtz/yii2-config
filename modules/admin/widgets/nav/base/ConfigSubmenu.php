@@ -15,7 +15,7 @@ class ConfigSubmenu extends Submenu
     /**
      * @inheritDoc
      */
-    public function init()
+    public function init(): void
     {
         if (!$this->title) {
             $this->title = Config::getModule()->name;

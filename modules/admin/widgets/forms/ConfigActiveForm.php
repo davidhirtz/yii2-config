@@ -9,22 +9,13 @@ use davidhirtz\yii2\timeago\Timeago;
 use Yii;
 
 /**
- * Class ConfigActiveForm
- * @package davidhirtz\yii2\config\modules\admin\widgets\forms
- *
  * @property Config $model
  */
 class ConfigActiveForm extends ActiveForm
 {
-    /**
-     * @var bool
-     */
     public bool $hasStickyButtons = true;
 
-    /**
-     * @inheritDoc
-     */
-    public function init()
+    public function init(): void
     {
         if (!$this->fields) {
             $this->fields = [];
@@ -37,18 +28,12 @@ class ConfigActiveForm extends ActiveForm
         parent::init();
     }
 
-    /**
-     * @return void
-     */
-    public function renderFooter()
+    public function renderFooter(): void
     {
         echo $this->listRow($this->getTimestampItems());
     }
 
-    /**
-     * @return array
-     */
-    protected function getTimestampItems()
+    protected function getTimestampItems(): array
     {
         $text = Yii::t('skeleton', 'Last updated {timestamp}', [
             'timestamp' => Timeago::tag($this->model->getUpdatedAt()),
