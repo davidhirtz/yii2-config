@@ -4,7 +4,6 @@
 namespace davidhirtz\yii2\config\modules\admin\models;
 
 use davidhirtz\yii2\config\modules\admin\Module;
-use davidhirtz\yii2\config\modules\admin\widgets\forms\ConfigActiveForm;
 use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
 use davidhirtz\yii2\skeleton\helpers\FileHelper;
 use Yii;
@@ -107,14 +106,6 @@ class Config extends Model
     protected function setAttributesFromParams(): void
     {
         $this->setAttributes($this->getParams(), false);
-    }
-
-    /**
-     * @return class-string
-     */
-    public function getActiveForm(): string
-    {
-        return ConfigActiveForm::class;
     }
 
     public static function getModule(): Module

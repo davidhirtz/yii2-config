@@ -1,13 +1,14 @@
 <?php
 /**
- * Configuration form.
- * @see davidhirtz\yii2\config\modules\admin\controllers\ConfigController::actionUpdate()
+ * @see ConfigController::actionUpdate()
  *
  * @var View $this
  * @var Config $config
  */
 
+use davidhirtz\yii2\config\modules\admin\controllers\ConfigController;
 use davidhirtz\yii2\config\modules\admin\models\Config;
+use davidhirtz\yii2\config\modules\admin\widgets\forms\ConfigActiveForm;
 use davidhirtz\yii2\config\modules\admin\widgets\nav\ConfigSubmenu;
 use davidhirtz\yii2\skeleton\helpers\Html;
 use davidhirtz\yii2\skeleton\web\View;
@@ -22,7 +23,7 @@ $this->setBreadcrumb($this->title);
 
 <?= Panel::widget([
     'title' => Yii::t('config', 'Update Settings'),
-    'content' => $config->getActiveForm()::widget([
+    'content' => ConfigActiveForm::widget([
         'model' => $config,
     ]),
 ]);
