@@ -68,7 +68,7 @@ class Config extends Model
     }
 
     /**
-     * Triggers an {@link ActiveRecord::EVENT_AFTER_UPDATE} so TrailBehavior can hook to it.
+     * Triggers an {@see ActiveRecord::EVENT_AFTER_UPDATE} so TrailBehavior can hook to it.
      */
     public function afterSave(array $changedAttributes): void
     {
