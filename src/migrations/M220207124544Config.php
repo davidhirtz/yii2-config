@@ -3,7 +3,7 @@
 namespace davidhirtz\yii2\config\migrations;
 
 use davidhirtz\yii2\config\modules\admin\models\Config;
-use davidhirtz\yii2\skeleton\db\MigrationTrait;
+use davidhirtz\yii2\skeleton\db\traits\MigrationTrait;
 use davidhirtz\yii2\skeleton\models\User;
 use Yii;
 use yii\db\Migration;
