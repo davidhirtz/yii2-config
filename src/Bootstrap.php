@@ -1,6 +1,6 @@
 <?php
 
-namespace davidhirtz\yii2\config\composer;
+namespace davidhirtz\yii2\config;
 
 use davidhirtz\yii2\config\modules\admin\Module;
 use davidhirtz\yii2\skeleton\web\Application;
@@ -15,7 +15,7 @@ class Bootstrap implements BootstrapInterface
      */
     public function bootstrap($app): void
     {
-        Yii::setAlias('@config', dirname(__DIR__));
+        Yii::setAlias('@config', __DIR__);
 
         $app->extendComponent('i18n', [
             'translations' => [
