@@ -1,3 +1,7 @@
+## v2.0.2 (Nov 6, 2023)
+
+- Using the new `@config` alias for the `configFile` pathname
+
 ## v2.0.1 (Nov 6, 2023)
 
 - Moved `Bootstrap` class to base package namespace for consistency

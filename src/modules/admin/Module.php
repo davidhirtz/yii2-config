@@ -17,7 +17,7 @@ class Module extends \yii\base\Module
     /**
      * @var string
      */
-    public string $configFile = '@app/config/params.php';
+    public string $configFile = '@config/params.php';
 
     /**
      * @var mixed the navbar item url
