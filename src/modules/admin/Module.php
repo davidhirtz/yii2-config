@@ -7,6 +7,9 @@ use davidhirtz\yii2\config\modules\admin\models\Config;
 use Yii;
 use yii\helpers\ArrayHelper;
 
+/**
+ * @property \davidhirtz\yii2\skeleton\modules\admin\Module $module
+ */
 class Module extends \yii\base\Module
 {
     /**
@@ -15,9 +18,9 @@ class Module extends \yii\base\Module
     public ?string $name = null;
 
     /**
-     * @var string
+     * @var string the config file path
      */
-    public string $configFile = '@app/config/params.php';
+    public string $configFile = '@root/config/params.php';
 
     /**
      * @var mixed the navbar item url
@@ -33,8 +36,6 @@ class Module extends \yii\base\Module
      * @var array containing the panel items
      */
     public array $panels = [];
-
-    public $defaultRoute = 'config';
 
     /**
      * @var array
