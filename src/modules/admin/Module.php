@@ -23,7 +23,7 @@ class Module extends \yii\base\Module
     public string $configFile = '@root/config/params.php';
 
     /**
-     * @var mixed the navbar item url
+     * @var array|string the navbar item url
      */
     public array|string $url = ['/admin/config/update'];
 

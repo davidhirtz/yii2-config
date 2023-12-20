@@ -15,7 +15,7 @@ class Bootstrap implements BootstrapInterface
      */
     public function bootstrap($app): void
     {
-        Yii::setAlias('@config', dirname(__DIR__));
+        Yii::setAlias('@config', __DIR__);
 
         $app->extendComponent('i18n', [
             'translations' => [
