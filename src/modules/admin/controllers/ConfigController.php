@@ -34,7 +34,7 @@ class ConfigController extends Controller
 
         if ($config->load(Yii::$app->getRequest()->post()) && $config->save()) {
             $this->success(Yii::t('config', 'The settings were updated.'));
-            $this->refresh();
+            return $this->refresh();
         }
 
         return $this->render('update', [

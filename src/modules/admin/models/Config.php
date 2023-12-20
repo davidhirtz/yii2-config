@@ -1,9 +1,9 @@
 <?php
 
-
 namespace davidhirtz\yii2\config\modules\admin\models;
 
 use davidhirtz\yii2\config\modules\admin\Module;
+use davidhirtz\yii2\config\modules\admin\widgets\forms\ConfigActiveForm;
 use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
 use davidhirtz\yii2\skeleton\helpers\FileHelper;
 use Yii;
@@ -52,19 +52,28 @@ class Config extends Model
             $params[$attribute] = $this->$attribute;
         }
 
-        if ($changedAttributes = array_diff_assoc($params, $prevParams)) {
-            $phpdoc = (Yii::$app->has('user') && $username = (Yii::$app->getUser()->getIdentity()->getUsername() ?? false)) ? "Last updated via administration by $username" : null;
-            FileHelper::createConfigFile(static::getModule()->configFile, $params, $phpdoc);
+        $changedAttributes = array_diff_assoc($params, $prevParams);
 
-            if (function_exists('opcache_invalidate')) {
-                opcache_invalidate(Yii::getAlias(static::getModule()->configFile));
-            }
-
-            $this->afterSave(array_intersect_key($prevParams, $changedAttributes));
-            return true;
+        if (!$changedAttributes) {
+            return false;
         }
 
-        return false;
+        $username = Yii::$app->has('user')
+            ? Yii::$app->getUser()->getIdentity()?->getUsername()
+            : null;
+
+        $phpdoc = $username ? "Last updated via administration by $username" : null;
+        $file = $this->getConfigFilePath();
+
+        FileHelper::createDirectory(dirname($file));
+        FileHelper::createConfigFile($file, $params, $phpdoc);
+
+        Yii::$app->params = [...Yii::$app->params, ...$params];
+        $this->_params = null;
+
+        $this->afterSave(array_intersect_key($prevParams, $changedAttributes));
+
+        return true;
     }
 
     /**
@@ -89,15 +98,15 @@ class Config extends Model
 
     public function getUpdatedAt(): bool|int|null
     {
-        $file = Yii::getAlias(static::getModule()->configFile);
+        $file = $this->getConfigFilePath();
         return is_file($file) ? filemtime($file) : null;
     }
 
     protected function getParams(): array
     {
         if ($this->_params === null) {
-            $file = Yii::getAlias(static::getModule()->configFile);
-            $this->_params = is_file($file) ? require($file) : [];
+            $file = $this->getConfigFilePath();
+            $this->_params = is_file($file) ? require ($file) : [];
         }
 
         return $this->_params;
@@ -108,9 +117,31 @@ class Config extends Model
         $this->setAttributes($this->getParams(), false);
     }
 
+    protected function getConfigFilePath(): string
+    {
+        $file = Yii::getAlias(static::getModule()->configFile);
+
+        if (function_exists('opcache_invalidate')) {
+            opcache_invalidate($file, true);
+        }
+
+        return $file;
+    }
+
+    /**
+     * @return class-string
+     */
+    public function getActiveForm(): string
+    {
+        return ConfigActiveForm::class;
+    }
+
     public static function getModule(): Module
     {
-        static::$_module ??= Yii::$app->getModule('admin')->getModule('config');
+        /** @var Module $module */
+        $module = Yii::$app->getModule('admin')->getModule('config');
+        static::$_module ??= $module;
+
         return static::$_module;
     }
 }

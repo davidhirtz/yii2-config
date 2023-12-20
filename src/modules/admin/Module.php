@@ -7,6 +7,9 @@ use davidhirtz\yii2\config\modules\admin\models\Config;
 use Yii;
 use yii\helpers\ArrayHelper;
 
+/**
+ * @property \davidhirtz\yii2\skeleton\modules\admin\Module $module
+ */
 class Module extends \yii\base\Module
 {
     /**
@@ -15,12 +18,12 @@ class Module extends \yii\base\Module
     public ?string $name = null;
 
     /**
-     * @var string
+     * @var string the config file path
      */
-    public string $configFile = '@config/params.php';
+    public string $configFile = '@root/config/params.php';
 
     /**
-     * @var mixed the navbar item url
+     * @var array|string the navbar item url
      */
     public array|string $url = ['/admin/config/update'];
 
@@ -34,11 +37,7 @@ class Module extends \yii\base\Module
      */
     public array $panels = [];
 
-    public $defaultRoute = 'config';
 
-    /**
-     * @var array
-     */
     protected array $defaultControllerMap = [
         'config' => [
             'class' => ConfigController::class,
@@ -46,14 +45,11 @@ class Module extends \yii\base\Module
         ],
     ];
 
-    /**
-     * @inheritdoc
-     */
     public function init(): void
     {
         $this->name ??= Yii::t('config', 'Settings');
 
-        if (!Yii::$app->getRequest()->getIsConsoleRequest()) {
+        if (Yii::$app->has('user')) {
             if (!$this->navbarItems) {
                 // Settings should come in last, so the config param "zz-config" is used
                 $this->navbarItems = [
