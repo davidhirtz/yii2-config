@@ -1,3 +1,7 @@
+## 2.1.1 (Dec 21, 2023)
+
+- Fixed corrupted git merge
+
 ## 2.1.0 (Dec 21, 2023)
 
 - Added Codeception test suite
