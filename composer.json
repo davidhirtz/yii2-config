@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "davidhirtz/yii2-skeleton": "^2.0"
+    "davidhirtz/yii2-skeleton": "^2.1"
   },
   "require-dev": {
     "codeception/codeception": "^5.0",
