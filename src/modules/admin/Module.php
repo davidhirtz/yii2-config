@@ -37,9 +37,7 @@ class Module extends \yii\base\Module
      */
     public array $panels = [];
 
-    /**
-     * @var array
-     */
+    
     protected array $defaultControllerMap = [
         'config' => [
             'class' => ConfigController::class,
@@ -47,9 +45,7 @@ class Module extends \yii\base\Module
         ],
     ];
 
-    /**
-     * @inheritdoc
-     */
+    
     public function init(): void
     {
         $this->name ??= Yii::t('config', 'Settings');
