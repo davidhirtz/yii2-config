@@ -32,7 +32,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "davidhirtz\\yii2\\media\\tests\\": "tests"
+      "davidhirtz\\yii2\\config\\tests\\": "tests"
     }
   },
   "config": {
@@ -44,7 +44,7 @@
     }
   },
   "extra": {
-    "bootstrap": "davidhirtz\\yii2\\config\\composer\\Bootstrap"
+    "bootstrap": "davidhirtz\\yii2\\config\\Bootstrap"
   },
   "repositories": [
     {

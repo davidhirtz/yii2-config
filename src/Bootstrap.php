@@ -1,6 +1,6 @@
 <?php
 
-namespace davidhirtz\yii2\config\composer;
+namespace davidhirtz\yii2\config;
 
 use davidhirtz\yii2\config\modules\admin\Module;
 use davidhirtz\yii2\skeleton\web\Application;

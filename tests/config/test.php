@@ -1,13 +1,13 @@
 <?php
 
-use davidhirtz\yii2\cms\Bootstrap;
+use davidhirtz\yii2\config\Bootstrap;
 use yii\web\Session;
 
 return [
     'id' => 'yii2-cms',
     'aliases' => [
         // This is a fix for the broken aliasing of `BaseMigrateController::getNamespacePath()`
-        '@davidhirtz/yii2/cms' => __DIR__ . '/../../src/',
+        '@davidhirtz/yii2/config' => __DIR__ . '/../../src/',
     ],
     'bootstrap' => [
         Bootstrap::class,
