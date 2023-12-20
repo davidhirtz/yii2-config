@@ -1,3 +1,8 @@
+## 2.1.0 (Dec 21, 2023)
+
+- Added Codeception test suite
+- Added GitHub Actions CI workflow
+
 ## v2.0.2 (Nov 6, 2023)
 
 - Using the new `@config` alias for the `configFile` pathname
