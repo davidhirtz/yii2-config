@@ -1,3 +1,7 @@
+## 2.1.2 (Jan 29, 2024)
+
+- Updated dependencies
+
 ## 2.1.1 (Dec 21, 2023)
 
 - Fixed corrupted git merge

@@ -8,8 +8,9 @@ namespace davidhirtz\yii2\config\tests\functional;
 
 use davidhirtz\yii2\config\modules\admin\models\Config;
 use davidhirtz\yii2\config\modules\admin\widgets\forms\ConfigActiveForm;
-use davidhirtz\yii2\config\tests\fixtures\UserFixture;
 use davidhirtz\yii2\config\tests\support\FunctionalTester;
+use davidhirtz\yii2\skeleton\codeception\fixtures\UserFixtureTrait;
+use davidhirtz\yii2\skeleton\codeception\functional\BaseCest;
 use davidhirtz\yii2\skeleton\db\Identity;
 use davidhirtz\yii2\skeleton\models\User;
 use davidhirtz\yii2\skeleton\modules\admin\widgets\forms\LoginActiveForm;
@@ -17,15 +18,7 @@ use Yii;
 
 class AuthCest extends BaseCest
 {
-    public function _fixtures(): array
-    {
-        return [
-            'user' => [
-                'class' => UserFixture::class,
-                'dataFile' => codecept_data_dir() . 'user.php',
-            ],
-        ];
-    }
+    use UserFixtureTrait;
 
     public function checkIndexAsGuest(FunctionalTester $I): void
     {

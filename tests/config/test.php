@@ -4,8 +4,11 @@ use davidhirtz\yii2\config\Bootstrap;
 use davidhirtz\yii2\config\modules\admin\Module;
 use yii\web\Session;
 
+if (is_file(__DIR__ . '/db.php')) {
+    require(__DIR__ . '/db.php');
+}
+
 return [
-    'id' => 'yii2-config',
     'aliases' => [
         // This is a fix for the broken aliasing of `BaseMigrateController::getNamespacePath()`
         '@davidhirtz/yii2/config' => __DIR__ . '/../../src/',
@@ -22,10 +25,6 @@ return [
             'username' => getenv('MYSQL_USER') ?: 'root',
             'password' => getenv('MYSQL_PASSWORD') ?: '',
             'charset' => 'utf8',
-            ...is_file(__DIR__ . '/db.php') ? require (__DIR__ . '/db.php') : [],
-        ],
-        'mailer' => [
-            'useFileTransport' => true,
         ],
         'session' => [
             'class' => Session::class,
