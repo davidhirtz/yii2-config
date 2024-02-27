@@ -6,8 +6,8 @@ use Codeception\Test\Unit;
 use davidhirtz\yii2\config\modules\admin\models\Config;
 use davidhirtz\yii2\config\modules\admin\Module;
 use Yii;
-use yii\db\ActiveRecord;
 use yii\db\AfterSaveEvent;
+use yii\db\BaseActiveRecord;
 use yii\helpers\FileHelper;
 
 class ConfigTest extends Unit
@@ -31,36 +31,36 @@ class ConfigTest extends Unit
     {
         codecept_debug(Yii::$app->params);
 
-        $config = new TestConfig();
+        $config = TestConfig::create();
 
-        $this->assertFalse($config->save());
-        $this->assertEquals('test', Yii::$app->params['cookieValidationKey']);
+        self::assertFalse($config->save());
+        self::assertEquals('test', Yii::$app->params['cookieValidationKey']);
 
         $config->cookieValidationKey = 'unit-test';
 
-        $this->assertTrue($config->save());
-        $this->assertEquals('unit-test', Yii::$app->params['cookieValidationKey']);
-        $this->assertFileExists(Yii::getAlias($this->getConfigFile()));
+        self::assertTrue($config->save());
+        self::assertEquals('unit-test', Yii::$app->params['cookieValidationKey']);
+        self::assertFileExists(Yii::getAlias($this->getConfigFile()));
 
-        $config = new TestConfig();
-        $this->assertEquals('unit-test', $config->cookieValidationKey);
+        $config = TestConfig::create();
+        self::assertEquals('unit-test', $config->cookieValidationKey);
     }
 
     public function testUpdateConfigWithEvent()
     {
-        $config = new TestConfig();
+        $config = TestConfig::create();
         $config->cookieValidationKey = 'unit-test';
         $config->save();
 
         $config->cookieValidationKey = 'unit-test-2';
 
-        $config->on(ActiveRecord::EVENT_AFTER_UPDATE, function (AfterSaveEvent $event) {
-            $this->assertEquals(['cookieValidationKey' => 'unit-test'], $event->changedAttributes);
+        $config->on(BaseActiveRecord::EVENT_AFTER_UPDATE, function (AfterSaveEvent $event) {
+            self::assertEquals(['cookieValidationKey' => 'unit-test'], $event->changedAttributes);
             $this->isEventTriggered = true;
         });
 
-        $this->assertTrue($config->save());
-        $this->assertTrue($this->isEventTriggered);
+        self::assertTrue($config->save());
+        self::assertTrue($this->isEventTriggered);
     }
 
     protected function getConfigFile(): string

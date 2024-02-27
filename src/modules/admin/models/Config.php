@@ -4,12 +4,13 @@ namespace davidhirtz\yii2\config\modules\admin\models;
 
 use davidhirtz\yii2\config\modules\admin\Module;
 use davidhirtz\yii2\config\modules\admin\widgets\forms\ConfigActiveForm;
+use davidhirtz\yii2\skeleton\base\traits\ModelTrait;
 use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
 use davidhirtz\yii2\skeleton\helpers\FileHelper;
 use Yii;
 use yii\base\Model;
-use yii\db\ActiveRecord;
 use yii\db\AfterSaveEvent;
+use yii\db\BaseActiveRecord;
 
 /**
  * Extend this class in your application to make application params editable via the admin interface. Params need to be
@@ -18,6 +19,8 @@ use yii\db\AfterSaveEvent;
  */
 class Config extends Model
 {
+    use ModelTrait;
+
     public const AUTH_CONFIG_UPDATE = 'configUpdate';
 
     protected static ?Module $_module = null;
@@ -77,11 +80,11 @@ class Config extends Model
     }
 
     /**
-     * Triggers an {@see ActiveRecord::EVENT_AFTER_UPDATE} so TrailBehavior can hook to it.
+     * Triggers an {@see BaseActiveRecord::EVENT_AFTER_UPDATE} so TrailBehavior can hook to it.
      */
     public function afterSave(array $changedAttributes): void
     {
-        $this->trigger(ActiveRecord::EVENT_AFTER_UPDATE, new AfterSaveEvent([
+        $this->trigger(BaseActiveRecord::EVENT_AFTER_UPDATE, new AfterSaveEvent([
             'changedAttributes' => $changedAttributes,
         ]));
     }
@@ -126,14 +129,6 @@ class Config extends Model
         }
 
         return $file;
-    }
-
-    /**
-     * @return class-string
-     */
-    public function getActiveForm(): string
-    {
-        return ConfigActiveForm::class;
     }
 
     public static function getModule(): Module
