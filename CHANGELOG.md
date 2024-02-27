@@ -1,3 +1,7 @@
+## 2.1.3 (Feb 27, 2024)
+
+- Fixed namespace of `davidhirtz\yii2\config\modules\admin\widgets\navs\ConfigSubmenu`
+
 ## 2.1.2 (Jan 29, 2024)
 
 - Updated dependencies

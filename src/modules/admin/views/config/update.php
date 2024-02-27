@@ -9,7 +9,7 @@
 use davidhirtz\yii2\config\modules\admin\controllers\ConfigController;
 use davidhirtz\yii2\config\modules\admin\models\Config;
 use davidhirtz\yii2\config\modules\admin\widgets\forms\ConfigActiveForm;
-use davidhirtz\yii2\config\modules\admin\widgets\nav\ConfigSubmenu;
+use davidhirtz\yii2\config\modules\admin\widgets\navs\ConfigSubmenu;
 use davidhirtz\yii2\skeleton\helpers\Html;
 use davidhirtz\yii2\skeleton\web\View;
 use davidhirtz\yii2\skeleton\widgets\bootstrap\Panel;

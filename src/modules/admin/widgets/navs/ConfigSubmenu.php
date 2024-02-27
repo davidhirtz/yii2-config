@@ -1,6 +1,6 @@
 <?php
 
-namespace davidhirtz\yii2\config\modules\admin\widgets\nav;
+namespace davidhirtz\yii2\config\modules\admin\widgets\navs;
 
 use davidhirtz\yii2\config\modules\admin\models\Config;
 use davidhirtz\yii2\skeleton\widgets\fontawesome\Submenu;
