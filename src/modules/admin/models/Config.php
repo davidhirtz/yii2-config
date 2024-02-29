@@ -3,7 +3,6 @@
 namespace davidhirtz\yii2\config\modules\admin\models;
 
 use davidhirtz\yii2\config\modules\admin\Module;
-use davidhirtz\yii2\config\modules\admin\widgets\forms\ConfigActiveForm;
 use davidhirtz\yii2\skeleton\base\traits\ModelTrait;
 use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
 use davidhirtz\yii2\skeleton\helpers\FileHelper;

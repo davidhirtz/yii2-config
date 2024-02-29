@@ -1,3 +1,7 @@
+## 2.1.5 (Feb 29, 2024)
+
+- Updated dependencies
+
 ## 2.1.4 (Feb 27, 2024)
 
 - Added `ModelTrait` to `Config` class, to allow the use of `Config::create()`
