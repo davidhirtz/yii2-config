@@ -29,8 +29,6 @@ class ConfigTest extends Unit
 
     public function testCreateConfig()
     {
-        codecept_debug(Yii::$app->params);
-
         $config = TestConfig::create();
 
         self::assertFalse($config->save());
