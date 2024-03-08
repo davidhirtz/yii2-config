@@ -1,3 +1,7 @@
+## 2.1.6 (under development)
+
+- Updated `Module::$navbarItems` default `order` value to `100`
+
 ## 2.1.5 (Feb 29, 2024)
 
 - Updated dependencies

@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
 /**
  * @property \davidhirtz\yii2\skeleton\modules\admin\Module $module
  */
-class Module extends \yii\base\Module
+class Module extends \davidhirtz\yii2\skeleton\base\Module
 {
     /**
      * @var string|null the module display name, defaults to "Settings"
@@ -37,7 +37,6 @@ class Module extends \yii\base\Module
      */
     public array $panels = [];
 
-
     protected array $defaultControllerMap = [
         'config' => [
             'class' => ConfigController::class,
@@ -51,14 +50,14 @@ class Module extends \yii\base\Module
 
         if (Yii::$app->has('user')) {
             if (!$this->navbarItems) {
-                // Settings should come in last, so the config param "zz-config" is used
                 $this->navbarItems = [
-                    'zz-config' => [
+                    'config' => [
                         'label' => $this->name,
                         'icon' => 'cogs',
                         'url' => $this->url,
                         'active' => ['admin/config/'],
                         'roles' => [Config::AUTH_CONFIG_UPDATE],
+                        'order' => 100,
                     ],
                 ];
             }
