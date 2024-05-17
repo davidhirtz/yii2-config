@@ -15,12 +15,14 @@ use yii\db\BaseActiveRecord;
  * Extend this class in your application to make application params editable via the admin interface. Params need to be
  * defined as public properties and must have a valid rule. Per default, only active attributes will be displayed in
  * the form.
+ *
+ * @mixin TrailBehavior
  */
 class Config extends Model
 {
     use ModelTrait;
 
-    public const AUTH_CONFIG_UPDATE = 'configUpdate';
+    final public const string AUTH_CONFIG_UPDATE = 'configUpdate';
 
     protected static ?Module $_module = null;
     private ?array $_params = null;
