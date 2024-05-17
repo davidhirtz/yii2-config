@@ -44,7 +44,14 @@
     }
   },
   "extra": {
-    "bootstrap": "davidhirtz\\yii2\\config\\Bootstrap"
+    "bootstrap": "davidhirtz\\yii2\\config\\Bootstrap",
+    "yii\\composer\\Installer::postInstall": {
+      "setPermission": [
+        {
+          "config/params.php": "0777"
+        }
+      ]
+    }
   },
   "repositories": [
     {
