@@ -1,4 +1,8 @@
-## 2.1.6 (under development)
+## 2.1.7 (Apr 5, 2024)
+
+- Updated admin according to `davidhirtz\yii2\skeleton\modules\admin\ModuleInterface`
+
+## 2.1.6 (Mar 21, 2024)
 
 - Updated `Module::$navbarItems` default `order` value to `100`
 
