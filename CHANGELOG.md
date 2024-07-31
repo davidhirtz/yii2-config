@@ -1,3 +1,9 @@
+## 2.2.0 (Jul 31, 2024)
+
+- Added I18N support for config
+- Enhanced `Config` model to not complain about unused properties that are not set as long as they are set
+  in `activeAttributes()`
+
 ## 2.1.7 (Apr 5, 2024)
 
 - Updated admin according to `davidhirtz\yii2\skeleton\modules\admin\ModuleInterface`

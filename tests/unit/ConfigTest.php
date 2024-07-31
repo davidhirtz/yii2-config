@@ -79,10 +79,11 @@ class ConfigTest extends Unit
     }
 }
 
+/**
+ * @property string $cookieValidationKey
+ */
 class TestConfig extends Config
 {
-    public ?string $cookieValidationKey = null;
-
     public function rules(): array
     {
         return [

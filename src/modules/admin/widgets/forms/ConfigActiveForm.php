@@ -19,6 +19,8 @@ class ConfigActiveForm extends ActiveForm
     public function init(): void
     {
         $this->fields ??= array_map(fn ($attribute) => [$attribute], $this->model->activeAttributes());
+        $this->i18nAttributes = [];
+
         parent::init();
     }
 
