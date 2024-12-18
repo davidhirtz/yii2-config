@@ -11,7 +11,7 @@ class ConfigSubmenu extends Submenu
 {
     public function init(): void
     {
-        $this->title ??= Config::getModule()->name;
+        $this->title ??= Config::getModule()->getName();
         parent::init();
     }
 }

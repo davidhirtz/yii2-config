@@ -1,3 +1,7 @@
+## 2.2.1 (Dev 18, 2024)
+
+- Fixed module name initialization
+
 ## 2.2.0 (Jul 31, 2024)
 
 - Added I18N support for config

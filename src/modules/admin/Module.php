@@ -16,11 +16,6 @@ use yii\helpers\ArrayHelper;
 class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInterface
 {
     /**
-     * @var string|null the module display name, defaults to "Settings"
-     */
-    public ?string $name = null;
-
-    /**
      * @var string the config file path
      */
     public string $configFile = '@root/config/params.php';
@@ -53,11 +48,16 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
         return [];
     }
 
+    public function getName(): string
+    {
+        return Yii::t('cms', 'Entries');
+    }
+
     public function getNavBarItems(): array
     {
         return [
             'config' => [
-                'label' => $this->name,
+                'label' => $this->getName(),
                 'icon' => 'cogs',
                 'url' => $this->url,
                 'active' => ['admin/config/'],
