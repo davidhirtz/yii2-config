@@ -4,26 +4,17 @@ declare(strict_types=1);
 
 namespace davidhirtz\yii2\config\tests\support;
 
-/**
- * Inherited Methods
- * @method void wantTo($text)
- * @method void wantToTest($text)
- * @method void execute($callable)
- * @method void expectTo($prediction)
- * @method void expect($prediction)
- * @method void amGoingTo($argumentation)
- * @method void am($role)
- * @method void lookForwardTo($achieveValue)
- * @method void comment($description)
- * @method void pause($vars = [])
- *
- * @SuppressWarnings(PHPMD)
- */
+use davidhirtz\yii2\skeleton\models\Trail;
+
 class UnitTester extends \Codeception\Actor
 {
     use _generated\UnitTesterActions;
+    use traits\ConfigTesterTrait;
 
-    /**
-     * Define custom actions here
-     */
+    public function loadLastTrail(): ?Trail
+    {
+        return Trail::find()
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+    }
 }

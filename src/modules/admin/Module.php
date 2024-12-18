@@ -21,15 +21,13 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
     public string $configFile = '@root/config/params.php';
 
     /**
-     * @var array|string the navbar item url
+     * @var array the navbar item url
      */
-    public array|string $url = ['/admin/config/update'];
+    public array $route = ['/admin/config/update'];
 
     public function init(): void
     {
-        $this->name ??= Yii::t('config', 'Settings');
         $this->controllerMap = ArrayHelper::merge($this->getCoreControllerMap(), $this->controllerMap);
-
         parent::init();
     }
 
@@ -50,7 +48,7 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
 
     public function getName(): string
     {
-        return Yii::t('cms', 'Entries');
+        return Yii::t('config', 'Settings');
     }
 
     public function getNavBarItems(): array
@@ -59,7 +57,7 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
             'config' => [
                 'label' => $this->getName(),
                 'icon' => 'cogs',
-                'url' => $this->url,
+                'url' => $this->route,
                 'active' => ['admin/config/'],
                 'roles' => [Config::AUTH_CONFIG_UPDATE],
                 'order' => 100,

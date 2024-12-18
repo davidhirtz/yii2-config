@@ -1,6 +1,7 @@
 ## 2.2.1 (Dev 18, 2024)
 
 - Fixed module name initialization
+- Fixed initial trail record
 
 ## 2.2.0 (Jul 31, 2024)
 

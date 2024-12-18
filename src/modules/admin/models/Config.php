@@ -49,10 +49,9 @@ class Config extends Model
         parent::__set($name, $value);
     }
 
-    public function init(): void
+    public function attributes(): array
     {
-        $this->setAttributesFromParams();
-        parent::init();
+        return $this->activeAttributes();
     }
 
     public function behaviors(): array
@@ -62,6 +61,12 @@ class Config extends Model
                 'class' => TrailBehavior::class,
             ],
         ]);
+    }
+
+    public function init(): void
+    {
+        $this->setAttributesFromParams();
+        parent::init();
     }
 
     public function save(bool $runValidation = true, ?array $attributeNames = null): bool
@@ -75,6 +80,7 @@ class Config extends Model
         $params = $prevParams;
 
         foreach ($this->activeAttributes() as $attribute) {
+            $prevParams[$attribute] ??= null;
             $params[$attribute] = $this->$attribute;
         }
 
@@ -105,7 +111,7 @@ class Config extends Model
     /**
      * Triggers an {@see BaseActiveRecord::EVENT_AFTER_UPDATE} so TrailBehavior can hook to it.
      */
-    public function afterSave(array $changedAttributes): void
+    protected function afterSave(array $changedAttributes): void
     {
         $this->trigger(BaseActiveRecord::EVENT_AFTER_UPDATE, new AfterSaveEvent([
             'changedAttributes' => $changedAttributes,
@@ -114,10 +120,10 @@ class Config extends Model
 
     public function getTrailModelName(): string
     {
-        return static::getModule()->name;
+        return static::getModule()->getName();
     }
 
-    public function getTrailModelAdminRoute(): array|false
+    public function getAdminRoute(): array|false
     {
         return ['/admin/config/update'];
     }

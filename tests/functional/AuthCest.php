@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @noinspection PhpUnused
+ */
+
 declare(strict_types=1);
 
 /**
@@ -21,23 +25,23 @@ class AuthCest extends BaseCest
 {
     use UserFixtureTrait;
 
-    public function checkIndexAsGuest(FunctionalTester $I): void
+    public function checkAdminUrlAsGuest(FunctionalTester $I): void
     {
-        $I->amOnPage('/admin/config/update');
+        $I->amOnPage($this->getAdminUrl());
 
         $widget = Yii::createObject(LoginActiveForm::class);
         $I->seeElement("#$widget->id");
     }
 
-    public function checkIndexWithoutPermission(FunctionalTester $I): void
+    public function checkAdminUrlWithoutPermission(FunctionalTester $I): void
     {
         $this->getLoggedInUser();
 
-        $I->amOnPage('/admin/config/update');
+        $I->amOnPage($this->getAdminUrl());
         $I->seeResponseCodeIs(403);
     }
 
-    public function checkIndexWithPermission(FunctionalTester $I): void
+    public function checkAdminUrlWithPermission(FunctionalTester $I): void
     {
         $user = $this->getLoggedInUser();
         $auth = Yii::$app->getAuthManager()->getPermission(Config::AUTH_CONFIG_UPDATE);
@@ -47,8 +51,13 @@ class AuthCest extends BaseCest
             'model' => Config::instance(),
         ]);
 
-        $I->amOnPage('/admin/config/update');
+        $I->amOnPage($this->getAdminUrl());
         $I->seeElement("#$widget->id");
+    }
+
+    protected function getAdminUrl(): string
+    {
+        return Yii::$app->getUrlManager()->createUrl(Config::instance()->getAdminRoute());
     }
 
     protected function getLoggedInUser(): User
