@@ -10,20 +10,20 @@
     }
   ],
   "require": {
-    "davidhirtz/yii2-skeleton": "^2.3"
+    "davidhirtz/yii2-skeleton": "^2.4"
   },
   "require-dev": {
     "codeception/codeception": "^5.0",
-    "codeception/verify": "^3.0",
-    "codeception/specify": "^2.0",
-    "phpunit/phpunit": "^9",
-    "codeception/module-yii2": "*",
-    "codeception/module-phpbrowser": "*",
     "codeception/module-asserts": "*",
-    "rector/rector": "^1.0",
+    "codeception/module-filesystem": "^3.0",
+    "codeception/module-phpbrowser": "*",
+    "codeception/module-yii2": "*",
+    "codeception/specify": "^2.0",
+    "codeception/verify": "^3.0",
+    "phpunit/phpunit": "^9",
+    "rector/rector": "^2.0",
     "symplify/easy-coding-standard": "^12.0",
-    "yiisoft/yii2-debug": "^2.1",
-    "codeception/module-filesystem": "^3.0"
+    "yiisoft/yii2-debug": "^2.1"
   },
   "autoload": {
     "psr-4": {

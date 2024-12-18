@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use davidhirtz\yii2\config\Bootstrap;
 use davidhirtz\yii2\config\modules\admin\Module;
 use yii\web\Session;

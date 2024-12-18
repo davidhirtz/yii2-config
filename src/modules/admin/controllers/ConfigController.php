@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace davidhirtz\yii2\config\modules\admin\controllers;
 
 use davidhirtz\yii2\config\modules\admin\models\Config;

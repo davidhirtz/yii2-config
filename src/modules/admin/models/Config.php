@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace davidhirtz\yii2\config\modules\admin\models;
 
 use davidhirtz\yii2\config\modules\admin\Module;
@@ -130,7 +132,7 @@ class Config extends Model
     {
         if ($this->_params === null) {
             $file = $this->getConfigFilePath();
-            $this->_params = is_file($file) ? require($file) : [];
+            $this->_params = is_file($file) ? require ($file) : [];
         }
 
         return $this->_params;

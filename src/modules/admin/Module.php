@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace davidhirtz\yii2\config\modules\admin;
 
 use davidhirtz\yii2\config\modules\admin\controllers\ConfigController;
 use davidhirtz\yii2\config\modules\admin\models\Config;
+use davidhirtz\yii2\skeleton\modules\admin\ModuleInterface;
 use Yii;
 use yii\helpers\ArrayHelper;
-use davidhirtz\yii2\skeleton\modules\admin\ModuleInterface;
 
 /**
  * @property \davidhirtz\yii2\skeleton\modules\admin\Module $module
