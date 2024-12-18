@@ -16,7 +16,7 @@ use davidhirtz\yii2\skeleton\helpers\Html;
 use davidhirtz\yii2\skeleton\web\View;
 use davidhirtz\yii2\skeleton\widgets\bootstrap\Panel;
 
-$this->setTitle($config::getModule()->name);
+$this->setTitle($config::getModule()->getName());
 $this->setBreadcrumb($this->title);
 ?>
 
