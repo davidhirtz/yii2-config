@@ -1,3 +1,7 @@
+## 2.2.2. (in development)
+
+- Changed `Bootstrap` I18N configuration
+
 ## 2.2.1 (Dev 18, 2024)
 
 - Fixed module name initialization

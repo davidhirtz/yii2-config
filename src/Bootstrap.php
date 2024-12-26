@@ -19,14 +19,10 @@ class Bootstrap implements BootstrapInterface
     {
         Yii::setAlias('@config', __DIR__);
 
-        $app->extendComponent('i18n', [
-            'translations' => [
-                'config' => [
-                    'class' => PhpMessageSource::class,
-                    'basePath' => '@config/messages',
-                ],
-            ],
-        ]);
+        $app->getI18n()->translations['config'] ??= [
+            'class' => PhpMessageSource::class,
+            'basePath' => '@config/messages',
+        ];
 
         $app->extendModules([
             'admin' => [
