@@ -6,6 +6,7 @@ namespace davidhirtz\yii2\config\modules\admin\controllers;
 
 use davidhirtz\yii2\config\modules\admin\models\Config;
 use davidhirtz\yii2\skeleton\web\Controller;
+use Override;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Response;
@@ -14,6 +15,7 @@ class ConfigController extends Controller
 {
     public $defaultAction = 'update';
 
+    #[Override]
     public function behaviors(): array
     {
         return array_merge(parent::behaviors(), [

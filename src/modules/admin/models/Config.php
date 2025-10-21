@@ -9,6 +9,7 @@ use davidhirtz\yii2\skeleton\base\traits\ModelTrait;
 use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
 use davidhirtz\yii2\skeleton\helpers\FileHelper;
 use davidhirtz\yii2\skeleton\models\traits\I18nAttributesTrait;
+use Override;
 use Yii;
 use yii\base\Model;
 use yii\db\AfterSaveEvent;
@@ -23,13 +24,14 @@ class Config extends Model
     use I18nAttributesTrait;
     use ModelTrait;
 
-    public const AUTH_CONFIG_UPDATE = 'configUpdate';
+    public const string AUTH_CONFIG_UPDATE = 'configUpdate';
 
     protected static ?Module $_module = null;
 
     private array $_attributes = [];
     private ?array $_params = null;
 
+    #[Override]
     public function __get($name): mixed
     {
         if (in_array($name, $this->activeAttributes())) {
@@ -39,6 +41,7 @@ class Config extends Model
         return parent::__get($name);
     }
 
+    #[Override]
     public function __set($name, $value): void
     {
         if (in_array($name, $this->activeAttributes())) {
@@ -49,11 +52,13 @@ class Config extends Model
         parent::__set($name, $value);
     }
 
+    #[Override]
     public function attributes(): array
     {
         return $this->activeAttributes();
     }
 
+    #[Override]
     public function behaviors(): array
     {
         return array_merge(parent::behaviors(), [

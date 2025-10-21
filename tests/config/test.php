@@ -6,10 +6,6 @@ use davidhirtz\yii2\config\Bootstrap;
 use davidhirtz\yii2\config\modules\admin\Module;
 use yii\web\Session;
 
-if (is_file(__DIR__ . '/db.php')) {
-    require(__DIR__ . '/db.php');
-}
-
 return [
     'aliases' => [
         // This is a fix for the broken aliasing of `BaseMigrateController::getNamespacePath()`

@@ -83,7 +83,6 @@ class ConfigTest extends Unit
 
         self::assertEquals('unit-test-de', $config->cookieValidationKey_de);
         self::assertEquals('unit-test-de', Yii::$app->params['cookieValidationKey_de']);
-
     }
 
     public function testTrailIntegration(): void
@@ -113,6 +112,7 @@ class ConfigTest extends Unit
  */
 class TestConfig extends Config
 {
+    #[\Override]
     public function rules(): array
     {
         return $this->getI18nRules([

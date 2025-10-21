@@ -7,6 +7,7 @@ namespace davidhirtz\yii2\config\modules\admin;
 use davidhirtz\yii2\config\modules\admin\controllers\ConfigController;
 use davidhirtz\yii2\config\modules\admin\models\Config;
 use davidhirtz\yii2\skeleton\modules\admin\ModuleInterface;
+use Override;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -25,6 +26,7 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
      */
     public array $route = ['/admin/config/update'];
 
+    #[Override]
     public function init(): void
     {
         $this->controllerMap = ArrayHelper::merge($this->getCoreControllerMap(), $this->controllerMap);

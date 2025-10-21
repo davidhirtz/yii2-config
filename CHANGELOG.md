@@ -1,3 +1,7 @@
+## 2.3.0 (Oct 21, 2025)
+
+- Requires PHP 8.3
+
 ## 2.2.2 (Jan 23, 2025)
 
 - Changed `Bootstrap` I18N configuration

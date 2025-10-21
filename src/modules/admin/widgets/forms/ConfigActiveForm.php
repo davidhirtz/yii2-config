@@ -9,6 +9,7 @@ use davidhirtz\yii2\skeleton\helpers\Html;
 use davidhirtz\yii2\skeleton\models\Trail;
 use davidhirtz\yii2\skeleton\widgets\bootstrap\ActiveForm;
 use davidhirtz\yii2\timeago\Timeago;
+use Override;
 use Yii;
 
 /**
@@ -18,6 +19,7 @@ class ConfigActiveForm extends ActiveForm
 {
     public bool $hasStickyButtons = true;
 
+    #[Override]
     public function init(): void
     {
         $this->fields ??= array_map(fn ($attribute) => [$attribute], $this->model->activeAttributes());
