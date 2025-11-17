@@ -6,6 +6,7 @@ namespace davidhirtz\yii2\config\modules\admin;
 
 use davidhirtz\yii2\config\modules\admin\controllers\ConfigController;
 use davidhirtz\yii2\config\modules\admin\models\Config;
+use davidhirtz\yii2\skeleton\modules\admin\config\MainMenuItemConfig;
 use davidhirtz\yii2\skeleton\modules\admin\ModuleInterface;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -15,15 +16,8 @@ use yii\helpers\ArrayHelper;
  */
 class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInterface
 {
-    /**
-     * @var string the config file path
-     */
     public string $configFile = '@root/config/params.php';
-
-    /**
-     * @var array the navbar item url
-     */
-    public array $route = ['/admin/config/update'];
+    public array|string $url = ['/admin/config/update'];
 
     public function init(): void
     {
@@ -51,17 +45,17 @@ class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInte
         return Yii::t('config', 'Settings');
     }
 
-    public function getNavBarItems(): array
+    public function getMainMenuItems(): array
     {
         return [
-            'config' => [
-                'label' => $this->getName(),
-                'icon' => 'cogs',
-                'url' => $this->route,
-                'active' => ['admin/config/'],
-                'roles' => [Config::AUTH_CONFIG_UPDATE],
-                'order' => 100,
-            ],
+            'config' => new MainMenuItemConfig(
+                label: $this->getName(),
+                url: $this->url,
+                icon: 'cogs',
+                routes: ['admin/config/'],
+                roles: [Config::AUTH_CONFIG_UPDATE],
+                order: 100,
+            ),
         ];
     }
 }
