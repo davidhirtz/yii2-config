@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\config\modules\admin\models;
+namespace Hirtz\Config\modules\admin\models;
 
-use davidhirtz\yii2\config\modules\admin\Module;
-use davidhirtz\yii2\skeleton\base\traits\ModelTrait;
-use davidhirtz\yii2\skeleton\behaviors\TrailBehavior;
-use davidhirtz\yii2\skeleton\helpers\FileHelper;
-use davidhirtz\yii2\skeleton\models\traits\I18nAttributesTrait;
+use Hirtz\Config\modules\admin\Module;
+use Hirtz\Skeleton\base\traits\ModelTrait;
+use Hirtz\Skeleton\behaviors\TrailBehavior;
+use Hirtz\Skeleton\helpers\FileHelper;
+use Hirtz\Skeleton\models\traits\I18nAttributesTrait;
 use Yii;
 use yii\base\Model;
 use yii\db\AfterSaveEvent;

@@ -8,13 +8,13 @@ declare(strict_types=1);
  * @var Config $config
  */
 
-use davidhirtz\yii2\config\modules\admin\controllers\ConfigController;
-use davidhirtz\yii2\config\modules\admin\models\Config;
-use davidhirtz\yii2\config\modules\admin\widgets\forms\ConfigActiveForm;
-use davidhirtz\yii2\config\modules\admin\widgets\navs\ConfigSubmenu;
-use davidhirtz\yii2\skeleton\helpers\Html;
-use davidhirtz\yii2\skeleton\web\View;
-use davidhirtz\yii2\skeleton\widgets\bootstrap\Panel;
+use Hirtz\Config\modules\admin\controllers\ConfigController;
+use Hirtz\Config\modules\admin\models\Config;
+use Hirtz\Config\modules\admin\widgets\forms\ConfigActiveForm;
+use Hirtz\Config\modules\admin\widgets\navs\ConfigSubmenu;
+use Hirtz\Skeleton\helpers\Html;
+use Hirtz\Skeleton\web\View;
+use Hirtz\Skeleton\widgets\bootstrap\Panel;
 
 $this->title($config::getModule()->getName());
 $this->setBreadcrumb($this->title);

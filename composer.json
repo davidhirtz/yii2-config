@@ -29,12 +29,12 @@
   },
   "autoload": {
     "psr-4": {
-      "davidhirtz\\yii2\\config\\": "src"
+      "Hirtz\\Config\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "davidhirtz\\yii2\\config\\tests\\": "tests"
+      "Hirtz\\Config\\tests\\": "tests"
     }
   },
   "config": {
@@ -44,7 +44,7 @@
     }
   },
   "extra": {
-    "bootstrap": "davidhirtz\\yii2\\config\\Bootstrap",
+    "bootstrap": "Hirtz\\Config\\Bootstrap",
     "yii\\composer\\Installer::postInstall": {
       "setPermission": [
         {

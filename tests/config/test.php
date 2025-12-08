@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use davidhirtz\yii2\config\Bootstrap;
-use davidhirtz\yii2\config\modules\admin\Module;
+use Hirtz\Config\Bootstrap;
+use Hirtz\Config\modules\admin\Module;
 use yii\web\Session;
 
 if (is_file(__DIR__ . '/db.php')) {

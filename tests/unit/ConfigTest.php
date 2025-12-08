@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\config\tests\unit;
+namespace Hirtz\Config\tests\unit;
 
 use Codeception\Test\Unit;
-use davidhirtz\yii2\config\modules\admin\models\Config;
-use davidhirtz\yii2\config\tests\support\UnitTester;
+use Hirtz\Config\modules\admin\models\Config;
+use Hirtz\Config\tests\support\UnitTester;
 use Yii;
 use yii\db\AfterSaveEvent;
 use yii\db\BaseActiveRecord;

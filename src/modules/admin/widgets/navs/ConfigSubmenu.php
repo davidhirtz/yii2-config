@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\config\modules\admin\widgets\navs;
+namespace Hirtz\Config\modules\admin\widgets\navs;
 
-use davidhirtz\yii2\config\modules\admin\models\Config;
-use davidhirtz\yii2\skeleton\widgets\fontawesome\Submenu;
+use Hirtz\Config\modules\admin\models\Config;
+use Hirtz\Skeleton\widgets\fontawesome\Submenu;
 
 class ConfigSubmenu extends Submenu
 {

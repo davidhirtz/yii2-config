@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\config;
+namespace Hirtz\Config;
 
-use davidhirtz\yii2\config\modules\admin\Module;
-use davidhirtz\yii2\skeleton\web\Application;
+use Hirtz\Config\modules\admin\Module;
+use Hirtz\Skeleton\web\Application;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\i18n\PhpMessageSource;
@@ -34,6 +34,6 @@ class Bootstrap implements BootstrapInterface
             ],
         ]);
 
-        $app->setMigrationNamespace('davidhirtz\yii2\config\migrations');
+        $app->setMigrationNamespace('Hirtz\Config\migrations');
     }
 }

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\config\modules\admin\widgets\forms;
+namespace Hirtz\Config\modules\admin\widgets\forms;
 
-use davidhirtz\yii2\config\modules\admin\models\Config;
-use davidhirtz\yii2\skeleton\helpers\Html;
-use davidhirtz\yii2\skeleton\models\Trail;
-use davidhirtz\yii2\skeleton\widgets\bootstrap\ActiveForm;
-use davidhirtz\yii2\timeago\Timeago;
+use Hirtz\Config\modules\admin\models\Config;
+use Hirtz\Skeleton\helpers\Html;
+use Hirtz\Skeleton\models\Trail;
+use Hirtz\Skeleton\widgets\bootstrap\ActiveForm;
+use Hirtz\Timeago\Timeago;
 use Yii;
 
 /**

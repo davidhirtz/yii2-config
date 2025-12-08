@@ -15,7 +15,7 @@
 
 ## 2.1.7 (Apr 5, 2024)
 
-- Updated admin according to `davidhirtz\yii2\skeleton\modules\admin\ModuleInterface`
+- Updated admin according to `Hirtz\Skeleton\modules\admin\ModuleInterface`
 
 ## 2.1.6 (Mar 21, 2024)
 
@@ -31,7 +31,7 @@
 
 ## 2.1.3 (Feb 27, 2024)
 
-- Fixed namespace of `davidhirtz\yii2\config\modules\admin\widgets\navs\ConfigSubmenu`
+- Fixed namespace of `Hirtz\Config\modules\admin\widgets\navs\ConfigSubmenu`
 
 ## 2.1.2 (Jan 29, 2024)
 

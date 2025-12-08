@@ -11,9 +11,9 @@ extensions:
 modules:
   config:
     Yii2:
-      applicationClass: "davidhirtz\\yii2\\skeleton\\web\\Application"
+      applicationClass: "Hirtz\\Skeleton\\web\\Application"
       configFile: "tests/config/test.php"
-namespace: davidhirtz\yii2\config\tests
+namespace: Hirtz\Config\tests
 paths:
   tests: tests
   output: tests/_output

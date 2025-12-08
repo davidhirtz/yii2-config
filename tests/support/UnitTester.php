@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\config\tests\support;
+namespace Hirtz\Config\tests\support;
 
-use davidhirtz\yii2\skeleton\models\Trail;
+use Hirtz\Skeleton\models\Trail;
 
 class UnitTester extends \Codeception\Actor
 {

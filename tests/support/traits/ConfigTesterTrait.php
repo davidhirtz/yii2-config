@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\config\tests\support\traits;
+namespace Hirtz\Config\tests\support\traits;
 
-use davidhirtz\yii2\config\modules\admin\models\Config;
+use Hirtz\Config\modules\admin\models\Config;
 use Yii;
 use yii\helpers\FileHelper;
 

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace davidhirtz\yii2\config\modules\admin;
+namespace Hirtz\Config\modules\admin;
 
-use davidhirtz\yii2\config\modules\admin\controllers\ConfigController;
-use davidhirtz\yii2\config\modules\admin\models\Config;
-use davidhirtz\yii2\skeleton\modules\admin\config\MainMenuItemConfig;
-use davidhirtz\yii2\skeleton\modules\admin\ModuleInterface;
+use Hirtz\Config\modules\admin\controllers\ConfigController;
+use Hirtz\Config\modules\admin\models\Config;
+use Hirtz\Skeleton\modules\admin\config\MainMenuItemConfig;
+use Hirtz\Skeleton\modules\admin\ModuleInterface;
 use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
- * @property \davidhirtz\yii2\skeleton\modules\admin\Module $module
+ * @property \Hirtz\Skeleton\modules\admin\Module $module
  */
-class Module extends \davidhirtz\yii2\skeleton\base\Module implements ModuleInterface
+class Module extends \Hirtz\Skeleton\base\Module implements ModuleInterface
 {
     public string $configFile = '@root/config/params.php';
     public array|string $url = ['/admin/config/update'];
