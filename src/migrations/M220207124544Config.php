@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Config\migrations;
+namespace Hirtz\Config\Migrations;
 
-use Hirtz\Config\modules\admin\models\Config;
-use Hirtz\Skeleton\db\traits\MigrationTrait;
-use Hirtz\Skeleton\models\User;
+use Hirtz\Config\Modules\Admin\Models\Config;
+use Hirtz\Skeleton\Db\Traits\MigrationTrait;
+use Hirtz\Skeleton\Models\User;
 use Yii;
 use yii\db\Migration;
 

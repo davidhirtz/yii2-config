@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Config\modules\admin\widgets\navs;
+namespace Hirtz\Config\Modules\Admin\Widgets\Navs;
 
-use Hirtz\Config\modules\admin\models\Config;
-use Hirtz\Skeleton\widgets\fontawesome\Submenu;
+use Hirtz\Config\Modules\Admin\Models\Config;
+use Hirtz\Skeleton\Widgets\Fontawesome\Submenu;
 
 class ConfigSubmenu extends Submenu
 {

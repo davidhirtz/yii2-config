@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Config\tests\unit;
 
 use Codeception\Test\Unit;
-use Hirtz\Config\modules\admin\models\Config;
+use Hirtz\Config\Modules\Admin\Models\Config;
 use Hirtz\Config\tests\support\UnitTester;
 use Yii;
 use yii\db\AfterSaveEvent;

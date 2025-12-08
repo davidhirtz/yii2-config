@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Hirtz\Config;
 
-use Hirtz\Config\modules\admin\Module;
-use Hirtz\Skeleton\web\Application;
+use Hirtz\Config\Modules\Admin\Module;
+use Hirtz\Skeleton\Web\Application;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\i18n\PhpMessageSource;
@@ -21,7 +21,7 @@ class Bootstrap implements BootstrapInterface
 
         $app->getI18n()->translations['config'] ??= [
             'class' => PhpMessageSource::class,
-            'basePath' => '@config/messages',
+            'basePath' => '@config/../messages',
         ];
 
         $app->extendModules([
@@ -34,6 +34,6 @@ class Bootstrap implements BootstrapInterface
             ],
         ]);
 
-        $app->setMigrationNamespace('Hirtz\Config\migrations');
+        $app->setMigrationNamespace('Hirtz\Config\Migrations');
     }
 }

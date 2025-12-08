@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Config\tests\support;
 
-use Hirtz\Skeleton\models\Trail;
+use Hirtz\Skeleton\Models\Trail;
 
 class UnitTester extends \Codeception\Actor
 {

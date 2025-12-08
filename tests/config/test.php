@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Hirtz\Config\Bootstrap;
-use Hirtz\Config\modules\admin\Module;
+use Hirtz\Config\Modules\Admin\Module;
 use yii\web\Session;
 
 if (is_file(__DIR__ . '/db.php')) {

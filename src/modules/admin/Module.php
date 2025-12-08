@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Hirtz\Config\modules\admin;
 
-use Hirtz\Config\modules\admin\controllers\ConfigController;
-use Hirtz\Config\modules\admin\models\Config;
-use Hirtz\Skeleton\modules\admin\config\MainMenuItemConfig;
-use Hirtz\Skeleton\modules\admin\ModuleInterface;
+use Hirtz\Config\Modules\Admin\Controllers\ConfigController;
+use Hirtz\Config\Modules\Admin\Models\Config;
+use Hirtz\Skeleton\Modules\Admin\Config\MainMenuItemConfig;
+use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
 use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
- * @property \Hirtz\Skeleton\modules\admin\Module $module
+ * @property \Hirtz\Skeleton\Modules\Admin\Module $module
  */
-class Module extends \Hirtz\Skeleton\base\Module implements ModuleInterface
+class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
 {
     public string $configFile = '@root/config/params.php';
     public array|string $url = ['/admin/config/update'];

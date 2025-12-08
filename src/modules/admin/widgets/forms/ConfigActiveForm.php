@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Config\modules\admin\widgets\forms;
+namespace Hirtz\Config\Modules\Admin\Widgets\Forms;
 
-use Hirtz\Config\modules\admin\models\Config;
-use Hirtz\Skeleton\helpers\Html;
-use Hirtz\Skeleton\models\Trail;
-use Hirtz\Skeleton\widgets\bootstrap\ActiveForm;
+use Hirtz\Config\Modules\Admin\Models\Config;
+use Hirtz\Skeleton\Helpers\Html;
+use Hirtz\Skeleton\Models\Trail;
+use Hirtz\Skeleton\Widgets\Bootstrap\ActiveForm;
 use Hirtz\Timeago\Timeago;
 use Yii;
 

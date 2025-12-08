@@ -12,13 +12,13 @@ declare(strict_types=1);
 
 namespace Hirtz\Config\tests\functional;
 
-use Hirtz\Config\modules\admin\models\Config;
-use Hirtz\Config\modules\admin\widgets\forms\ConfigActiveForm;
+use Hirtz\Config\Modules\Admin\Models\Config;
+use Hirtz\Config\Modules\Admin\Widgets\Forms\ConfigActiveForm;
 use Hirtz\Config\tests\support\FunctionalTester;
-use Hirtz\Skeleton\codeception\fixtures\UserFixtureTrait;
-use Hirtz\Skeleton\codeception\functional\BaseCest;
-use Hirtz\Skeleton\models\User;
-use Hirtz\Skeleton\modules\admin\widgets\forms\LoginActiveForm;
+use Hirtz\Skeleton\Codeception\fixtures\UserFixtureTrait;
+use Hirtz\Skeleton\Codeception\functional\BaseCest;
+use Hirtz\Skeleton\Models\User;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Forms\LoginActiveForm;
 use Yii;
 
 class AuthCest extends BaseCest

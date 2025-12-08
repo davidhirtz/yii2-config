@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Config\tests\support\traits;
 
-use Hirtz\Config\modules\admin\models\Config;
+use Hirtz\Config\Modules\Admin\Models\Config;
 use Yii;
 use yii\helpers\FileHelper;
 

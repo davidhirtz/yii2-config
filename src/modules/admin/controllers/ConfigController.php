@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Config\modules\admin\controllers;
+namespace Hirtz\Config\Modules\Admin\Controllers;
 
-use Hirtz\Config\modules\admin\models\Config;
-use Hirtz\Skeleton\web\Controller;
+use Hirtz\Config\Modules\Admin\Models\Config;
+use Hirtz\Skeleton\Web\Controller;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Response;

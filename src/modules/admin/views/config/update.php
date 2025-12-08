@@ -8,13 +8,13 @@ declare(strict_types=1);
  * @var Config $config
  */
 
-use Hirtz\Config\modules\admin\controllers\ConfigController;
-use Hirtz\Config\modules\admin\models\Config;
-use Hirtz\Config\modules\admin\widgets\forms\ConfigActiveForm;
-use Hirtz\Config\modules\admin\widgets\navs\ConfigSubmenu;
-use Hirtz\Skeleton\helpers\Html;
-use Hirtz\Skeleton\web\View;
-use Hirtz\Skeleton\widgets\bootstrap\Panel;
+use Hirtz\Config\Modules\Admin\Controllers\ConfigController;
+use Hirtz\Config\Modules\Admin\Models\Config;
+use Hirtz\Config\Modules\Admin\Widgets\Forms\ConfigActiveForm;
+use Hirtz\Config\Modules\Admin\Widgets\Navs\ConfigSubmenu;
+use Hirtz\Skeleton\Helpers\Html;
+use Hirtz\Skeleton\Web\View;
+use Hirtz\Skeleton\Widgets\Bootstrap\Panel;
 
 $this->title($config::getModule()->getName());
 $this->setBreadcrumb($this->title);
