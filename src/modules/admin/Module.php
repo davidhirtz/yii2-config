@@ -19,6 +19,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
     public string $configFile = '@root/config/params.php';
     public array|string $url = ['/admin/config/update'];
 
+    #[\Override]
     public function init(): void
     {
         $this->controllerMap = ArrayHelper::merge($this->getCoreControllerMap(), $this->controllerMap);

@@ -27,7 +27,7 @@ class ConfigTest extends Unit
         parent::_after();
     }
 
-    public function testCreateConfig()
+    public function testCreateConfig(): void
     {
         $config = TestConfig::create();
 
@@ -44,7 +44,7 @@ class ConfigTest extends Unit
         self::assertEquals('unit-test', $config->cookieValidationKey);
     }
 
-    public function testUpdateConfig()
+    public function testUpdateConfig(): void
     {
         $config = TestConfig::create();
         $config->cookieValidationKey = 'unit-test';
@@ -67,7 +67,7 @@ class ConfigTest extends Unit
         self::assertEquals('unit-test-2', Yii::$app->params['cookieValidationKey']);
     }
 
-    public function testSaveI18nAttribute()
+    public function testSaveI18nAttribute(): void
     {
         Yii::$app->getI18n()->languages = ['de', 'en-US'];
 
@@ -113,6 +113,7 @@ class ConfigTest extends Unit
  */
 class TestConfig extends Config
 {
+    #[\Override]
     public function rules(): array
     {
         return $this->getI18nRules([

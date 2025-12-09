@@ -14,20 +14,19 @@ class ConfigController extends Controller
 {
     public $defaultAction = 'update';
 
+    #[\Override]
     public function behaviors(): array
     {
-        return array_merge(parent::behaviors(), [
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['update'],
-                        'roles' => [Config::AUTH_CONFIG_UPDATE],
-                    ],
+        return [...parent::behaviors(), 'access' => [
+            'class' => AccessControl::class,
+            'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => ['update'],
+                    'roles' => [Config::AUTH_CONFIG_UPDATE],
                 ],
             ],
-        ]);
+        ]];
     }
 
     public function actionUpdate(): Response|string
