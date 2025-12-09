@@ -55,7 +55,7 @@ class ConfigTest extends Unit
 
         $isTriggered = false;
 
-        $config->on(BaseActiveRecord::EVENT_AFTER_UPDATE, function (AfterSaveEvent $event) use (&$isTriggered) {
+        $config->on(BaseActiveRecord::EVENT_AFTER_UPDATE, function (AfterSaveEvent $event) use (&$isTriggered): void {
             self::assertEquals(['cookieValidationKey' => 'unit-test'], $event->changedAttributes);
             $isTriggered = true;
         });
