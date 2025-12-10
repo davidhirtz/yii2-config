@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Config\tests\support\traits;
+namespace Hirtz\Config\tests\support\Traits;
 
 use Hirtz\Config\Modules\Admin\Models\Config;
 use Yii;
