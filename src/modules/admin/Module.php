@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Config\modules\admin;
+namespace Hirtz\Config\Modules\Admin;
 
 use Hirtz\Config\Modules\Admin\Controllers\ConfigController;
 use Hirtz\Config\Modules\Admin\Models\Config;
