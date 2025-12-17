@@ -31,7 +31,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
         return [
             'config' => [
                 'class' => ConfigController::class,
-                'viewPath' => '@config/modules/admin/views/config',
+                'viewPath' => '@config/../resources/views/admin/config',
             ],
         ];
     }
