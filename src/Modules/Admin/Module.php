@@ -8,6 +8,7 @@ use Hirtz\Config\Modules\Admin\Controllers\ConfigController;
 use Hirtz\Config\Modules\Admin\Models\Config;
 use Hirtz\Skeleton\Modules\Admin\Config\MainMenuItemConfig;
 use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
+use Override;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -19,7 +20,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
     public string $configFile = '@root/config/params.php';
     public array|string $url = ['/admin/config/update'];
 
-    #[\Override]
+    #[Override]
     public function init(): void
     {
         $this->controllerMap = ArrayHelper::merge($this->getCoreControllerMap(), $this->controllerMap);
@@ -53,8 +54,8 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
                 label: $this->getName(),
                 url: $this->url,
                 icon: 'cogs',
-                routes: ['admin/config/'],
                 roles: [Config::AUTH_CONFIG_UPDATE],
+                routes: ['admin/config/'],
                 order: 100,
             ),
         ];

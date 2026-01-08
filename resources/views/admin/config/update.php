@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -12,21 +13,15 @@ use Hirtz\Config\Modules\Admin\Controllers\ConfigController;
 use Hirtz\Config\Modules\Admin\Models\Config;
 use Hirtz\Config\Modules\Admin\Widgets\Forms\ConfigActiveForm;
 use Hirtz\Config\Modules\Admin\Widgets\Navs\ConfigSubmenu;
-use Hirtz\Skeleton\Helpers\Html;
 use Hirtz\Skeleton\Web\View;
-use Hirtz\Skeleton\Widgets\Bootstrap\Panel;
+use Hirtz\Skeleton\Widgets\Forms\FormContainer;
 
 $this->title($config::getModule()->getName());
-$this->setBreadcrumb($this->title);
-?>
+$this->addBreadcrumb($this->title);
 
-<?= ConfigSubmenu::widget(); ?>
-<?= Html::errorSummary($config); ?>
+echo ConfigSubmenu::make();
 
-<?= Panel::widget([
-    'title' => Yii::t('config', 'Update Settings'),
-    'content' => ConfigActiveForm::widget([
-        'model' => $config,
-    ]),
-]);
-?>
+echo FormContainer::make()
+    ->title(Yii::t('config', 'Update Settings'))
+    ->form(ConfigActiveForm::make()
+        ->model($config));

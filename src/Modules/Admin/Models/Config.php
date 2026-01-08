@@ -8,7 +8,10 @@ use Hirtz\Config\Modules\Admin\Module;
 use Hirtz\Skeleton\Base\Traits\ModelTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Helpers\FileHelper;
+use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
+use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
+use Override;
 use Yii;
 use yii\base\Model;
 use yii\db\AfterSaveEvent;
@@ -18,19 +21,20 @@ use yii\db\BaseActiveRecord;
  * Extend this class in your application to make application params editable via the admin interface. Params must have
  * a valid rule. Only active attributes will be displayed in the form.
  */
-class Config extends Model
+class Config extends Model implements TrailModelInterface
 {
     use I18nAttributesTrait;
     use ModelTrait;
+    use TrailModelTrait;
 
-    public const AUTH_CONFIG_UPDATE = 'configUpdate';
+    public const string AUTH_CONFIG_UPDATE = 'configUpdate';
 
     protected static ?Module $_module = null;
 
     private array $_attributes = [];
     private ?array $_params = null;
 
-    #[\Override]
+    #[Override]
     public function __get($name): mixed
     {
         if (in_array($name, $this->activeAttributes())) {
@@ -40,7 +44,7 @@ class Config extends Model
         return parent::__get($name);
     }
 
-    #[\Override]
+    #[Override]
     public function __set($name, $value): void
     {
         if (in_array($name, $this->activeAttributes())) {
@@ -51,13 +55,13 @@ class Config extends Model
         parent::__set($name, $value);
     }
 
-    #[\Override]
+    #[Override]
     public function attributes(): array
     {
         return $this->activeAttributes();
     }
 
-    #[\Override]
+    #[Override]
     public function behaviors(): array
     {
         return [...parent::behaviors(), 'TrailBehavior' => [
@@ -130,15 +134,15 @@ class Config extends Model
         return ['/admin/config/update'];
     }
 
-    public function getUpdatedAt(): bool|int|null
+    public function getUpdatedAt(): false|int
     {
         $file = $this->getConfigFilePath();
-        return is_file($file) ? filemtime($file) : null;
+        return is_file($file) ? filemtime($file) : false;
     }
 
     protected function getParams(): array
     {
-        if ($this->_params === null) {
+        if (null === $this->_params) {
             $file = $this->getConfigFilePath();
             $this->_params = is_file($file) ? require ($file) : [];
         }

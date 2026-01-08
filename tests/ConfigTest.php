@@ -2,29 +2,31 @@
 
 declare(strict_types=1);
 
-namespace Hirtz\Config\tests\unit;
+namespace Hirtz\Config\Tests;
 
-use Codeception\Test\Unit;
 use Hirtz\Config\Modules\Admin\Models\Config;
-use Hirtz\Config\tests\support\UnitTester;
+use Hirtz\Skeleton\Models\Trail;
+use Hirtz\Skeleton\Test\TestCase;
+use Override;
 use Yii;
 use yii\db\AfterSaveEvent;
 use yii\db\BaseActiveRecord;
+use yii\helpers\FileHelper;
 
-class ConfigTest extends Unit
+class ConfigTest extends TestCase
 {
-    protected UnitTester $tester;
+    private ?string $configFile = null;
 
-    protected function _before(): void
+    protected function setUp(): void
     {
-        $this->tester->deleteConfigFile();
-        parent::_before();
+        parent::setUp();
+        $this->configFile = Config::getModule()->configFile;
     }
 
-    protected function _after(): void
+    protected function tearDown(): void
     {
-        $this->tester->deleteConfigFile();
-        parent::_after();
+        $this->deleteConfigFile();
+        parent::tearDown();
     }
 
     public function testCreateConfig(): void
@@ -38,7 +40,7 @@ class ConfigTest extends Unit
 
         self::assertTrue($config->save());
         self::assertEquals('unit-test', Yii::$app->params['cookieValidationKey']);
-        self::assertFileExists(Yii::getAlias($this->tester->getConfigFile()));
+        self::assertFileExists(Yii::getAlias($this->configFile));
 
         $config = TestConfig::create();
         self::assertEquals('unit-test', $config->cookieValidationKey);
@@ -92,7 +94,7 @@ class ConfigTest extends Unit
         $config->cookieValidationKey = 'trail-test';
         $config->save();
 
-        $trail = $this->tester->loadLastTrail();
+        $trail = $this->loadLastTrail();
 
         self::assertEquals(TestConfig::class, $trail->model);
         self::assertEquals($config->getTrailModelName(), $trail->getModelName());
@@ -101,10 +103,23 @@ class ConfigTest extends Unit
         $config->cookieValidationKey = 'trail-test-2';
         $config->save();
 
-        $trail = $this->tester->loadLastTrail();
+        $trail = $this->loadLastTrail();
 
         self::assertEquals(TestConfig::class, $trail->model);
         self::assertEquals(['cookieValidationKey' => ['trail-test', 'trail-test-2']], $trail->data);
+    }
+
+    private function deleteConfigFile(): void
+    {
+        $file = Yii::getAlias($this->configFile);
+        FileHelper::removeDirectory(dirname($file));
+    }
+
+    private function loadLastTrail(): ?Trail
+    {
+        return Trail::find()
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
     }
 }
 
@@ -113,7 +128,7 @@ class ConfigTest extends Unit
  */
 class TestConfig extends Config
 {
-    #[\Override]
+    #[Override]
     public function rules(): array
     {
         return $this->getI18nRules([
