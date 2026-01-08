@@ -15,17 +15,21 @@ use yii\helpers\FileHelper;
 
 class ConfigTest extends TestCase
 {
-    private ?string $configFile = null;
+    private string $configFile = '@runtime/config/params.php';
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->configFile = Config::getModule()->configFile;
+
+        $configFile = Yii::getAlias($this->configFile);
+
+        Config::getModule()->configFile = $configFile;
+        FileHelper::createDirectory(dirname($configFile));
     }
 
     protected function tearDown(): void
     {
-        $this->deleteConfigFile();
+        FileHelper::removeDirectory(dirname(Config::getModule()->configFile));
         parent::tearDown();
     }
 
@@ -107,12 +111,6 @@ class ConfigTest extends TestCase
 
         self::assertEquals(TestConfig::class, $trail->model);
         self::assertEquals(['cookieValidationKey' => ['trail-test', 'trail-test-2']], $trail->data);
-    }
-
-    private function deleteConfigFile(): void
-    {
-        $file = Yii::getAlias($this->configFile);
-        FileHelper::removeDirectory(dirname($file));
     }
 
     private function loadLastTrail(): ?Trail
