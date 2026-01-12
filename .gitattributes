@@ -3,8 +3,10 @@
 /.gitignore export-ignore
 /README.md export-ignore
 /composer.lock export-ignore
-/package.json export-ignore
+/esbuild.js export-ignore
 /package-lock.json export-ignore
-/phpunit.xml export-ignore
+/package.json export-ignore
 /phpstan.neon export-ignore
+/phpunit.xml export-ignore
 /tests/ export-ignore
+/tsconfig.json export-ignore
