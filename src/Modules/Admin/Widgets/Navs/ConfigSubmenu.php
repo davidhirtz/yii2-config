@@ -9,6 +9,7 @@ use Hirtz\Skeleton\Widgets\Navs\Submenu;
 
 class ConfigSubmenu extends Submenu
 {
+    #[\Override]
     protected function configure(): void
     {
         $this->title ??= Config::getModule()->getName();

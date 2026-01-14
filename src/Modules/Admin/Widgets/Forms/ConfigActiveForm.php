@@ -14,6 +14,7 @@ use Stringable;
  */
 class ConfigActiveForm extends ActiveForm
 {
+    #[\Override]
     protected function configure(): void
     {
         $this->rows ??= array_map(fn ($attribute) => [$attribute], $this->model->activeAttributes());

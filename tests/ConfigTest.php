@@ -17,6 +17,7 @@ class ConfigTest extends TestCase
 {
     private string $configFile = '@runtime/config/params.php';
 
+    #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -27,6 +28,7 @@ class ConfigTest extends TestCase
         FileHelper::createDirectory(dirname($configFile));
     }
 
+    #[\Override]
     protected function tearDown(): void
     {
         FileHelper::removeDirectory(dirname(Config::getModule()->configFile));
