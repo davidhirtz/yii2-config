@@ -6,8 +6,9 @@ namespace Hirtz\Config\Modules\Admin;
 
 use Hirtz\Config\Modules\Admin\Controllers\ConfigController;
 use Hirtz\Config\Modules\Admin\Models\Config;
-use Hirtz\Skeleton\Modules\Admin\Config\MainMenuItemConfig;
 use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
+use Hirtz\Skeleton\Widgets\Navs\Nav;
+use Hirtz\Skeleton\Widgets\Navs\NavItem;
 use Override;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -47,17 +48,14 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
         return Yii::t('config', 'Settings');
     }
 
-    public function getMainMenuItems(): array
+    public function aside(Nav $nav): Nav
     {
-        return [
-            'config' => new MainMenuItemConfig(
-                label: $this->getName(),
-                url: $this->url,
-                icon: 'cogs',
-                roles: [Config::AUTH_CONFIG_UPDATE],
-                routes: ['admin/config/'],
-                order: 100,
-            ),
-        ];
+        return $nav->addItem(NavItem::make()
+            ->label($this->getName())
+            ->url($this->url)
+            ->icon('cogs')
+            ->roles([Config::AUTH_CONFIG_UPDATE])
+            ->routes(['admin/config/'])
+            ->order(100));
     }
 }
