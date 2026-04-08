@@ -7,6 +7,7 @@ namespace Hirtz\Config\Modules\Admin;
 use Hirtz\Config\Modules\Admin\Controllers\ConfigController;
 use Hirtz\Config\Modules\Admin\Models\Config;
 use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
+use Hirtz\Skeleton\Modules\Admin\Widgets\Navs\SystemNavItem;
 use Hirtz\Skeleton\Widgets\Navs\Nav;
 use Hirtz\Skeleton\Widgets\Navs\NavItem;
 use Override;
@@ -50,12 +51,20 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
 
     public function aside(Nav $nav): Nav
     {
-        return $nav->addItem(NavItem::make()
-            ->label($this->getName())
-            ->url($this->url)
-            ->icon('cogs')
-            ->roles([Config::AUTH_CONFIG_UPDATE])
-            ->routes(['admin/config/'])
-            ->order(100));
+        return $nav->items(function (array $items): array {
+            foreach ($items as $item) {
+                if ($item instanceof SystemNavItem) {
+                    $item->roles([Config::AUTH_CONFIG_UPDATE])
+                        ->addItem(NavItem::make()
+                            ->label($this->getName())
+                            ->url($this->url)
+                            ->roles([Config::AUTH_CONFIG_UPDATE])
+                            ->routes(['admin/config/'])
+                            ->order(100));
+                }
+            }
+
+            return $items;
+        });
     }
 }
