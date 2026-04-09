@@ -12,14 +12,11 @@ declare(strict_types=1);
 use Hirtz\Config\Modules\Admin\Controllers\ConfigController;
 use Hirtz\Config\Modules\Admin\Models\Config;
 use Hirtz\Config\Modules\Admin\Widgets\Forms\ConfigActiveForm;
-use Hirtz\Config\Modules\Admin\Widgets\Navs\ConfigSubmenu;
+use Hirtz\Config\Modules\Admin\Widgets\Navs\ConfigHeader;
 use Hirtz\Skeleton\Web\View;
 use Hirtz\Skeleton\Widgets\Forms\FormContainer;
 
-$this->title($config::getModule()->getName());
-$this->addBreadcrumb($this->title);
-
-echo ConfigSubmenu::make();
+echo ConfigHeader::make();
 
 echo FormContainer::make()
     ->title(Yii::t('config', 'Update Settings'))
