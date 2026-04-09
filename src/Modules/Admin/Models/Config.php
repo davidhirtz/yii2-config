@@ -126,7 +126,7 @@ class Config extends Model implements TrailModelInterface
 
     public function getTrailModelName(): string
     {
-        return static::getModule()->getName();
+        return Yii::t('config', 'Config');
     }
 
     public function getAdminRoute(): array|false
@@ -144,7 +144,7 @@ class Config extends Model implements TrailModelInterface
     {
         if (null === $this->_params) {
             $file = $this->getConfigFilePath();
-            $this->_params = is_file($file) ? require ($file) : [];
+            $this->_params = is_file($file) ? require($file) : [];
         }
 
         return $this->_params;
