@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Hirtz\Config;
 
+use Hirtz\Config\Modules\Admin\Models\Config;
 use Hirtz\Config\Modules\Admin\Module;
+use Hirtz\Skeleton\Modules\Admin\Controllers\DashboardController;
 use Hirtz\Skeleton\Web\Application;
 use Yii;
 use yii\base\BootstrapInterface;
@@ -32,6 +34,10 @@ class Bootstrap implements BootstrapInterface
                     ],
                 ],
             ],
+        ]);
+
+        DashboardController::addRoles([
+            Config::AUTH_CONFIG_UPDATE,
         ]);
 
         $app->setMigrationNamespace('Hirtz\Config\Migrations');
