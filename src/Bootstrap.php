@@ -24,7 +24,8 @@ class Bootstrap implements BootstrapInterface
         $app->getI18n()->translations['config'] ??= [
             'class' => PhpMessageSource::class,
             'basePath' => '@config/../messages',
-        ];
+                    'forceTranslation' => true,
+];
 
         $app->extendModules([
             'admin' => [

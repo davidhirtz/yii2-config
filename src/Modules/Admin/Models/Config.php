@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Config\Modules\Admin\Models;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Config\Modules\Admin\Module;
 use Hirtz\Skeleton\Base\Traits\ModelTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
@@ -126,7 +127,7 @@ class Config extends Model implements TrailModelInterface
 
     public function getTrailModelName(): string
     {
-        return Yii::t('config', 'Config');
+        return Lang::t('config', 'IN_CONFIG');
     }
 
     public function getAdminRoute(): array|false

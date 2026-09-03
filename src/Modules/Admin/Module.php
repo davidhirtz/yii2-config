@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Config\Modules\Admin;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Cms\Models\Entry;
 use Hirtz\Config\Modules\Admin\Models\Config;
 use Hirtz\Config\Modules\Admin\Widgets\Navs\ConfigNavItem;
@@ -43,7 +44,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
     {
         return $dashboard->addItem(DashboardItem::make()
             ->icon('pen')
-            ->label(Yii::t('config', 'Settings'))
+            ->label(Lang::t('config', 'COMMON_SETTINGS'))
             ->roles([Config::AUTH_CONFIG_UPDATE])
             ->url(['/admin/config/config/update']));
     }

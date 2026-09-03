@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Config\Modules\Admin\Controllers;
 
+use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Config\Modules\Admin\Models\Config;
 use Hirtz\Skeleton\Web\Controller;
 use Override;
@@ -38,7 +39,7 @@ class ConfigController extends Controller
         $config = Config::create();
 
         if ($config->load(Yii::$app->getRequest()->post()) && $config->save()) {
-            $this->success(Yii::t('config', 'The settings were updated.'));
+            $this->success(Lang::t('config', 'CONFIG_FLASH_THE_SETTINGS_WERE_UPDATED'));
             return $this->refresh();
         }
 
