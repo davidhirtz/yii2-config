@@ -7,6 +7,6 @@
 return [
     'AUTH_CONFIG_UPDATE_DESCRIPTION' => '',
     'COMMON_SETTINGS' => '',
-    'CONFIG_FLASH_THE_SETTINGS_WERE_UPDATED' => '',
+    'CONFIG_SUCCESS_UPDATED' => '',
     'IN_CONFIG' => '',
 ];

@@ -39,7 +39,7 @@ class ConfigController extends Controller
         $config = Config::create();
 
         if ($config->load(Yii::$app->getRequest()->post()) && $config->save()) {
-            $this->success(Lang::t('config', 'CONFIG_FLASH_THE_SETTINGS_WERE_UPDATED'));
+            $this->success(Lang::t('config', 'CONFIG_SUCCESS_UPDATED'));
             return $this->refresh();
         }
 

@@ -7,6 +7,6 @@
 return [
     'AUTH_CONFIG_UPDATE_DESCRIPTION' => 'Einstellungen der Webseite aktualisieren',
     'COMMON_SETTINGS' => 'Einstellungen',
-    'CONFIG_FLASH_THE_SETTINGS_WERE_UPDATED' => 'Die Einstellungen wurden aktualisiert.',
+    'CONFIG_SUCCESS_UPDATED' => 'Die Einstellungen wurden aktualisiert.',
     'IN_CONFIG' => '',
 ];
