@@ -11,7 +11,6 @@ use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Helpers\FileHelper;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
-use Hirtz\Skeleton\Models\User;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
 use Override;
 use Yii;
@@ -98,8 +97,7 @@ class Config extends Model implements TrailModelInterface
             return false;
         }
 
-        $identity = Yii::$app->has('user') ? Yii::$app->getUser()->getIdentity() : null;
-        $username = $identity instanceof User ? $identity->getUsername() : null;
+        $username = Yii::$app->has('user') ? Yii::$app->getUser()->getIdentity()?->getUsername() : null;
 
         $phpdoc = $username ? "Last updated via administration by $username" : null;
         $file = $this->getConfigFilePath();
