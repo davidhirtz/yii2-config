@@ -32,7 +32,10 @@ class Config extends Model implements TrailModelInterface
 
     protected static ?Module $_module = null;
 
+    /** @var array<string, mixed> */
     private array $_attributes = [];
+
+    /** @var array<string, mixed>|null */
     private ?array $_params = null;
 
     #[Override]
@@ -76,6 +79,9 @@ class Config extends Model implements TrailModelInterface
         parent::init();
     }
 
+    /**
+     * @param string[]|null $attributeNames
+     */
     public function save(bool $runValidation = true, ?array $attributeNames = null): bool
     {
         if ($runValidation && !$this->validate($attributeNames)) {
@@ -116,6 +122,9 @@ class Config extends Model implements TrailModelInterface
     /**
      * Triggers an {@see BaseActiveRecord::EVENT_AFTER_UPDATE} so TrailBehavior can hook to it.
      */
+    /**
+     * @param array<string, mixed> $changedAttributes
+     */
     protected function afterSave(array $changedAttributes): void
     {
         $this->trigger(BaseActiveRecord::EVENT_AFTER_UPDATE, new AfterSaveEvent([
@@ -128,6 +137,9 @@ class Config extends Model implements TrailModelInterface
         return Lang::t('config', 'IN_CONFIG');
     }
 
+    /**
+     * @return list<string>|false
+     */
     public function getAdminRoute(): array|false
     {
         return ['/admin/config/update'];
@@ -139,6 +151,9 @@ class Config extends Model implements TrailModelInterface
         return is_file($file) ? filemtime($file) : false;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getParams(): array
     {
         if (null === $this->_params) {

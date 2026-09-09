@@ -10,6 +10,9 @@ use Hirtz\Skeleton\Widgets\Navs\NavItem;
 
 class ConfigNavItem extends NavItem
 {
+    /**
+     * @param array<string, mixed> $config
+     */
     public function __construct(array $config = [])
     {
         //$this->icon ??= 'wrench';

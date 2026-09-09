@@ -6,12 +6,16 @@ namespace Hirtz\Config\Modules\Admin\Controllers;
 
 use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Config\Modules\Admin\Models\Config;
+use Hirtz\Config\Modules\Admin\Module;
 use Hirtz\Skeleton\Web\Controller;
 use Override;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Response;
 
+/**
+ * @extends Controller<Module>
+ */
 class ConfigController extends Controller
 {
     public $defaultAction = 'update';
