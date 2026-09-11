@@ -102,7 +102,7 @@ class ConfigTest extends TestCase
 
         $trail = $this->loadLastTrail();
 
-        self::assertEquals(TestConfig::class, $trail->model);
+        self::assertEquals(TestConfig::class, $trail->model_class);
         self::assertEquals($config->getTrailModelName(), $trail->getModelName());
         self::assertEquals(['cookieValidationKey' => [null, 'trail-test']], $trail->data);
 
@@ -111,7 +111,7 @@ class ConfigTest extends TestCase
 
         $trail = $this->loadLastTrail();
 
-        self::assertEquals(TestConfig::class, $trail->model);
+        self::assertEquals(TestConfig::class, $trail->model_class);
         self::assertEquals(['cookieValidationKey' => ['trail-test', 'trail-test-2']], $trail->data);
     }
 
