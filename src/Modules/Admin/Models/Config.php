@@ -9,6 +9,7 @@ use Hirtz\Config\Modules\Admin\Module;
 use Hirtz\Skeleton\Base\Traits\ModelTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Helpers\FileHelper;
+use Hirtz\Skeleton\Models\Interfaces\AdminRouteInterface;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
@@ -22,7 +23,7 @@ use yii\db\BaseActiveRecord;
  * Extend this class in your application to make application params editable via the admin interface. Params must have
  * a valid rule. Only active attributes will be displayed in the form.
  */
-class Config extends Model implements TrailModelInterface
+class Config extends Model implements AdminRouteInterface, TrailModelInterface
 {
     use I18nAttributesTrait;
     use ModelTrait;
