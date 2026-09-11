@@ -19,6 +19,5 @@ use Hirtz\Skeleton\Widgets\Forms\FormContainer;
 echo ConfigHeader::make();
 
 echo FormContainer::make()
-    ->title(Yii::t('config', 'Update Settings'))
     ->form(ConfigActiveForm::make()
         ->model($config));
