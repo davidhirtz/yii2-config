@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hirtz\Config\Modules\Admin\Controllers;
 
-use Hirtz\Skeleton\I18n\Lang;
 use Hirtz\Config\Modules\Admin\Models\Config;
 use Hirtz\Config\Modules\Admin\Module;
 use Hirtz\Skeleton\Web\Controller;
@@ -42,8 +41,8 @@ class ConfigController extends Controller
     {
         $config = Config::create();
 
-        if ($config->load(Yii::$app->getRequest()->post()) && $config->save()) {
-            $this->success(Lang::t('config', 'CONFIG_SUCCESS_UPDATED'));
+        if ($config->load($this->request->post()) && $config->save()) {
+            $this->success(Yii::t('config', 'CONFIG_SUCCESS_UPDATED'));
             return $this->refresh();
         }
 
