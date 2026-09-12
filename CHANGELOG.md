@@ -1,3 +1,8 @@
+## 3.0.0 (in development)
+
+- `Modules\Admin\Models\Config::$_module` is `$module`, dropping the underscore prefix a private or protected
+  property no longer carries
+
 ## 2.2.2 (Jan 23, 2025)
 
 - Changed `Bootstrap` I18N configuration

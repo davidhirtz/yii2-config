@@ -30,19 +30,19 @@ class Config extends Model implements AdminRouteInterface, TrailModelInterface
 
     public const string AUTH_CONFIG_UPDATE = 'configUpdate';
 
-    protected static ?Module $_module = null;
+    protected static ?Module $module = null;
 
     /** @var array<string, mixed> */
-    private array $_attributes = [];
+    private array $attributes = [];
 
     /** @var array<string, mixed>|null */
-    private ?array $_params = null;
+    private ?array $params = null;
 
     #[Override]
     public function __get($name): mixed
     {
         if (in_array($name, $this->activeAttributes())) {
-            return $this->_attributes[$name] ?? null;
+            return $this->attributes[$name] ?? null;
         }
 
         return parent::__get($name);
@@ -52,7 +52,7 @@ class Config extends Model implements AdminRouteInterface, TrailModelInterface
     public function __set($name, $value): void
     {
         if (in_array($name, $this->activeAttributes())) {
-            $this->_attributes[$name] = $value;
+            $this->attributes[$name] = $value;
             return;
         }
 
@@ -112,7 +112,7 @@ class Config extends Model implements AdminRouteInterface, TrailModelInterface
         FileHelper::createConfigFile($file, $params, $phpdoc);
 
         Yii::$app->params = [...Yii::$app->params, ...$params];
-        $this->_params = null;
+        $this->params = null;
 
         $this->afterSave(array_intersect_key($prevParams, $changedAttributes));
 
@@ -156,12 +156,12 @@ class Config extends Model implements AdminRouteInterface, TrailModelInterface
      */
     protected function getParams(): array
     {
-        if (null === $this->_params) {
+        if (null === $this->params) {
             $file = $this->getConfigFilePath();
-            $this->_params = is_file($file) ? require($file) : [];
+            $this->params = is_file($file) ? require($file) : [];
         }
 
-        return $this->_params;
+        return $this->params;
     }
 
     protected function setAttributesFromParams(): void
@@ -184,8 +184,8 @@ class Config extends Model implements AdminRouteInterface, TrailModelInterface
     {
         /** @var Module $module */
         $module = Yii::$app->getModule('admin')->getModule('config');
-        static::$_module ??= $module;
+        static::$module ??= $module;
 
-        return static::$_module;
+        return static::$module;
     }
 }
