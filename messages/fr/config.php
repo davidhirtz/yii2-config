@@ -5,8 +5,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'AUTH_CONFIG_DESCRIPTION' => '',
-    'COMMON_SETTINGS' => '',
-    'CONFIG_SUCCESS_UPDATED' => '',
-    'IN_CONFIG' => '',
+    'AUTH_CONFIG_DESCRIPTION' => 'Gérer les paramètres du site',
+    'COMMON_SETTINGS' => 'Paramètres',
+    'CONFIG_SUCCESS_UPDATED' => 'Les paramètres ont été mis à jour.',
+    'IN_CONFIG' => 'Configuration',
 ];
