@@ -1,5 +1,7 @@
 ## 3.0.0 (in development)
 
+- `Modules\Admin\Models\Config` implements the skeleton's `Models\Interfaces\AdminModelInterface`:
+  `getTrailModelName()` is `getAdminType()`, which is what `AdminModelTrait` names a model with no primary key by
 - `Modules\Admin\Models\Config::$_module` is `$module`, dropping the underscore prefix a private or protected
   property no longer carries
 

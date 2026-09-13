@@ -8,8 +8,8 @@ use Hirtz\Config\Modules\Admin\Module;
 use Hirtz\Skeleton\Base\Traits\ModelTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Helpers\FileHelper;
-use Hirtz\Skeleton\Models\Interfaces\AdminRouteInterface;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
+use Hirtz\Skeleton\Models\Traits\AdminModelTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
 use Override;
@@ -22,8 +22,9 @@ use yii\db\BaseActiveRecord;
  * Extend this class in your application to make application params editable via the admin interface. Params must have
  * a valid rule. Only active attributes will be displayed in the form.
  */
-class Config extends Model implements AdminRouteInterface, TrailModelInterface
+class Config extends Model implements TrailModelInterface
 {
+    use AdminModelTrait;
     use I18nAttributesTrait;
     use ModelTrait;
     use TrailModelTrait;
@@ -132,17 +133,17 @@ class Config extends Model implements AdminRouteInterface, TrailModelInterface
         ]));
     }
 
-    public function getTrailModelName(): string
-    {
-        return Yii::t('config', 'IN_CONFIG');
-    }
-
     /**
      * @return list<string>|false
      */
     public function getAdminRoute(): array|false
     {
         return ['/admin/config/update'];
+    }
+
+    public function getAdminType(): string
+    {
+        return Yii::t('config', 'IN_CONFIG');
     }
 
     public function getUpdatedAt(): false|int

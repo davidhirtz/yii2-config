@@ -103,7 +103,7 @@ class ConfigTest extends TestCase
         $trail = $this->loadLastTrail();
 
         self::assertEquals(TestConfig::class, $trail->model_class);
-        self::assertEquals($config->getTrailModelName(), $trail->getModelName());
+        self::assertEquals($config->getAdminName(), $trail->getModelName());
         self::assertEquals(['cookieValidationKey' => [null, 'trail-test']], $trail->data);
 
         $config->cookieValidationKey = 'trail-test-2';
