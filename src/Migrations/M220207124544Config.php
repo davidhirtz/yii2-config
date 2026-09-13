@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Hirtz\Config\Migrations;
 
-use Hirtz\Config\Modules\Admin\Models\Config;
 use Hirtz\Skeleton\Db\Traits\MigrationTrait;
 use Hirtz\Skeleton\Models\User;
 use Yii;
 use yii\db\Migration;
 
 /**
+ * The permission names and descriptions this creates are hardcoded: `M2609141[0-6]0000AuthItems` collapses them
+ * into one permission per model, so neither the constants nor the message keys exist any more.
+ *
  * @noinspection PhpUnused
  */
 
@@ -20,13 +22,11 @@ class M220207124544Config extends Migration
 
     public function safeUp(): void
     {
-        $sourceLanguage = Yii::$app->sourceLanguage;
-
         $auth = Yii::$app->getAuthManager();
         $admin = $auth->getRole(User::AUTH_ROLE_ADMIN);
 
-        $configUpdate = $auth->createPermission(Config::AUTH_CONFIG_UPDATE);
-        $configUpdate->description = Yii::t('config', 'AUTH_CONFIG_UPDATE_DESCRIPTION', [], $sourceLanguage);
+        $configUpdate = $auth->createPermission('configUpdate');
+        $configUpdate->description = 'Update website settings';
         $auth->add($configUpdate);
 
         $auth->addChild($admin, $configUpdate);
@@ -35,6 +35,6 @@ class M220207124544Config extends Migration
     public function safeDown(): void
     {
         $auth = Yii::$app->getAuthManager();
-        $this->delete($auth->itemTable, ['name' => Config::AUTH_CONFIG_UPDATE]);
+        $this->delete($auth->itemTable, ['name' => 'configUpdate']);
     }
 }

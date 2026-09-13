@@ -18,7 +18,7 @@ class ConfigNavItem extends NavItem
         //$this->icon ??= 'wrench';
         $this->label ??= Yii::t('config', 'COMMON_SETTINGS');
         $this->order ??= 100;
-        $this->roles ??= [Config::AUTH_CONFIG_UPDATE];
+        $this->roles ??= [Config::AUTH_CONFIG];
         $this->url ??= ['/admin/config/config/update'];
 
         parent::__construct($config);

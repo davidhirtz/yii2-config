@@ -30,7 +30,7 @@ class ConfigController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['update'],
-                        'roles' => [Config::AUTH_CONFIG_UPDATE],
+                        'roles' => [Config::AUTH_CONFIG],
                     ],
                 ],
             ],

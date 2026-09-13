@@ -29,7 +29,7 @@ class Config extends Model implements TrailModelInterface
     use ModelTrait;
     use TrailModelTrait;
 
-    public const string AUTH_CONFIG_UPDATE = 'configUpdate';
+    public const string AUTH_CONFIG = 'config';
 
     protected static ?Module $module = null;
 

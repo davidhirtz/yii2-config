@@ -1,5 +1,8 @@
 ## 3.0.0 (in development)
 
+- **One permission per admin-managed model.** `Modules\Admin\Models\Config::AUTH_CONFIG` (`config`) replaces
+  `AUTH_CONFIG_UPDATE`, described by `AUTH_CONFIG_DESCRIPTION`. `Migrations\M260914150000AuthItems` grants it to
+  every parent and assignee of the old one
 - `Modules\Admin\Models\Config` implements the skeleton's `Models\Interfaces\AdminModelInterface`:
   `getTrailModelName()` is `getAdminType()`, which is what `AdminModelTrait` names a model with no primary key by
 - `Modules\Admin\Models\Config::$_module` is `$module`, dropping the underscore prefix a private or protected

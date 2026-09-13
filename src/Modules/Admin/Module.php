@@ -44,7 +44,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
         return $dashboard->addItem(DashboardItem::make()
             ->icon('pen')
             ->label(Yii::t('config', 'COMMON_SETTINGS'))
-            ->roles([Config::AUTH_CONFIG_UPDATE])
+            ->roles([Config::AUTH_CONFIG])
             ->url(['/admin/config/config/update']));
     }
 }
