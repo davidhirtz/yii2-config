@@ -102,6 +102,9 @@ class ConfigControllerTest extends TestCase
         Yii::$app->runAction('admin/config/config/update');
     }
 
+    /**
+     * @param array<string, mixed> $bodyParams
+     */
     private function post(array $bodyParams): mixed
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
