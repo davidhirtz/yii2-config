@@ -1,5 +1,7 @@
 ## 3.0.0 (in development)
 
+- `Modules\Admin\Models\Config::reset()` clears the module the static accessor caches, and `Bootstrap` calls it —
+  the cached module belonged to the application that built it
 - **One permission per admin-managed model.** `Modules\Admin\Models\Config::AUTH_CONFIG` (`config`) replaces
   `AUTH_CONFIG_UPDATE`, described by `AUTH_CONFIG_DESCRIPTION`. `Migrations\M260914150000AuthItems` grants it to
   every parent and assignee of the old one

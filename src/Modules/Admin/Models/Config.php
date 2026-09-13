@@ -189,4 +189,9 @@ class Config extends Model implements TrailModelInterface
 
         return static::$module;
     }
+
+    public static function reset(): void
+    {
+        static::$module = null;
+    }
 }
