@@ -31,8 +31,6 @@ class Config extends Model implements TrailModelInterface
 
     public const string AUTH_CONFIG = 'config';
 
-    protected static ?Module $module = null;
-
     /** @var array<string, mixed> */
     private array $attributes = [];
 
@@ -185,13 +183,6 @@ class Config extends Model implements TrailModelInterface
     {
         /** @var Module $module */
         $module = Yii::$app->getModule('admin')->getModule('config');
-        static::$module ??= $module;
-
-        return static::$module;
-    }
-
-    public static function reset(): void
-    {
-        static::$module = null;
+        return $module;
     }
 }

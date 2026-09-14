@@ -21,9 +21,6 @@ class Bootstrap implements BootstrapInterface
     {
         Yii::setAlias('@config', __DIR__);
 
-        // The cached module belongs to the application that built it, and this static outlives it.
-        Config::reset();
-
         $app->getI18n()->translations['config'] ??= [
             'class' => PhpMessageSource::class,
             'basePath' => '@config/../messages',

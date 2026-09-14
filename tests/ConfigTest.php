@@ -35,6 +35,24 @@ class ConfigTest extends TestCase
         parent::tearDown();
     }
 
+    /**
+     * The module belongs to the application that built it, so it is looked up rather than memoised — a static one
+     * outlived the application and handed the next request a module of a dead one.
+     */
+    public function testTheModuleIsTheOneOfTheCurrentApplication(): void
+    {
+        $module = Config::getModule();
+
+        $this->reloadApplication();
+
+        $reloaded = Config::getModule();
+
+        // tearDown() removes the directory of whatever the module points at, and the default is `@root/config`
+        $reloaded->configFile = Yii::getAlias($this->configFile);
+
+        self::assertNotSame($module, $reloaded);
+    }
+
     public function testCreateConfig(): void
     {
         $config = TestConfig::create();

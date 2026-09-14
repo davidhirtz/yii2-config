@@ -1,14 +1,14 @@
 ## 3.0.0 (in development)
 
-- `Modules\Admin\Models\Config::reset()` clears the module the static accessor caches, and `Bootstrap` calls it —
-  the cached module belonged to the application that built it
+- `Modules\Admin\Models\Config::getModule()` looks the module up on every call instead of memoising it in a
+  static, and `Config::reset()` is gone with the static — so is the `Bootstrap` call that cleared it. A module
+  belongs to the application that built it, and what the memo saved is the two array reads the skeleton's
+  `Modules\ModuleTrait::getModule()` has always done uncached
 - **One permission per admin-managed model.** `Modules\Admin\Models\Config::AUTH_CONFIG` (`config`) replaces
   `AUTH_CONFIG_UPDATE`, described by `AUTH_CONFIG_DESCRIPTION`. `Migrations\M260914150000AuthItems` grants it to
   every parent and assignee of the old one
 - `Modules\Admin\Models\Config` implements the skeleton's `Models\Interfaces\AdminModelInterface`:
   `getTrailModelName()` is `getAdminType()`, which is what `AdminModelTrait` names a model with no primary key by
-- `Modules\Admin\Models\Config::$_module` is `$module`, dropping the underscore prefix a private or protected
-  property no longer carries
 
 ## 2.2.2 (Jan 23, 2025)
 
