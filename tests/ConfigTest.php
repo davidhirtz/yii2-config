@@ -15,23 +15,28 @@ use yii\helpers\FileHelper;
 
 class ConfigTest extends TestCase
 {
-    private string $configFile = '@runtime/config/params.php';
+    private const string CONFIG_FILE = '@runtime/config/params.php';
+
+    private string $configFile;
 
     #[\Override]
     protected function setUp(): void
     {
         parent::setUp();
 
-        $configFile = Yii::getAlias($this->configFile);
+        $this->configFile = Yii::getAlias(self::CONFIG_FILE);
 
-        Config::getModule()->configFile = $configFile;
-        FileHelper::createDirectory(dirname($configFile));
+        Config::getModule()->configFile = $this->configFile;
+        FileHelper::createDirectory(dirname($this->configFile));
     }
 
     #[\Override]
     protected function tearDown(): void
     {
-        FileHelper::removeDirectory(dirname(Config::getModule()->configFile));
+        if (isset($this->configFile)) {
+            FileHelper::removeDirectory(dirname($this->configFile));
+        }
+
         parent::tearDown();
     }
 
@@ -47,9 +52,6 @@ class ConfigTest extends TestCase
 
         $reloaded = Config::getModule();
 
-        // tearDown() removes the directory of whatever the module points at, and the default is `@root/config`
-        $reloaded->configFile = Yii::getAlias($this->configFile);
-
         self::assertNotSame($module, $reloaded);
     }
 
@@ -64,7 +66,7 @@ class ConfigTest extends TestCase
 
         self::assertTrue($config->save());
         self::assertEquals('unit-test', Yii::$app->params['cookieValidationKey']);
-        self::assertFileExists(Yii::getAlias($this->configFile));
+        self::assertFileExists($this->configFile);
 
         $config = TestConfig::create();
         self::assertEquals('unit-test', $config->cookieValidationKey);
