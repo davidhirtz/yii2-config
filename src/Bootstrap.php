@@ -37,7 +37,7 @@ class Bootstrap implements BootstrapInterface
             ],
         ]);
 
-        DashboardController::addRoles([
+        DashboardController::addRoles(static fn (): array => [
             Config::AUTH_CONFIG,
         ]);
 
