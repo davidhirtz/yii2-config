@@ -68,7 +68,7 @@ class ConfigControllerTest extends TestCase
         self::assertSame('A new name', Yii::$app->params['siteName']);
 
         self::assertSame('A new name', (require Yii::getAlias($this->configFile))['siteName']);
-        self::assertNotEmpty(Yii::$app->getSession()->getFlash('success'));
+        self::assertNotEmpty($this->getWebSession()->getFlash('success'));
     }
 
     public function testSavingLeavesATrail(): void
@@ -96,7 +96,7 @@ class ConfigControllerTest extends TestCase
 
     public function testTheConfigPageIsForbiddenWithoutThePermission(): void
     {
-        Yii::$app->getUser()->setIdentity($this->getUserFromFixture('admin'));
+        $this->getWebUser()->setIdentity($this->getUserFromFixture('admin'));
 
         $this->expectException(ForbiddenHttpException::class);
         Yii::$app->runAction('admin/config/config/update');
@@ -109,7 +109,7 @@ class ConfigControllerTest extends TestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
 
-        $request = Yii::$app->getRequest();
+        $request = $this->getWebRequest();
         $request->setBodyParams([...$bodyParams, $request->csrfParam => $request->getCsrfToken()]);
 
         return Yii::$app->runAction('admin/config/config/update');
@@ -120,7 +120,7 @@ class ConfigControllerTest extends TestCase
         $user = $this->getUserFromFixture('admin');
         $this->assignPermission($user->id, Config::AUTH_CONFIG);
 
-        Yii::$app->getUser()->setIdentity($user);
+        $this->getWebUser()->setIdentity($user);
 
         return $user;
     }
