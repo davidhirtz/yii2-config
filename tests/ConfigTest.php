@@ -166,5 +166,8 @@ class TestConfig extends Config
 class TestConfigI18n extends TestConfig
 {
     /** @var string[] */
+    /**
+     * @var list<string>
+     */
     public array $i18nAttributes = ['cookieValidationKey'];
 }
