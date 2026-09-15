@@ -12,6 +12,7 @@ use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Traits\AdminModelTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
+use Hirtz\Skeleton\Web\User as WebUser;
 use Override;
 use Yii;
 use yii\base\Model;
@@ -102,7 +103,7 @@ class Config extends Model implements TrailModelInterface
             return false;
         }
 
-        $username = Yii::$app->has('user') ? Yii::$app->getUser()->getIdentity()?->getUsername() : null;
+        $username = WebUser::current()?->getIdentity()?->getUsername();
 
         $phpdoc = $username ? "Last updated via administration by $username" : null;
         $file = $this->getConfigFilePath();
