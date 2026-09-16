@@ -17,13 +17,17 @@ class ConfigActiveForm extends ActiveForm
     #[\Override]
     protected function configure(): void
     {
-        $this->rows ??= array_map(fn ($attribute) => [$attribute], $this->model->activeAttributes());
-
         $this->footer ??= [
             $this->getUpdatedAtFooterItem(),
         ];
 
         parent::configure();
+    }
+
+    #[\Override]
+    protected function getDefaultRows(): array
+    {
+        return array_map(static fn (string $attribute): array => [$attribute], $this->model->activeAttributes());
     }
 
     protected function getUpdatedAtFooterItem(): ?Stringable

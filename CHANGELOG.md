@@ -1,5 +1,10 @@
 ## 3.0.0 (in development)
 
+- `Modules\Admin\Widgets\Forms\ConfigActiveForm` declares its fields in `getDefaultRows()` instead of assigning
+  `$this->rows ??=` in `configure()`, which the skeleton's `Widgets\Forms\ActiveForm` needs to normalize them
+  before an `EVENT_CONFIGURE` listener sees them (monorepo issue #120). A subclass overriding `configure()` to
+  change the fields has to move to the hook.
+
 - `Modules\Admin\Models\Config::getModule()` looks the module up on every call instead of memoising it in a
   static, and `Config::reset()` is gone with the static — so is the `Bootstrap` call that cleared it. A module
   belongs to the application that built it, and what the memo saved is the two array reads the skeleton's
