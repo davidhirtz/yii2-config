@@ -1,5 +1,9 @@
 ## 3.0.0 (in development)
 
+- **The settings page carries a *System* breadcrumb.** `ConfigNavItem` is a child of the skeleton's
+  `SystemNavItem`, so `Modules\Admin\Widgets\Navs\ConfigHeader` says so in the bar rather than leaving the
+  page looking like a top-level one.
+
 - `Modules\Admin\Widgets\Forms\ConfigActiveForm` declares its fields in `getDefaultRows()` instead of assigning
   `$this->rows ??=` in `configure()`, which the skeleton's `Widgets\Forms\ActiveForm` needs to normalize them
   before an `EVENT_CONFIGURE` listener sees them (monorepo issue #120). A subclass overriding `configure()` to

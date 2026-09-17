@@ -14,6 +14,17 @@ class ConfigHeader extends Header
     protected function configure(): void
     {
         $this->title ??= Yii::t('config', 'COMMON_SETTINGS');
+
+        $this->addSystemBreadcrumb();
+
         parent::configure();
+    }
+
+    /**
+     * The settings live under the system nav item, not beside it.
+     */
+    protected function addSystemBreadcrumb(): void
+    {
+        $this->addBreadcrumb(Yii::t('skeleton', 'COMMON_SYSTEM'), ['/admin/system/index']);
     }
 }
