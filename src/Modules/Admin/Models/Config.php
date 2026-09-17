@@ -140,6 +140,11 @@ class Config extends Model implements TrailModelInterface
         return ['/admin/config/update'];
     }
 
+    public function getPermissionName(): string
+    {
+        return self::AUTH_CONFIG;
+    }
+
     public function getAdminType(): string
     {
         return Yii::t('config', 'IN_CONFIG');
