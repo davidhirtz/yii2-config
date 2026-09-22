@@ -6,7 +6,8 @@
  */
 return [
     'AUTH_CONFIG_DESCRIPTION' => 'Website-Einstellungen verwalten',
-    'COMMON_SETTINGS' => 'Einstellungen',
+    'CONFIG_DASHBOARD_UPDATE' => 'Einstellungen bearbeiten',
+    'CONFIG_NAME' => 'Einstellungen',
     'CONFIG_SUCCESS_UPDATED' => 'Die Einstellungen wurden aktualisiert.',
-    'IN_CONFIG' => 'Konfiguration',
+    'CONFIG_TITLE' => 'Einstellungen bearbeiten',
 ];

@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Hirtz\Config\Modules\Admin;
 
-use Hirtz\Cms\Models\Entry;
 use Hirtz\Config\Modules\Admin\Models\Config;
 use Hirtz\Config\Modules\Admin\Widgets\Navs\ConfigNavItem;
 use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
 use Hirtz\Skeleton\Modules\Admin\Widgets\Navs\SystemNavItem;
 use Hirtz\Skeleton\Widgets\Navs\Nav;
-use Hirtz\Skeleton\Widgets\Navs\NavItem;
 use Hirtz\Skeleton\Widgets\Panels\Dashboard;
 use Hirtz\Skeleton\Widgets\Panels\DashboardItem;
 use Override;
@@ -43,7 +41,8 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
     {
         return $dashboard->addItem(DashboardItem::make()
             ->icon('pen')
-            ->label(Yii::t('config', 'COMMON_SETTINGS'))
+            ->label(Yii::t('config', 'CONFIG_DASHBOARD_UPDATE'))
+            ->order(80)
             ->roles([Config::AUTH_CONFIG])
             ->url(['/admin/config/config/update']));
     }

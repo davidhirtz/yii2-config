@@ -6,7 +6,8 @@
  */
 return [
     'AUTH_CONFIG_DESCRIPTION' => 'Manage website settings',
-    'COMMON_SETTINGS' => 'Settings',
+    'CONFIG_DASHBOARD_UPDATE' => 'Manage settings',
+    'CONFIG_NAME' => 'Settings',
     'CONFIG_SUCCESS_UPDATED' => 'The settings were updated.',
-    'IN_CONFIG' => 'Config',
+    'CONFIG_TITLE' => 'Settings',
 ];

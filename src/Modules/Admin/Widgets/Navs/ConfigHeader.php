@@ -13,7 +13,7 @@ class ConfigHeader extends Header
     #[Override]
     protected function configure(): void
     {
-        $this->title ??= Yii::t('config', 'COMMON_SETTINGS');
+        $this->title ??= Yii::t('config', 'CONFIG_TITLE');
 
         $this->addSystemBreadcrumb();
 

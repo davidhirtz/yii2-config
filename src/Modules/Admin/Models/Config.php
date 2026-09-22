@@ -147,7 +147,7 @@ class Config extends Model implements TrailModelInterface
 
     public function getAdminType(): string
     {
-        return Yii::t('config', 'IN_CONFIG');
+        return Yii::t('config', 'CONFIG_NAME');
     }
 
     public function getUpdatedAt(): false|int

@@ -6,7 +6,8 @@
  */
 return [
     'AUTH_CONFIG_DESCRIPTION' => 'Gérer les paramètres du site',
-    'COMMON_SETTINGS' => 'Paramètres',
+    'CONFIG_DASHBOARD_UPDATE' => 'Gérer les paramètres',
+    'CONFIG_NAME' => 'Paramètres',
     'CONFIG_SUCCESS_UPDATED' => 'Les paramètres ont été mis à jour.',
-    'IN_CONFIG' => 'Configuration',
+    'CONFIG_TITLE' => 'Paramètres',
 ];

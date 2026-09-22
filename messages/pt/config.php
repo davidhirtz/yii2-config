@@ -6,7 +6,8 @@
  */
 return [
     'AUTH_CONFIG_DESCRIPTION' => 'Gerir as definições do site',
-    'COMMON_SETTINGS' => 'Definições',
+    'CONFIG_DASHBOARD_UPDATE' => 'Gerir as definições',
+    'CONFIG_NAME' => 'Definições',
     'CONFIG_SUCCESS_UPDATED' => 'As definições foram atualizadas.',
-    'IN_CONFIG' => 'Configuração',
+    'CONFIG_TITLE' => 'Definições',
 ];
