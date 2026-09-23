@@ -135,6 +135,17 @@ class ConfigTest extends TestCase
         self::assertEquals(['cookieValidationKey' => ['trail-test', 'trail-test-2']], $trail->data);
     }
 
+    /**
+     * The trail links the settings record to this route, and no test renders that link.
+     */
+    public function testTheAdminRouteResolvesToAController(): void
+    {
+        $route = TestConfig::create()->getAdminRoute();
+
+        self::assertIsArray($route);
+        self::assertNotFalse(Yii::$app->createController(ltrim($route[0], '/')));
+    }
+
     private function loadLastTrail(): ?Trail
     {
         return Trail::find()

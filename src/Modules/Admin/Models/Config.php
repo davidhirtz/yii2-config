@@ -137,7 +137,7 @@ class Config extends Model implements TrailModelInterface
      */
     public function getAdminRoute(): array|false
     {
-        return ['/admin/config/update'];
+        return ['/admin/config/config/update'];
     }
 
     public function getPermissionName(): string
