@@ -1,6 +1,7 @@
 {
   "name": "davidhirtz/yii2-config",
   "description": "Yii2 config module",
+  "license": "proprietary",
   "type": "yii2-extension",
   "homepage": "https://www.github.com/davidhirtz/yii2-config",
   "authors": [
