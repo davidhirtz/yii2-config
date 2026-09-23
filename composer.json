@@ -33,7 +33,10 @@
     }
   },
   "extra": {
-    "bootstrap": "Hirtz\\Config\\Bootstrap"
+    "bootstrap": "Hirtz\\Config\\Bootstrap",
+    "branch-alias": {
+      "dev-main": "3.x-dev"
+    }
   },
   "config": {
     "allow-plugins": {
