@@ -1,23 +1,14 @@
 ## 3.0.0 (in development)
 
-- **The settings page carries a *System* breadcrumb.** `ConfigNavItem` is a child of the skeleton's
-  `SystemNavItem`, so `Modules\Admin\Widgets\Navs\ConfigHeader` says so in the bar rather than leaving the
-  page looking like a top-level one.
-
-- `Modules\Admin\Widgets\Forms\ConfigActiveForm` declares its fields in `getDefaultRows()` instead of assigning
-  `$this->rows ??=` in `configure()`, which the skeleton's `Widgets\Forms\ActiveForm` needs to normalize them
-  before an `EVENT_CONFIGURE` listener sees them (monorepo issue #120). A subclass overriding `configure()` to
-  change the fields has to move to the hook.
-
-- `Modules\Admin\Models\Config::getModule()` looks the module up on every call instead of memoising it in a
-  static, and `Config::reset()` is gone with the static — so is the `Bootstrap` call that cleared it. A module
-  belongs to the application that built it, and what the memo saved is the two array reads the skeleton's
-  `Modules\ModuleTrait::getModule()` has always done uncached
-- **One permission per admin-managed model.** `Modules\Admin\Models\Config::AUTH_CONFIG` (`config`) replaces
-  `AUTH_CONFIG_UPDATE`, described by `AUTH_CONFIG_DESCRIPTION`. `Migrations\M260914150000AuthItems` grants it to
-  every parent and assignee of the old one
-- `Modules\Admin\Models\Config` implements the skeleton's `Models\Interfaces\AdminModelInterface`:
-  `getTrailModelName()` is `getAdminType()`, which is what `AdminModelTrait` names a model with no primary key by
+- Renamed the namespace from `davidhirtz\yii2\config\` to `Hirtz\Config\` and every directory to StudlyCase; the message files moved from `src/messages/` to `messages/`, the views from `src/modules/admin/views/config/` to `resources/views/admin/config/`
+- Replaced the permission `configUpdate` (`Config::AUTH_CONFIG_UPDATE`) with `config` (`Config::AUTH_CONFIG`), described by the message key `AUTH_CONFIG_DESCRIPTION` and granted to the `admin` and `manager` roles
+- Replaced the English message texts with keys: `CONFIG_NAME`, `CONFIG_TITLE`, `CONFIG_SUCCESS_UPDATED`, `CONFIG_DASHBOARD_UPDATE` and `AUTH_CONFIG_DESCRIPTION`; removed the `zh-CN` and `zh-TW` message files
+- Removed `Module::$route`, `Module::getName()`, `Module::getNavBarItems()` and `Module::getDashboardPanels()`; the module implements `aside()` and `dashboard()` of `Hirtz\Skeleton\Modules\Admin\ModuleInterface`, adding `Modules\Admin\Widgets\Navs\ConfigNavItem` below the skeleton's *System* nav item and a dashboard item, both pointing at `/admin/config/config/update`
+- Removed `Modules\Admin\Widgets\Navs\ConfigSubmenu`; the update view renders `Modules\Admin\Widgets\Navs\ConfigHeader`, which carries a *System* breadcrumb
+- Changed `Modules\Admin\Models\Config` to implement `Hirtz\Skeleton\Models\Interfaces\TrailModelInterface`: `getTrailModelName()` is now `getAdminType()`, `getPermissionName()` answers `AUTH_CONFIG`, and `getUpdatedAt()` returns `false|int` instead of `bool|int|null`
+- Changed `Modules\Admin\Widgets\Forms\ConfigActiveForm` to extend `Hirtz\Skeleton\Widgets\Forms\ActiveForm`: the fields are declared in `getDefaultRows()` and the footer in `getUpdatedAtFooterItem()`; removed `$hasStickyButtons`, `renderFooter()` and `getTimestampItems()`
+- Replaced `Migrations\M220207124544Config` with the fresh-install baseline `Migrations\M260101000800ConfigBaseline`; an existing database is upgraded through `davidhirtz/yii2-upgrade`
+- Removed the Composer `postInstall` hook that set `config/params.php` to `0777`; the file has to be writable by the web server
 
 ## 2.2.2 (Jan 23, 2025)
 
