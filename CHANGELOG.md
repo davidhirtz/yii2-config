@@ -1,4 +1,4 @@
-## 3.0.0 (in development)
+## 3.0.0 (September 23, 2026)
 
 - Renamed the namespace from `davidhirtz\yii2\config\` to `Hirtz\Config\` and every directory to StudlyCase; the message files moved from `src/messages/` to `messages/`, the views from `src/modules/admin/views/config/` to `resources/views/admin/config/`
 - Replaced the permission `configUpdate` (`Config::AUTH_CONFIG_UPDATE`) with `config` (`Config::AUTH_CONFIG`), described by the message key `AUTH_CONFIG_DESCRIPTION` and granted to the `admin` and `manager` roles
