@@ -7,7 +7,7 @@ namespace Hirtz\Config\Modules\Admin\Models;
 use Hirtz\Config\Modules\Admin\Module;
 use Hirtz\Skeleton\Base\Traits\ModelTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
-use Hirtz\Skeleton\Helpers\FileHelper;
+use Hirtz\Skeleton\Helpers\ConfigFile;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Traits\AdminModelTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
@@ -106,10 +106,7 @@ class Config extends Model implements TrailModelInterface
         $username = WebUser::current()?->getIdentity()?->getUsername();
 
         $phpdoc = $username ? "Last updated via administration by $username" : null;
-        $file = $this->getConfigFilePath();
-
-        FileHelper::createDirectory(dirname($file));
-        FileHelper::createConfigFile($file, $params, $phpdoc);
+        ConfigFile::write($this->getConfigFilePath(), $params, $phpdoc);
 
         Yii::$app->params = [...Yii::$app->params, ...$params];
         $this->params = null;
