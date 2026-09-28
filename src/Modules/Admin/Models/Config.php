@@ -97,7 +97,13 @@ class Config extends Model implements TrailModelInterface
             $params[$attribute] = $this->$attribute;
         }
 
-        $changedAttributes = array_diff_assoc($params, $prevParams);
+        $changedAttributes = [];
+
+        foreach ($this->activeAttributes() as $attribute) {
+            if (!$this->isSameValue($prevParams[$attribute], $params[$attribute])) {
+                $changedAttributes[$attribute] = $params[$attribute];
+            }
+        }
 
         if (!$changedAttributes) {
             return false;
@@ -117,9 +123,21 @@ class Config extends Model implements TrailModelInterface
     }
 
     /**
-     * Triggers an {@see BaseActiveRecord::EVENT_AFTER_UPDATE} so TrailBehavior can hook to it.
+     * A form posts strings, so a scalar compares as one — `'1'` is the `1` the file holds. Only the form's own
+     * attributes are compared: whatever else the file holds, an array written by hand among it, stays as it is.
      */
+    protected function isSameValue(mixed $old, mixed $new): bool
+    {
+        if (is_array($old) || is_array($new) || is_object($old) || is_object($new)) {
+            return $old === $new;
+        }
+
+        return (string)$old === (string)$new;
+    }
+
     /**
+     * Triggers an {@see BaseActiveRecord::EVENT_AFTER_UPDATE} so TrailBehavior can hook to it.
+     *
      * @param array<string, mixed> $changedAttributes
      */
     protected function afterSave(array $changedAttributes): void

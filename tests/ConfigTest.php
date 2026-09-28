@@ -95,6 +95,23 @@ class ConfigTest extends TestCase
         self::assertEquals('unit-test-2', Yii::$app->params['cookieValidationKey']);
     }
 
+    /**
+     * `params.php` holds scalars, but a hand-edited array under a key the form does not own must not stop a save.
+     */
+    public function testAnArrayElsewhereInTheFileDoesNotStopASave(): void
+    {
+        file_put_contents($this->configFile, "<?php\n\nreturn ['cookieValidationKey' => 'test', 'hosts' => ['a', 'b']];\n");
+
+        $config = TestConfig::create();
+        $config->cookieValidationKey = 'unit-test';
+
+        self::assertTrue($config->save());
+
+        $params = require $this->configFile;
+        self::assertSame(['a', 'b'], $params['hosts']);
+        self::assertSame('unit-test', $params['cookieValidationKey']);
+    }
+
     public function testSaveI18nAttribute(): void
     {
         Yii::$app->getI18n()->languages = ['de', 'en-US'];
