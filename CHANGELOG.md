@@ -1,3 +1,7 @@
+## Unreleased
+
+- Requires `davidhirtz/yii2-skeleton` `^3.8`: the bundle's defaults are `Bootstrap::getDefaultConfig()`, merged under the application's configuration, so a project's own configuration wins without the former "unless already set" guards
+
 ## 3.0.0 (September 23, 2026)
 
 - Renamed the namespace from `davidhirtz\yii2\config\` to `Hirtz\Config\` and every directory to StudlyCase; the message files moved from `src/messages/` to `messages/`, the views from `src/modules/admin/views/config/` to `resources/views/admin/config/`
