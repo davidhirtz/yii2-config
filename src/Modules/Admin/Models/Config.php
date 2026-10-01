@@ -7,6 +7,7 @@ namespace Hirtz\Config\Modules\Admin\Models;
 use Hirtz\Config\Modules\Admin\Module;
 use Hirtz\Skeleton\Base\Traits\ModelTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
+use Hirtz\Skeleton\Filters\PageCache;
 use Hirtz\Skeleton\Helpers\ConfigFile;
 use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Traits\AdminModelTrait;
@@ -16,6 +17,7 @@ use Hirtz\Skeleton\Web\User as WebUser;
 use Override;
 use Yii;
 use yii\base\Model;
+use yii\caching\TagDependency;
 use yii\db\AfterSaveEvent;
 use yii\db\BaseActiveRecord;
 
@@ -116,6 +118,10 @@ class Config extends Model implements TrailModelInterface
 
         Yii::$app->params = [...Yii::$app->params, ...$params];
         $this->params = null;
+
+        if ($cache = Yii::$app->getCache()) {
+            TagDependency::invalidate($cache, PageCache::TAG_DEPENDENCY_KEY);
+        }
 
         $this->afterSave(array_intersect_key($prevParams, $changedAttributes));
 

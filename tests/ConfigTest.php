@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Hirtz\Config\Tests;
 
 use Hirtz\Config\Modules\Admin\Models\Config;
+use Hirtz\Skeleton\Filters\PageCache;
 use Hirtz\Skeleton\Models\Trail;
 use Hirtz\Skeleton\Test\TestCase;
 use Override;
 use Yii;
+use yii\caching\TagDependency;
 use yii\db\AfterSaveEvent;
 use yii\db\BaseActiveRecord;
 use yii\helpers\FileHelper;
@@ -70,6 +72,18 @@ class ConfigTest extends TestCase
 
         $config = TestConfig::create();
         self::assertEquals('unit-test', $config->cookieValidationKey);
+    }
+
+    public function testSavingInvalidatesThePageCache(): void
+    {
+        $cache = Yii::$app->getCache();
+        $cache->set('page', 'cached', 0, new TagDependency(['tags' => [PageCache::TAG_DEPENDENCY_KEY]]));
+
+        $config = TestConfig::create();
+        $config->cookieValidationKey = 'unit-test';
+
+        self::assertTrue($config->save());
+        self::assertFalse($cache->get('page'));
     }
 
     public function testUpdateConfig(): void
