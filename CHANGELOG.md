@@ -1,4 +1,4 @@
-## Unreleased
+## 3.1.1 (October 2, 2026)
 
 - Fixed saving the config not invalidating the page cache
 
