@@ -66,7 +66,7 @@ class ConfigTest extends TestCase
 
         $config->cookieValidationKey = 'unit-test';
 
-        self::assertTrue($config->save());
+        self::assertTrue($config->save(), print_r($config->getErrors(), true));
         self::assertEquals('unit-test', Yii::$app->params['cookieValidationKey']);
         self::assertFileExists($this->configFile);
 
@@ -82,7 +82,7 @@ class ConfigTest extends TestCase
         $config = TestConfig::create();
         $config->cookieValidationKey = 'unit-test';
 
-        self::assertTrue($config->save());
+        self::assertTrue($config->save(), print_r($config->getErrors(), true));
         self::assertFalse($cache->get('page'));
     }
 
@@ -91,7 +91,7 @@ class ConfigTest extends TestCase
         $config = TestConfig::create();
         $config->cookieValidationKey = 'unit-test';
 
-        self::assertTrue($config->save());
+        self::assertTrue($config->save(), print_r($config->getErrors(), true));
 
         $config->cookieValidationKey = 'unit-test-2';
 
@@ -102,7 +102,7 @@ class ConfigTest extends TestCase
             $isTriggered = true;
         });
 
-        self::assertTrue($config->save());
+        self::assertTrue($config->save(), print_r($config->getErrors(), true));
         self::assertTrue($isTriggered);
 
         self::assertEquals('unit-test-2', $config->cookieValidationKey);
@@ -119,7 +119,7 @@ class ConfigTest extends TestCase
         $config = TestConfig::create();
         $config->cookieValidationKey = 'unit-test';
 
-        self::assertTrue($config->save());
+        self::assertTrue($config->save(), print_r($config->getErrors(), true));
 
         $params = require $this->configFile;
         self::assertSame(['a', 'b'], $params['hosts']);
@@ -138,7 +138,7 @@ class ConfigTest extends TestCase
 
         $config->cookieValidationKey_de = 'unit-test-de';
 
-        self::assertTrue($config->save());
+        self::assertTrue($config->save(), print_r($config->getErrors(), true));
 
         self::assertEquals('unit-test-de', $config->cookieValidationKey_de);
         self::assertEquals('unit-test-de', Yii::$app->params['cookieValidationKey_de']);
