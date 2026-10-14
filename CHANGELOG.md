@@ -1,3 +1,7 @@
+## Unreleased
+
+- Added `Config::$sensitiveParams` and `getSensitiveAttributes()`: secrets are password fields and stay out of the trail
+
 ## 3.1.1 (October 2, 2026)
 
 - Fixed saving the config not invalidating the page cache

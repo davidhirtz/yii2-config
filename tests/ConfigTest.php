@@ -148,22 +148,37 @@ class ConfigTest extends TestCase
     public function testTrailIntegration(): void
     {
         $config = TestConfig::create();
-        $config->cookieValidationKey = 'trail-test';
+        $config->cookieValidationKey = 'secret';
+        $config->claim = 'trail-test';
         $config->save();
 
         $trail = $this->loadLastTrail();
 
         self::assertEquals(TestConfig::class, $trail->model_class);
         self::assertEquals($config->getAdminName(), $trail->getModelName());
-        self::assertEquals(['cookieValidationKey' => [null, 'trail-test']], $trail->data);
+        self::assertEquals(['claim' => [null, 'trail-test']], $trail->data);
 
-        $config->cookieValidationKey = 'trail-test-2';
+        $config->claim = 'trail-test-2';
         $config->save();
 
         $trail = $this->loadLastTrail();
 
         self::assertEquals(TestConfig::class, $trail->model_class);
-        self::assertEquals(['cookieValidationKey' => ['trail-test', 'trail-test-2']], $trail->data);
+        self::assertEquals(['claim' => ['trail-test', 'trail-test-2']], $trail->data);
+    }
+
+    public function testASecretParamIsSensitiveAndStaysOutOfTheTrail(): void
+    {
+        $config = TestConfig::create();
+        $config->cookieValidationKey = 'dummy-key-new';
+
+        self::assertSame(['cookieValidationKey'], $config->getSensitiveAttributes());
+        self::assertNotContains('cookieValidationKey', $config->getTrailAttributes());
+
+        $id = $this->loadLastTrail()?->id;
+        self::assertTrue($config->save(), print_r($config->getErrors(), true));
+
+        self::assertSame($id, $this->loadLastTrail()?->id);
     }
 
     /**
@@ -187,6 +202,7 @@ class ConfigTest extends TestCase
 
 /**
  * @property string $cookieValidationKey
+ * @property string|null $claim
  */
 class TestConfig extends Config
 {
@@ -197,6 +213,10 @@ class TestConfig extends Config
             [
                 ['cookieValidationKey'],
                 'required',
+            ],
+            [
+                ['claim'],
+                'string',
             ],
         ]);
     }

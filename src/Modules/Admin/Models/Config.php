@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hirtz\Config\Modules\Admin\Models;
 
+use ArrayObject;
 use Hirtz\Config\Modules\Admin\Module;
 use Hirtz\Skeleton\Base\Traits\ModelTrait;
 use Hirtz\Skeleton\Behaviors\TrailBehavior;
@@ -13,6 +14,7 @@ use Hirtz\Skeleton\Models\Interfaces\TrailModelInterface;
 use Hirtz\Skeleton\Models\Traits\AdminModelTrait;
 use Hirtz\Skeleton\Models\Traits\I18nAttributesTrait;
 use Hirtz\Skeleton\Models\Traits\TrailModelTrait;
+use Hirtz\Skeleton\Validators\SensitiveAttributeValidator;
 use Hirtz\Skeleton\Web\User as WebUser;
 use Override;
 use Yii;
@@ -20,6 +22,7 @@ use yii\base\Model;
 use yii\caching\TagDependency;
 use yii\db\AfterSaveEvent;
 use yii\db\BaseActiveRecord;
+use yii\validators\Validator;
 
 /**
  * Extend this class in your application to make application params editable via the admin interface. Params must have
@@ -29,10 +32,31 @@ class Config extends Model implements TrailModelInterface
 {
     use AdminModelTrait;
     use I18nAttributesTrait;
-    use ModelTrait;
+    use ModelTrait {
+        createValidators as private createModelValidators;
+    }
     use TrailModelTrait;
 
     public const string AUTH_CONFIG = 'config';
+
+    /**
+     * @var list<string> the params the bundles read as secrets: an editable one is validated by
+     * {@see SensitiveAttributeValidator} without a rule naming it, so it renders as a password field and, like any
+     * attribute that validator names, stays out of the trail.
+     */
+    public array $sensitiveParams = [
+        'cookieValidationKey',
+        'googleApiKey',
+        'mailerDsn',
+        'passwordPepper',
+        'registryKey',
+        'secretKey',
+        'sentryDsn',
+        'shopifyAccessToken',
+        'shopifyApiKey',
+        'shopifyApiSecret',
+        'shopifyStorefrontAccessToken',
+    ];
 
     /** @var array<string, mixed> */
     private array $attributes = [];
@@ -59,6 +83,52 @@ class Config extends Model implements TrailModelInterface
         }
 
         parent::__set($name, $value);
+    }
+
+    public function createValidators(): ArrayObject
+    {
+        $validators = $this->createModelValidators();
+        $attributes = [];
+
+        foreach ($validators as $validator) {
+            $attributes = [...$attributes, ...$validator->getAttributeNames()];
+        }
+
+        $sensitive = array_values(array_intersect($this->sensitiveParams, $attributes));
+
+        if ($sensitive) {
+            $validators->append(Validator::createValidator(SensitiveAttributeValidator::class, $this, $sensitive));
+        }
+
+        return $validators;
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function getTrailAttributes(): array
+    {
+        return array_values(array_diff(
+            $this->attributes(),
+            $this->getTrailBehavior()->exclude,
+            $this->getSensitiveAttributes(),
+        ));
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function getSensitiveAttributes(): array
+    {
+        $attributes = [];
+
+        foreach ($this->getValidators() as $validator) {
+            if ($validator instanceof SensitiveAttributeValidator) {
+                $attributes = [...$attributes, ...$validator->getAttributeNames()];
+            }
+        }
+
+        return array_values(array_unique($attributes));
     }
 
     #[Override]
