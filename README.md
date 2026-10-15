@@ -73,9 +73,9 @@ class Config extends \Hirtz\Config\Modules\Admin\Models\Config
 }
 ```
 
-A param in `Config::$sensitiveParams` (the secrets the bundles read: `cookieValidationKey`, `mailerDsn`, the API keys
-and tokens) is a password field and stays out of the trail, as is any param a project validates with
-`SensitiveAttributeValidator`.
+A param in the application's `sensitiveParams` (the secrets each installed bundle declares: `cookieValidationKey`,
+`mailerDsn`, the API keys and tokens) is a password field and masked in the trail, as is any param a project validates
+with `SensitiveAttributeValidator`.
 
 What the form shows is `activeAttributes()`: a param is editable when a validation rule names it, and every
 other key in the file survives a save untouched. `i18nAttributes` clones a field per configured language and

@@ -1,6 +1,7 @@
 ## Unreleased
 
-- Added `Config::$sensitiveParams` and `getSensitiveAttributes()`: secrets are password fields and stay out of the trail
+- Changed the `davidhirtz/yii2-skeleton` requirement to `^3.18` (`sensitiveParams`, `TrailBehavior::MASKED_VALUE`)
+- Changed `Config` to validate the application's `sensitiveParams` with `SensitiveAttributeValidator`: a password field, masked in the trail
 
 ## 3.1.1 (October 2, 2026)
 

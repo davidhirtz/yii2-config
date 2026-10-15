@@ -39,25 +39,6 @@ class Config extends Model implements TrailModelInterface
 
     public const string AUTH_CONFIG = 'config';
 
-    /**
-     * @var list<string> the params the bundles read as secrets: an editable one is validated by
-     * {@see SensitiveAttributeValidator} without a rule naming it, so it renders as a password field and, like any
-     * attribute that validator names, stays out of the trail.
-     */
-    public array $sensitiveParams = [
-        'cookieValidationKey',
-        'googleApiKey',
-        'mailerDsn',
-        'passwordPepper',
-        'registryKey',
-        'secretKey',
-        'sentryDsn',
-        'shopifyAccessToken',
-        'shopifyApiKey',
-        'shopifyApiSecret',
-        'shopifyStorefrontAccessToken',
-    ];
-
     /** @var array<string, mixed> */
     private array $attributes = [];
 
@@ -94,41 +75,14 @@ class Config extends Model implements TrailModelInterface
             $attributes = [...$attributes, ...$validator->getAttributeNames()];
         }
 
-        $sensitive = array_values(array_intersect($this->sensitiveParams, $attributes));
+        // A secret a bundle declared is masked whether or not the project's rule says so
+        $sensitive = array_values(array_intersect(Yii::$app->sensitiveParams, $attributes));
 
         if ($sensitive) {
             $validators->append(Validator::createValidator(SensitiveAttributeValidator::class, $this, $sensitive));
         }
 
         return $validators;
-    }
-
-    /**
-     * @return list<string>
-     */
-    public function getTrailAttributes(): array
-    {
-        return array_values(array_diff(
-            $this->attributes(),
-            $this->getTrailBehavior()->exclude,
-            $this->getSensitiveAttributes(),
-        ));
-    }
-
-    /**
-     * @return list<string>
-     */
-    public function getSensitiveAttributes(): array
-    {
-        $attributes = [];
-
-        foreach ($this->getValidators() as $validator) {
-            if ($validator instanceof SensitiveAttributeValidator) {
-                $attributes = [...$attributes, ...$validator->getAttributeNames()];
-            }
-        }
-
-        return array_values(array_unique($attributes));
     }
 
     #[Override]

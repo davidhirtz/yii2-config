@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Hirtz\Config\Tests;
 
 use Hirtz\Config\Modules\Admin\Models\Config;
+use Hirtz\Skeleton\Behaviors\TrailBehavior;
 use Hirtz\Skeleton\Filters\PageCache;
 use Hirtz\Skeleton\Models\Trail;
 use Hirtz\Skeleton\Test\TestCase;
@@ -156,7 +157,10 @@ class ConfigTest extends TestCase
 
         self::assertEquals(TestConfig::class, $trail->model_class);
         self::assertEquals($config->getAdminName(), $trail->getModelName());
-        self::assertEquals(['claim' => [null, 'trail-test']], $trail->data);
+        self::assertEquals([
+            'claim' => [null, 'trail-test'],
+            'cookieValidationKey' => [null, TrailBehavior::MASKED_VALUE],
+        ], $trail->data);
 
         $config->claim = 'trail-test-2';
         $config->save();
@@ -167,18 +171,17 @@ class ConfigTest extends TestCase
         self::assertEquals(['claim' => ['trail-test', 'trail-test-2']], $trail->data);
     }
 
-    public function testASecretParamIsSensitiveAndStaysOutOfTheTrail(): void
+    public function testASecretParamIsMaskedInTheTrail(): void
     {
         $config = TestConfig::create();
-        $config->cookieValidationKey = 'dummy-key-new';
-
-        self::assertSame(['cookieValidationKey'], $config->getSensitiveAttributes());
-        self::assertNotContains('cookieValidationKey', $config->getTrailAttributes());
-
-        $id = $this->loadLastTrail()?->id;
+        $config->cookieValidationKey = 'dummy-key-old';
         self::assertTrue($config->save(), print_r($config->getErrors(), true));
 
-        self::assertSame($id, $this->loadLastTrail()?->id);
+        $config->cookieValidationKey = 'dummy-key-new';
+        self::assertTrue($config->save(), print_r($config->getErrors(), true));
+
+        $data = $this->loadLastTrail()?->data;
+        self::assertSame(['cookieValidationKey' => [TrailBehavior::MASKED_VALUE, TrailBehavior::MASKED_VALUE]], $data);
     }
 
     /**
