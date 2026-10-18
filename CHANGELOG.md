@@ -1,4 +1,4 @@
-## Unreleased
+## 3.3.0 (October 18, 2026)
 
 - Changed the config form to show a sensitive param masked, keep it when left empty, and remove it on request
 
