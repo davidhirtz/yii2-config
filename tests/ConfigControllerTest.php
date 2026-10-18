@@ -84,6 +84,38 @@ class ConfigControllerTest extends TestCase
         self::assertSame(TestControllerConfig::class, $trail->model_class);
     }
 
+    public function testASecretIsShownMaskedAndKeptWhenLeftEmpty(): void
+    {
+        $this->login();
+        $this->saveSecret('sk-Grüße-東京-0123456789');
+
+        $html = Yii::$app->runAction('admin/config/config/update');
+
+        self::assertIsString($html);
+        self::assertStringNotContainsString('0123456789', $html);
+        self::assertStringContainsString('placeholder="sk-G••••••••"', $html);
+        self::assertStringContainsString('name="TestControllerConfig[removedAttributes][]"', $html);
+
+        $this->post([self::FORM_NAME => ['siteName' => 'Renamed', 'cookieValidationKey' => '']]);
+
+        self::assertSame('sk-Grüße-東京-0123456789', (require Yii::getAlias($this->configFile))['cookieValidationKey']);
+    }
+
+    public function testASecretIsReplacedOrRemoved(): void
+    {
+        $this->login();
+        $this->saveSecret('old-secret-0123456789');
+
+        $this->post([self::FORM_NAME => ['cookieValidationKey' => 'new-secret-9876543210']]);
+        self::assertSame('new-secret-9876543210', (require Yii::getAlias($this->configFile))['cookieValidationKey']);
+
+        $this->post([self::FORM_NAME => ['cookieValidationKey' => '', 'removedAttributes' => ['cookieValidationKey', 'siteName']]]);
+
+        $params = require Yii::getAlias($this->configFile);
+        self::assertNull($params['cookieValidationKey'] ?? null);
+        self::assertSame('Kept', $params['siteName'] ?? null);
+    }
+
     public function testAnInvalidValueIsNotWritten(): void
     {
         $this->login();
@@ -100,6 +132,15 @@ class ConfigControllerTest extends TestCase
 
         $this->expectException(ForbiddenHttpException::class);
         Yii::$app->runAction('admin/config/config/update');
+    }
+
+    private function saveSecret(string $secret): void
+    {
+        $config = TestControllerConfig::create();
+        $config->siteName = 'Kept';
+        $config->cookieValidationKey = $secret;
+
+        self::assertTrue($config->save(), print_r($config->getErrors(), true));
     }
 
     /**
@@ -126,6 +167,10 @@ class ConfigControllerTest extends TestCase
     }
 }
 
+/**
+ * @property string|null $siteName
+ * @property string|null $cookieValidationKey
+ */
 class TestControllerConfig extends Config
 {
     #[Override]
@@ -136,6 +181,10 @@ class TestControllerConfig extends Config
                 ['siteName'],
                 'string',
                 'max' => 255,
+            ],
+            [
+                ['cookieValidationKey'],
+                'string',
             ],
         ];
     }

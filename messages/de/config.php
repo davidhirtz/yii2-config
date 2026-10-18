@@ -8,6 +8,8 @@ return [
     'AUTH_CONFIG_DESCRIPTION' => 'Website-Einstellungen verwalten',
     'CONFIG_DASHBOARD_UPDATE' => 'Einstellungen bearbeiten',
     'CONFIG_NAME' => 'Einstellungen',
+    'CONFIG_SENSITIVE_HINT' => 'Leer lassen, um den gespeicherten Wert zu behalten.',
+    'CONFIG_SENSITIVE_REMOVE' => 'Gespeicherten Wert entfernen',
     'CONFIG_SUCCESS_UPDATED' => 'Die Einstellungen wurden aktualisiert.',
     'CONFIG_TITLE' => 'Einstellungen bearbeiten',
 ];

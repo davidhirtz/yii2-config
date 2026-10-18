@@ -8,6 +8,8 @@ return [
     'AUTH_CONFIG_DESCRIPTION' => 'Manage website settings',
     'CONFIG_DASHBOARD_UPDATE' => 'Manage settings',
     'CONFIG_NAME' => 'Settings',
+    'CONFIG_SENSITIVE_HINT' => 'Leave empty to keep the saved value.',
+    'CONFIG_SENSITIVE_REMOVE' => 'Remove the saved value',
     'CONFIG_SUCCESS_UPDATED' => 'The settings were updated.',
     'CONFIG_TITLE' => 'Settings',
 ];

@@ -1,3 +1,7 @@
+## Unreleased
+
+- Changed the config form to show a sensitive param masked, keep it when left empty, and remove it on request
+
 ## 3.2.0 (October 15, 2026)
 
 - Changed the `davidhirtz/yii2-skeleton` requirement to `^3.18` (`sensitiveParams`, `TrailBehavior::MASKED_VALUE`)

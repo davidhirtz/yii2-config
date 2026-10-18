@@ -8,6 +8,8 @@ return [
     'AUTH_CONFIG_DESCRIPTION' => 'Gerir as definições do site',
     'CONFIG_DASHBOARD_UPDATE' => 'Gerir as definições',
     'CONFIG_NAME' => 'Definições',
+    'CONFIG_SENSITIVE_HINT' => 'Deixe vazio para manter o valor guardado.',
+    'CONFIG_SENSITIVE_REMOVE' => 'Remover o valor guardado',
     'CONFIG_SUCCESS_UPDATED' => 'As definições foram atualizadas.',
     'CONFIG_TITLE' => 'Definições',
 ];

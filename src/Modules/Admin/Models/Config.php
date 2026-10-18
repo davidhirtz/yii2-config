@@ -45,6 +45,11 @@ class Config extends Model implements TrailModelInterface
     /** @var array<string, mixed>|null */
     private ?array $params = null;
 
+    /**
+     * @var list<string> sensitive attributes the form asked to remove, which an empty field cannot say
+     */
+    private array $removedAttributes = [];
+
     #[Override]
     public function __get($name): mixed
     {
@@ -91,6 +96,60 @@ class Config extends Model implements TrailModelInterface
         return $this->activeAttributes();
     }
 
+    /**
+     * The form never shows a secret, so an empty field keeps the saved one; `removedAttributes` lists those to clear.
+     *
+     * @param array<array-key, mixed> $data
+     */
+    #[Override]
+    public function load($data, $formName = null): bool
+    {
+        $scope = $formName ?? $this->formName();
+        $values = $scope === '' ? $data : ($data[$scope] ?? null);
+
+        if (is_array($values)) {
+            $removed = is_array($values['removedAttributes'] ?? null) ? $values['removedAttributes'] : [];
+            $this->removedAttributes = array_values(array_filter($removed, fn (mixed $name): bool => is_string($name) && $this->isSensitiveAttribute($name)));
+
+            foreach ($values as $name => $value) {
+                if (is_string($name) && ($value === '' || $value === null) && $this->isSensitiveAttribute($name)) {
+                    unset($values[$name]);
+                }
+            }
+
+            unset($values['removedAttributes']);
+            $data = $scope === '' ? $values : [...$data, $scope => $values];
+        }
+
+        return parent::load($data, $formName);
+    }
+
+    public function isSensitiveAttribute(string $name): bool
+    {
+        foreach ($this->getActiveValidators($name) as $validator) {
+            if ($validator instanceof SensitiveAttributeValidator) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * The first characters of a saved secret, enough to tell which one it is; a short one shows none.
+     */
+    public function getMaskedValue(string $name): ?string
+    {
+        $value = $this->getParams()[$name] ?? null;
+
+        if (!is_scalar($value) || (string)$value === '') {
+            return null;
+        }
+
+        $value = (string)$value;
+        return (mb_strlen($value) > 12 ? mb_substr($value, 0, 4) : '') . '••••••••';
+    }
+
     #[Override]
     public function behaviors(): array
     {
@@ -113,6 +172,10 @@ class Config extends Model implements TrailModelInterface
         if ($runValidation && !$this->validate($attributeNames)) {
             Yii::info('Model not updated due to validation error.', __METHOD__);
             return false;
+        }
+
+        foreach ($this->removedAttributes as $attribute) {
+            $this->$attribute = null;
         }
 
         $prevParams = $this->getParams();
