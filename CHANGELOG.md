@@ -1,3 +1,7 @@
+## Unreleased
+
+- Changed the config form to show a saved sensitive param locked, with buttons to replace or remove it, instead of a remove checkbox
+
 ## 3.3.0 (October 18, 2026)
 
 - Changed the config form to show a sensitive param masked, keep it when left empty, and remove it on request

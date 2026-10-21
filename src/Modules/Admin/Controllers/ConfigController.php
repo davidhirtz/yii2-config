@@ -6,10 +6,13 @@ namespace Hirtz\Config\Modules\Admin\Controllers;
 
 use Hirtz\Config\Modules\Admin\Models\Config;
 use Hirtz\Config\Modules\Admin\Module;
+use Hirtz\Config\Modules\Admin\Widgets\Forms\Fields\SensitiveField;
 use Hirtz\Skeleton\Web\Controller;
 use Override;
 use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -29,9 +32,15 @@ class ConfigController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['update'],
+                        'actions' => ['sensitive', 'update'],
                         'roles' => [Config::AUTH_CONFIG],
                     ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'sensitive' => ['post'],
                 ],
             ],
         ];
@@ -49,5 +58,26 @@ class ConfigController extends Controller
         return $this->render('update', [
             'config' => $config,
         ]);
+    }
+
+    public function actionSensitive(string $attribute, string $state): string
+    {
+        $config = Config::create();
+
+        if (!in_array($attribute, $config->activeAttributes(), true) || !$config->isSensitiveAttribute($attribute)) {
+            throw new NotFoundHttpException();
+        }
+
+        $states = [SensitiveField::STATE_SAVED, SensitiveField::STATE_REPLACE, SensitiveField::STATE_REMOVE];
+
+        if (!in_array($state, $states, true)) {
+            throw new NotFoundHttpException();
+        }
+
+        return (string)SensitiveField::make()
+            ->model($config)
+            ->property($attribute)
+            ->state($state)
+            ->autofocus($state === SensitiveField::STATE_REPLACE);
     }
 }

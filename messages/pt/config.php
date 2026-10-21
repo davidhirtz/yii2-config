@@ -10,6 +10,9 @@ return [
     'CONFIG_NAME' => 'Definições',
     'CONFIG_SENSITIVE_HINT' => 'Deixe vazio para manter o valor guardado.',
     'CONFIG_SENSITIVE_REMOVE' => 'Remover o valor guardado',
+    'CONFIG_SENSITIVE_REMOVED' => 'Removido ao guardar',
+    'CONFIG_SENSITIVE_REPLACE' => 'Substituir o valor guardado',
+    'CONFIG_SENSITIVE_UNDO' => 'Anular',
     'CONFIG_SUCCESS_UPDATED' => 'As definições foram atualizadas.',
     'CONFIG_TITLE' => 'Definições',
 ];

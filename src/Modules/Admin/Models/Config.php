@@ -97,7 +97,8 @@ class Config extends Model implements TrailModelInterface
     }
 
     /**
-     * The form never shows a secret, so an empty field keeps the saved one; `removedAttributes` lists those to clear.
+     * The form never shows a secret, so an empty field keeps the saved one; `removedAttributes` lists those to clear,
+     * which a value typed into the same field overrules.
      *
      * @param array<array-key, mixed> $data
      */
@@ -109,7 +110,9 @@ class Config extends Model implements TrailModelInterface
 
         if (is_array($values)) {
             $removed = is_array($values['removedAttributes'] ?? null) ? $values['removedAttributes'] : [];
-            $this->removedAttributes = array_values(array_filter($removed, fn (mixed $name): bool => is_string($name) && $this->isSensitiveAttribute($name)));
+            $this->removedAttributes = array_values(array_filter($removed, fn (mixed $name): bool => is_string($name)
+                && $this->isSensitiveAttribute($name)
+                && in_array($values[$name] ?? null, ['', null], true)));
 
             foreach ($values as $name => $value) {
                 if (is_string($name) && ($value === '' || $value === null) && $this->isSensitiveAttribute($name)) {
@@ -133,6 +136,16 @@ class Config extends Model implements TrailModelInterface
         }
 
         return false;
+    }
+
+    public function isRemovedAttribute(string $name): bool
+    {
+        return in_array($name, $this->removedAttributes, true);
+    }
+
+    public function isChangedAttribute(string $name): bool
+    {
+        return !$this->isSameValue($this->getParams()[$name] ?? null, $this->$name);
     }
 
     /**

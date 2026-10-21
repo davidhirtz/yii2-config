@@ -13,6 +13,7 @@ use Override;
 use Yii;
 use yii\helpers\FileHelper;
 use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -93,12 +94,68 @@ class ConfigControllerTest extends TestCase
 
         self::assertIsString($html);
         self::assertStringNotContainsString('0123456789', $html);
-        self::assertStringContainsString('placeholder="sk-G••••••••"', $html);
-        self::assertStringContainsString('name="TestControllerConfig[removedAttributes][]"', $html);
+        self::assertStringNotContainsString('name="TestControllerConfig[cookieValidationKey]"', $html);
+        self::assertStringContainsString('sk-G••••••••', $html);
+        self::assertStringContainsString('state=replace', $html);
+        self::assertStringContainsString('state=remove', $html);
 
         $this->post([self::FORM_NAME => ['siteName' => 'Renamed', 'cookieValidationKey' => '']]);
 
         self::assertSame('sk-Grüße-東京-0123456789', (require Yii::getAlias($this->configFile))['cookieValidationKey']);
+    }
+
+    public function testAnUnsavedSecretIsAPasswordField(): void
+    {
+        $this->login();
+
+        $html = Yii::$app->runAction('admin/config/config/update');
+
+        self::assertIsString($html);
+        self::assertStringContainsString('name="TestControllerConfig[cookieValidationKey]"', $html);
+        self::assertStringNotContainsString('state=remove', $html);
+    }
+
+    public function testTheSecretFieldSwapsBetweenItsStates(): void
+    {
+        $this->login();
+        $this->saveSecret('sk-Ωmega-0123456789');
+
+        $html = $this->postSensitive('cookieValidationKey', 'replace');
+
+        self::assertStringContainsString('id="testcontrollerconfig-cookievalidationkey-row"', $html);
+        self::assertStringContainsString('type="password"', $html);
+        self::assertStringContainsString('name="TestControllerConfig[cookieValidationKey]"', $html);
+        self::assertStringContainsString('placeholder="sk-Ω••••••••"', $html);
+        self::assertStringContainsString('autofocus', $html);
+        self::assertStringContainsString('Leave empty to keep the saved value.', $html);
+        self::assertStringContainsString('state=saved', $html);
+
+        $html = $this->postSensitive('cookieValidationKey', 'remove');
+
+        self::assertStringContainsString('name="TestControllerConfig[removedAttributes][]" value="cookieValidationKey"', $html);
+        self::assertStringNotContainsString('name="TestControllerConfig[cookieValidationKey]"', $html);
+        self::assertStringContainsString('state=saved', $html);
+
+        $html = $this->postSensitive('cookieValidationKey', 'saved');
+
+        self::assertStringContainsString('sk-Ω••••••••', $html);
+        self::assertStringNotContainsString('removedAttributes', $html);
+    }
+
+    public function testOnlyASecretFieldIsSwapped(): void
+    {
+        $this->login();
+        $refused = 0;
+
+        foreach ([['siteName', 'replace'], ['cookieValidationKey', 'reveal'], ['unknown', 'replace']] as [$attribute, $state]) {
+            try {
+                $this->postSensitive($attribute, $state);
+            } catch (NotFoundHttpException) {
+                $refused++;
+            }
+        }
+
+        self::assertSame(3, $refused);
     }
 
     public function testASecretIsReplacedOrRemoved(): void
@@ -114,6 +171,34 @@ class ConfigControllerTest extends TestCase
         $params = require Yii::getAlias($this->configFile);
         self::assertNull($params['cookieValidationKey'] ?? null);
         self::assertSame('Kept', $params['siteName'] ?? null);
+    }
+
+    public function testAValueTypedOverrulesTheRemoval(): void
+    {
+        $this->login();
+        $this->saveSecret('old-secret-0123456789');
+
+        $this->post([self::FORM_NAME => ['cookieValidationKey' => 'новый-秘密-🔑', 'removedAttributes' => ['cookieValidationKey']]]);
+
+        self::assertSame('новый-秘密-🔑', (require Yii::getAlias($this->configFile))['cookieValidationKey']);
+    }
+
+    public function testAFailedSaveKeepsTheSecretFieldsState(): void
+    {
+        $this->login();
+        $this->saveSecret('old-secret-0123456789');
+
+        $html = $this->post([self::FORM_NAME => ['siteName' => str_repeat('a', 300), 'removedAttributes' => ['cookieValidationKey']]]);
+
+        self::assertIsString($html);
+        self::assertStringContainsString('name="TestControllerConfig[removedAttributes][]" value="cookieValidationKey"', $html);
+
+        $html = $this->post([self::FORM_NAME => ['siteName' => str_repeat('a', 300), 'cookieValidationKey' => 'new-secret-9876543210']]);
+
+        self::assertIsString($html);
+        self::assertStringNotContainsString('new-secret', $html);
+        self::assertStringContainsString('name="TestControllerConfig[cookieValidationKey]"', $html);
+        self::assertSame('old-secret-0123456789', (require Yii::getAlias($this->configFile))['cookieValidationKey']);
     }
 
     public function testAnInvalidValueIsNotWritten(): void
@@ -154,6 +239,19 @@ class ConfigControllerTest extends TestCase
         $request->setBodyParams([...$bodyParams, $request->csrfParam => $request->getCsrfToken()]);
 
         return Yii::$app->runAction('admin/config/config/update');
+    }
+
+    private function postSensitive(string $attribute, string $state): string
+    {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+
+        $request = $this->getWebRequest();
+        $request->setBodyParams([$request->csrfParam => $request->getCsrfToken()]);
+
+        $html = Yii::$app->runAction('admin/config/config/sensitive', ['attribute' => $attribute, 'state' => $state]);
+        self::assertIsString($html);
+
+        return $html;
     }
 
     private function login(): User
