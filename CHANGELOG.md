@@ -1,4 +1,4 @@
-## Unreleased
+## 3.4.0 (October 21, 2026)
 
 - Changed the config form to show a saved sensitive param locked, with buttons to replace or remove it, instead of a remove checkbox
 
