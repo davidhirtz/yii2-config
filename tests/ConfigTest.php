@@ -148,6 +148,20 @@ class ConfigTest extends TestCase
         self::assertTrue(Yii::$app->params['enableFoo']);
     }
 
+    public function testAnUntickedBooleanMissingFromTheFileIsWritten(): void
+    {
+        file_put_contents($this->configFile, "<?php\n\nreturn ['cookieValidationKey' => 'k'];\n");
+        $config = TestConfig::create();
+
+        $config->load(['TestConfig' => ['enableFoo' => '0']]);
+
+        self::assertTrue($config->isChangedAttribute('enableFoo'));
+        self::assertTrue($config->save(), print_r($config->getErrors(), true));
+
+        $params = require $this->configFile;
+        self::assertFalse($params['enableFoo']);
+    }
+
     public function testAnUntouchedFalseIsNoTrailEntry(): void
     {
         file_put_contents($this->configFile, "<?php\n\nreturn ['cookieValidationKey' => 'k', 'enableFoo' => false];\n");

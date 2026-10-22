@@ -243,6 +243,11 @@ class Config extends Model implements TrailModelInterface
             return $old === $new;
         }
 
+        // A typed `false` is a value, which a param missing from the file is not
+        if (is_bool($old) || is_bool($new)) {
+            return $old === $new;
+        }
+
         return (string)$old === (string)$new;
     }
 
