@@ -50,9 +50,15 @@ class ConfigController extends Controller
     {
         $config = Config::create();
 
-        if ($config->load($this->request->post()) && $config->save()) {
-            $this->success(Yii::t('config', 'CONFIG_SUCCESS_UPDATED'));
-            return $this->refresh();
+        if ($config->load($this->request->post())) {
+            if ($config->save()) {
+                $this->success(Yii::t('config', 'CONFIG_SUCCESS_UPDATED'));
+            }
+
+            // An unchanged save ends like a changed one rather than redrawing the posted form
+            if (!$config->hasErrors()) {
+                return $this->refresh();
+            }
         }
 
         return $this->render('update', [
