@@ -127,6 +127,39 @@ class ConfigTest extends TestCase
         self::assertSame('unit-test', $params['cookieValidationKey']);
     }
 
+    public function testTypedParamsAreWrittenTyped(): void
+    {
+        file_put_contents($this->configFile, "<?php\n\nreturn ['cookieValidationKey' => 'k', 'enableFoo' => false, 'pageSize' => 20, 'ratio' => 1];\n");
+        $config = TestConfig::create();
+
+        $config->load(['TestConfig' => ['enableFoo' => '0', 'pageSize' => '20', 'ratio' => '1']]);
+        self::assertFalse($config->isChangedAttribute('enableFoo'));
+        self::assertFalse($config->isChangedAttribute('pageSize'));
+        self::assertFalse($config->isChangedAttribute('ratio'));
+
+        $config->load(['TestConfig' => ['enableFoo' => '1', 'pageSize' => '25', 'ratio' => '1.5', 'claim' => '7']]);
+        self::assertTrue($config->save(), print_r($config->getErrors(), true));
+
+        $params = require $this->configFile;
+        self::assertTrue($params['enableFoo']);
+        self::assertSame(25, $params['pageSize']);
+        self::assertSame(1.5, $params['ratio']);
+        self::assertSame('7', $params['claim']);
+        self::assertTrue(Yii::$app->params['enableFoo']);
+    }
+
+    public function testAnUntouchedFalseIsNoTrailEntry(): void
+    {
+        file_put_contents($this->configFile, "<?php\n\nreturn ['cookieValidationKey' => 'k', 'enableFoo' => false];\n");
+        $config = TestConfig::create();
+        $lastId = $this->loadLastTrail()?->id;
+
+        $config->load(['TestConfig' => ['enableFoo' => '0']]);
+
+        self::assertFalse($config->save());
+        self::assertSame($lastId, $this->loadLastTrail()?->id);
+    }
+
     public function testSaveI18nAttribute(): void
     {
         Yii::$app->getI18n()->languages = ['de', 'en-US'];
@@ -206,6 +239,9 @@ class ConfigTest extends TestCase
 /**
  * @property string $cookieValidationKey
  * @property string|null $claim
+ * @property bool|null $enableFoo
+ * @property int|null $pageSize
+ * @property float|null $ratio
  */
 class TestConfig extends Config
 {
@@ -220,6 +256,18 @@ class TestConfig extends Config
             [
                 ['claim'],
                 'string',
+            ],
+            [
+                ['enableFoo'],
+                'boolean',
+            ],
+            [
+                ['pageSize'],
+                'integer',
+            ],
+            [
+                ['ratio'],
+                'number',
             ],
         ]);
     }

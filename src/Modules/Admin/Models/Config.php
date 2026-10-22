@@ -22,6 +22,8 @@ use yii\base\Model;
 use yii\caching\TagDependency;
 use yii\db\AfterSaveEvent;
 use yii\db\BaseActiveRecord;
+use yii\validators\BooleanValidator;
+use yii\validators\NumberValidator;
 use yii\validators\Validator;
 
 /**
@@ -145,7 +147,10 @@ class Config extends Model implements TrailModelInterface
 
     public function isChangedAttribute(string $name): bool
     {
-        return !$this->isSameValue($this->getParams()[$name] ?? null, $this->$name);
+        return !$this->isSameValue(
+            $this->typecastValue($name, $this->getParams()[$name] ?? null),
+            $this->typecastValue($name, $this->$name),
+        );
     }
 
     /**
@@ -196,13 +201,13 @@ class Config extends Model implements TrailModelInterface
 
         foreach ($this->activeAttributes() as $attribute) {
             $prevParams[$attribute] ??= null;
-            $params[$attribute] = $this->$attribute;
+            $params[$attribute] = $this->$attribute = $this->typecastValue($attribute, $this->$attribute);
         }
 
         $changedAttributes = [];
 
         foreach ($this->activeAttributes() as $attribute) {
-            if (!$this->isSameValue($prevParams[$attribute], $params[$attribute])) {
+            if (!$this->isSameValue($this->typecastValue($attribute, $prevParams[$attribute]), $params[$attribute])) {
                 $changedAttributes[$attribute] = $params[$attribute];
             }
         }
@@ -239,6 +244,34 @@ class Config extends Model implements TrailModelInterface
         }
 
         return (string)$old === (string)$new;
+    }
+
+    /**
+     * A param is written as the type its rule names, a boolean as `bool`; one without a typed rule stays as posted.
+     */
+    protected function typecastValue(string $name, mixed $value): mixed
+    {
+        if (!is_scalar($value) || $value === '') {
+            return $value;
+        }
+
+        foreach ($this->getActiveValidators($name) as $validator) {
+            if ($validator instanceof BooleanValidator) {
+                return $validator->trueValue === '1'
+                    && $validator->falseValue === '0'
+                    && in_array($value, [true, false, 0, 1, '0', '1'], true)
+                        ? (bool)$value
+                        : $value;
+            }
+
+            if ($validator instanceof NumberValidator && is_numeric($value)) {
+                return $validator->integerOnly
+                    ? (preg_match('/^\s*[+-]?\d+\s*$/', (string)$value) ? (int)$value : $value)
+                    : (float)$value;
+            }
+        }
+
+        return $value;
     }
 
     /**
