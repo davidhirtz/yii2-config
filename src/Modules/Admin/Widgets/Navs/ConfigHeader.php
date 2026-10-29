@@ -25,6 +25,6 @@ class ConfigHeader extends Header
      */
     protected function addSystemBreadcrumb(): void
     {
-        $this->addBreadcrumb(Yii::t('skeleton', 'COMMON_SYSTEM'), ['/admin/system/index']);
+        $this->addBreadcrumb(Yii::t('skeleton', 'SYSTEM_TITLE'), ['/admin/system/index']);
     }
 }
