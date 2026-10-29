@@ -44,8 +44,7 @@ class ConfigTest extends TestCase
     }
 
     /**
-     * The module belongs to the application that built it, so it is looked up rather than memoised — a static one
-     * outlived the application and handed the next request a module of a dead one.
+     * The module is looked up rather than memoised, since a static one outlived the application that built it.
      */
     public function testTheModuleIsTheOneOfTheCurrentApplication(): void
     {
@@ -292,7 +291,6 @@ class TestConfig extends Config
  */
 class TestConfigI18n extends TestConfig
 {
-    /** @var string[] */
     /**
      * @var list<string>
      */

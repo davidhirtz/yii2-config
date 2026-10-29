@@ -16,10 +16,6 @@ use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
-/**
- * The config page writes a PHP file the application reads its params from, so a saved value has to survive the
- * round trip and leave a trail behind.
- */
 class ConfigControllerTest extends TestCase
 {
     use UserFixtureTrait;

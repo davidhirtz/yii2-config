@@ -27,8 +27,7 @@ use yii\validators\NumberValidator;
 use yii\validators\Validator;
 
 /**
- * Extend this class in your application to make application params editable via the admin interface. Params must have
- * a valid rule. Only active attributes will be displayed in the form.
+ * A param is editable only with a rule.
  */
 class Config extends Model implements TrailModelInterface
 {
@@ -48,7 +47,9 @@ class Config extends Model implements TrailModelInterface
     private ?array $params = null;
 
     /**
-     * @var list<string> sensitive attributes the form asked to remove, which an empty field cannot say
+     * An empty field cannot ask to remove a secret, hence the list.
+     *
+     * @var list<string>
      */
     private array $removedAttributes = [];
 
@@ -99,8 +100,7 @@ class Config extends Model implements TrailModelInterface
     }
 
     /**
-     * The form never shows a secret, so an empty field keeps the saved one; `removedAttributes` lists those to clear,
-     * which a value typed into the same field overrules.
+     * The form never shows a secret, so an empty field keeps it unless `removedAttributes` lists it and none is typed.
      *
      * @param array<array-key, mixed> $data
      */
@@ -234,8 +234,7 @@ class Config extends Model implements TrailModelInterface
     }
 
     /**
-     * A form posts strings, so a scalar compares as one — `'1'` is the `1` the file holds. Only the form's own
-     * attributes are compared: whatever else the file holds, an array written by hand among it, stays as it is.
+     * A form posts strings, so a scalar compares as one, and only the form's attributes, so a hand-written array stays.
      */
     protected function isSameValue(mixed $old, mixed $new): bool
     {
