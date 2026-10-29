@@ -6,13 +6,13 @@
  */
 return [
     'AUTH_CONFIG_DESCRIPTION' => 'Gerir as definições do site',
-    'CONFIG_DASHBOARD_UPDATE' => 'Gerir as definições',
-    'CONFIG_NAME' => 'Definições',
     'CONFIG_SENSITIVE_HINT' => 'Deixe vazio para manter o valor guardado.',
-    'CONFIG_SENSITIVE_REMOVE' => 'Remover o valor guardado',
-    'CONFIG_SENSITIVE_REMOVED' => 'Removido ao guardar',
-    'CONFIG_SENSITIVE_REPLACE' => 'Substituir o valor guardado',
-    'CONFIG_SENSITIVE_UNDO' => 'Anular',
-    'CONFIG_SUCCESS_UPDATED' => 'As definições foram atualizadas.',
+    'CONFIG_SENSITIVE_REMOVED_TEXT' => 'Removido ao guardar',
+    'CONFIG_SENSITIVE_REMOVE_BUTTON' => 'Remover o valor guardado',
+    'CONFIG_SENSITIVE_REPLACE_BUTTON' => 'Substituir o valor guardado',
+    'CONFIG_SENSITIVE_UNDO_BUTTON' => 'Anular',
+    'CONFIG_SINGULAR' => 'Definições',
     'CONFIG_TITLE' => 'Definições',
+    'CONFIG_UPDATE_BUTTON' => 'Gerir as definições',
+    'CONFIG_UPDATE_SUCCESS' => 'As definições foram atualizadas.',
 ];

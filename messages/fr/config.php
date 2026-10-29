@@ -6,13 +6,13 @@
  */
 return [
     'AUTH_CONFIG_DESCRIPTION' => 'Gérer les paramètres du site',
-    'CONFIG_DASHBOARD_UPDATE' => 'Gérer les paramètres',
-    'CONFIG_NAME' => 'Paramètres',
     'CONFIG_SENSITIVE_HINT' => 'Laissez vide pour conserver la valeur enregistrée.',
-    'CONFIG_SENSITIVE_REMOVE' => 'Supprimer la valeur enregistrée',
-    'CONFIG_SENSITIVE_REMOVED' => 'Supprimée à l’enregistrement',
-    'CONFIG_SENSITIVE_REPLACE' => 'Remplacer la valeur enregistrée',
-    'CONFIG_SENSITIVE_UNDO' => 'Annuler',
-    'CONFIG_SUCCESS_UPDATED' => 'Les paramètres ont été mis à jour.',
+    'CONFIG_SENSITIVE_REMOVED_TEXT' => 'Supprimée à l’enregistrement',
+    'CONFIG_SENSITIVE_REMOVE_BUTTON' => 'Supprimer la valeur enregistrée',
+    'CONFIG_SENSITIVE_REPLACE_BUTTON' => 'Remplacer la valeur enregistrée',
+    'CONFIG_SENSITIVE_UNDO_BUTTON' => 'Annuler',
+    'CONFIG_SINGULAR' => 'Paramètres',
     'CONFIG_TITLE' => 'Paramètres',
+    'CONFIG_UPDATE_BUTTON' => 'Gérer les paramètres',
+    'CONFIG_UPDATE_SUCCESS' => 'Les paramètres ont été mis à jour.',
 ];

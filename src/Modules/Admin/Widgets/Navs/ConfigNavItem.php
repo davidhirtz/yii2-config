@@ -16,7 +16,7 @@ class ConfigNavItem extends NavItem
     public function __construct(array $config = [])
     {
         //$this->icon ??= 'wrench';
-        $this->label ??= Yii::t('config', 'CONFIG_NAME');
+        $this->label ??= Yii::t('config', 'CONFIG_SINGULAR');
         $this->order ??= 100;
         $this->roles ??= [Config::AUTH_CONFIG];
         $this->url ??= ['/admin/config/config/update'];

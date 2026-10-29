@@ -40,7 +40,7 @@
 | `Config::getUpdatedAt(): bool\|int\|null`   | `Config::getUpdatedAt(): false\|int`                        |
 | —                                           | `Config::getPermissionName()` (new, answers `AUTH_CONFIG`)  |
 | `Module::$route`                            | removed; `ConfigNavItem` carries the URL                    |
-| `Module::getName()`                         | removed; `Yii::t('config', 'CONFIG_NAME')`                  |
+| `Module::getName()`                         | removed; `Yii::t('config', 'CONFIG_SINGULAR')`                  |
 | `Module::getNavBarItems()`                  | `Module::aside(Nav $nav)`                                   |
 | `Module::getDashboardPanels()`              | `Module::dashboard(Dashboard $dashboard)`                   |
 | `Module::getCoreControllerMap()`            | removed; the controller is found by namespace               |

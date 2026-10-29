@@ -52,7 +52,7 @@ class ConfigController extends Controller
 
         if ($config->load($this->request->post())) {
             if ($config->save()) {
-                $this->success(Yii::t('config', 'CONFIG_SUCCESS_UPDATED'));
+                $this->success(Yii::t('config', 'CONFIG_UPDATE_SUCCESS'));
             }
 
             // An unchanged save ends like a changed one rather than redrawing the posted form

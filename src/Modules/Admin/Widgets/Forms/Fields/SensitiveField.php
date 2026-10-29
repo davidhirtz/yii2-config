@@ -80,8 +80,8 @@ class SensitiveField extends InputField
         return match ($this->state) {
             self::STATE_SAVED => InputGroup::make()
                 ->append(
-                    $this->getStateButton(self::STATE_REPLACE, 'pencil-alt', Yii::t('config', 'CONFIG_SENSITIVE_REPLACE')),
-                    $this->getStateButton(self::STATE_REMOVE, 'trash', Yii::t('config', 'CONFIG_SENSITIVE_REMOVE')),
+                    $this->getStateButton(self::STATE_REPLACE, 'pencil-alt', Yii::t('config', 'CONFIG_SENSITIVE_REPLACE_BUTTON')),
+                    $this->getStateButton(self::STATE_REMOVE, 'trash', Yii::t('config', 'CONFIG_SENSITIVE_REMOVE_BUTTON')),
                 )
                 ->content(Span::make()
                     ->addClass('input text-muted')
@@ -94,7 +94,7 @@ class SensitiveField extends InputField
                 ->content(
                     Span::make()
                         ->addClass('input text-muted')
-                        ->text(Yii::t('config', 'CONFIG_SENSITIVE_REMOVED')),
+                        ->text(Yii::t('config', 'CONFIG_SENSITIVE_REMOVED_TEXT')),
                     $this->getRemovedInput(),
                 ),
             default => parent::getInput(),
@@ -126,7 +126,7 @@ class SensitiveField extends InputField
 
     protected function getUndoButton(): Stringable
     {
-        return $this->getStateButton(self::STATE_SAVED, 'rotate-left', Yii::t('config', 'CONFIG_SENSITIVE_UNDO'));
+        return $this->getStateButton(self::STATE_SAVED, 'rotate-left', Yii::t('config', 'CONFIG_SENSITIVE_UNDO_BUTTON'));
     }
 
     protected function getStateButton(string $state, string $icon, string $tooltip): Stringable
