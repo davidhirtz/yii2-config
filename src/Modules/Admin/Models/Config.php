@@ -74,6 +74,7 @@ class Config extends Model implements TrailModelInterface
         parent::__set($name, $value);
     }
 
+    #[\Override]
     public function createValidators(): ArrayObject
     {
         $validators = $this->createModelValidators();
