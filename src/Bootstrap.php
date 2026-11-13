@@ -45,6 +45,7 @@ class Bootstrap implements ConfigBootstrapInterface
     /**
      * @param Application<\Hirtz\Skeleton\Models\User> $app
      */
+    #[Override]
     public function bootstrap($app): void
     {
         Yii::setAlias('@config', __DIR__);

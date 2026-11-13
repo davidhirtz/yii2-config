@@ -37,6 +37,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
         });
     }
 
+    #[Override]
     public function dashboard(Dashboard $dashboard): Dashboard
     {
         return $dashboard->addItem(DashboardItem::make()

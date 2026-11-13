@@ -74,7 +74,7 @@ class Config extends Model implements TrailModelInterface
         parent::__set($name, $value);
     }
 
-    #[\Override]
+    #[Override]
     public function createValidators(): ArrayObject
     {
         $validators = $this->createModelValidators();
@@ -294,16 +294,19 @@ class Config extends Model implements TrailModelInterface
     /**
      * @return list<string>|false
      */
+    #[Override]
     public function getAdminRoute(): array|false
     {
         return ['/admin/config/config/update'];
     }
 
+    #[Override]
     public function getPermissionName(): string
     {
         return self::AUTH_CONFIG;
     }
 
+    #[Override]
     public function getAdminType(): string
     {
         return Yii::t('config', 'CONFIG_SINGULAR');
