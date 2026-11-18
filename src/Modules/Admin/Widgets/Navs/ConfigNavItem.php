@@ -15,10 +15,11 @@ class ConfigNavItem extends NavItem
      */
     public function __construct(array $config = [])
     {
-        //$this->icon ??= 'wrench';
+        $this->icon ??= 'wrench';
         $this->label ??= Yii::t('config', 'CONFIG_SINGULAR');
-        $this->order ??= 100;
+        $this->order ??= 900;
         $this->roles ??= [Config::AUTH_CONFIG];
+        $this->routes = ['admin/config'];
         $this->url ??= ['/admin/config/config/update'];
 
         parent::__construct($config);

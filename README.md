@@ -84,7 +84,7 @@ declares the `_de` variant, since nothing on a plain `yii\base\Model` does it fo
 
 ## The admin page
 
-- `Modules\Admin\Widgets\Navs\ConfigNavItem` is added below the skeleton's *System* nav item, and
+- `Modules\Admin\Widgets\Navs\ConfigNavItem` is a top-level nav item above the skeleton's *System*, and
   `Module::dashboard()` adds a *Manage settings* item to the dashboard; both point at
   `/admin/config/config/update`.
 - `Modules\Admin\Controllers\ConfigController::actionUpdate()` is guarded by `Config::AUTH_CONFIG` (`config`).

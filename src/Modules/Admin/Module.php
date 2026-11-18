@@ -7,7 +7,6 @@ namespace Hirtz\Config\Modules\Admin;
 use Hirtz\Config\Modules\Admin\Models\Config;
 use Hirtz\Config\Modules\Admin\Widgets\Navs\ConfigNavItem;
 use Hirtz\Skeleton\Modules\Admin\ModuleInterface;
-use Hirtz\Skeleton\Modules\Admin\Widgets\Navs\SystemNavItem;
 use Hirtz\Skeleton\Widgets\Navs\Nav;
 use Hirtz\Skeleton\Widgets\Panels\Dashboard;
 use Hirtz\Skeleton\Widgets\Panels\DashboardItem;
@@ -25,16 +24,7 @@ class Module extends \Hirtz\Skeleton\Base\Module implements ModuleInterface
     #[Override]
     public function aside(Nav $nav): Nav
     {
-        return $nav->items(function (array $items): array {
-            foreach ($items as $item) {
-                if ($item instanceof SystemNavItem) {
-                    $item->addItem(ConfigNavItem::make());
-                    break;
-                }
-            }
-
-            return $items;
-        });
+        return $nav->addItem(ConfigNavItem::make());
     }
 
     #[Override]

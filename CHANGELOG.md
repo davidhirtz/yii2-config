@@ -1,3 +1,7 @@
+## Unreleased
+
+- Changed `ConfigNavItem` to a top-level nav item above *System*
+
 ## 3.5.0 (October 31, 2026)
 
 - Changed every message key to the `{DOMAIN}_{SUBJECT}_{KIND}` scheme
