@@ -1,4 +1,4 @@
-## Unreleased
+## 3.6.0 (November 21, 2026)
 
 - Changed `ConfigNavItem` to a top-level nav item above *System*
 
